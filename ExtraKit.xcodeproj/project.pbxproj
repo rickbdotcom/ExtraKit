@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D9C64711CC457DA00B7AA5C /* UIResponder+TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9C64701CC457DA00B7AA5C /* UIResponder+TextInput.swift */; };
 		0D9C64751CC45C1800B7AA5C /* NSObject+AssociatedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9C64741CC45C1800B7AA5C /* NSObject+AssociatedObject.swift */; };
+		0D9C64861CC4807200B7AA5C /* UIScrollView+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9C64851CC4807200B7AA5C /* UIScrollView+Keyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		0D9C646A1CC4575400B7AA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D9C64701CC457DA00B7AA5C /* UIResponder+TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+TextInput.swift"; sourceTree = "<group>"; };
 		0D9C64741CC45C1800B7AA5C /* NSObject+AssociatedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+AssociatedObject.swift"; sourceTree = "<group>"; };
+		0D9C64851CC4807200B7AA5C /* UIScrollView+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Keyboard.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		0D9C64671CC4575400B7AA5C /* ExtraKit */ = {
 			isa = PBXGroup;
 			children = (
+				0D9C64851CC4807200B7AA5C /* UIScrollView+Keyboard.swift */,
 				0D9C64701CC457DA00B7AA5C /* UIResponder+TextInput.swift */,
 				0D9C64741CC45C1800B7AA5C /* NSObject+AssociatedObject.swift */,
 				0D9C646A1CC4575400B7AA5C /* Info.plist */,
@@ -133,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D9C64751CC45C1800B7AA5C /* NSObject+AssociatedObject.swift in Sources */,
+				0D9C64861CC4807200B7AA5C /* UIScrollView+Keyboard.swift in Sources */,
 				0D9C64711CC457DA00B7AA5C /* UIResponder+TextInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
