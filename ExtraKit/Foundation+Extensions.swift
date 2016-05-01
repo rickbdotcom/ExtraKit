@@ -3,7 +3,7 @@ import Foundation
 public extension Dictionary {
     init<S: SequenceType
       where S.Generator.Element == Element>
-      (tuples seq: S) {
+      (keyValues seq: S) {
         self.init()
         self.merge(seq)
     }
@@ -28,8 +28,8 @@ public extension Array {
 }
 
 public extension NSObjectProtocol {
-	func configure<T>(block: (T)->Void) -> T {
-		block(self as! T)
-		return self as! T
+	func configure(block: (Self)->Void) -> Self {
+		block(self)
+		return self
 	}
 }

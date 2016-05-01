@@ -7,6 +7,8 @@ public class DatePickerInputView: UIDatePicker
 	
 	func dateChanged() {
 		textField?.text = dateFormatter?.stringFromDate(date)
+		NSNotificationCenter.defaultCenter().postNotificationName(UITextFieldTextDidChangeNotification, object: textField)
+		textField?.sendActionsForControlEvents(.EditingChanged)
 	}
 }
 
@@ -28,5 +30,9 @@ public extension UITextField
 		picker.addTarget(picker, action: #selector(DatePickerInputView.dateChanged), forControlEvents: .ValueChanged)
 		inputView = picker
 		return picker
+	}
+	
+	var datePickerDate: NSDate? {
+		return !(text?.isEmpty ?? true) ? datePickerView?.date : nil
 	}
 }
