@@ -33,3 +33,12 @@ public extension NSObjectProtocol {
 		return self
 	}
 }
+
+public class Lift<T>: NSObject {
+	public var value: T!
+	
+	public init(_ value: T) {
+		super.init()
+		self.value = value
+	}
+}

@@ -13,6 +13,7 @@ public extension UIResponder
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
 			}
+			createPreviousNextDoneInputAccessory()
 			updatePreviousNextSegmentControlState()
 		}
 	}
@@ -27,51 +28,52 @@ public extension UIResponder
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self
 			}
-
+			createPreviousNextDoneInputAccessory()
 			updatePreviousNextSegmentControlState()
 		}
 	}
 
 	var previousNextSegmentControl: UISegmentedControl? {
-		return previousNextDoneAccessoryToolbar?.items?.first?.customView as? UISegmentedControl
+		return previousNextDoneInputAccessory?.items?.first?.customView as? UISegmentedControl
 	}
 	
-	var previousNextDoneAccessoryToolbar: UIToolbar?
-	{
-		guard let tf = self as? UITextInputTraits  else { return nil }
+	var previousNextDoneInputAccessory: UIToolbar? {
+		guard self is UITextInputTraits  else { return nil }
 
-		var toolbar: UIToolbar?
 		if let tf = self as? UITextField {
-			toolbar = tf.inputAccessoryView as? UIToolbar
+			return tf.inputAccessoryView as? UIToolbar
 		} else if let tf = self as? UITextView {
-			toolbar = tf.inputAccessoryView as? UIToolbar
+			return tf.inputAccessoryView as? UIToolbar
 		}else {
 			return nil
 		}
-		
-		if toolbar == nil {
-			let segmentControl = UISegmentedControl(items: ["Prev","Next"])
-			segmentControl.sizeToFit()
-			segmentControl.momentary = true
-			segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), forControlEvents: .ValueChanged)
-			
-			let toolbar = UIToolbar()
-			toolbar.barStyle = tf.keyboardAppearance  == .Dark ? .Black : .Default
-			toolbar.sizeToFit()
-			
-			toolbar.items = [
-				UIBarButtonItem(customView: segmentControl)
-			,	UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-			,	UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(resignFirstResponder))
-			]
+	}
+	
+	func createPreviousNextDoneInputAccessory()
+	{
+		guard let tf = self as? UITextInputTraits where previousNextDoneInputAccessory == nil else { return }
 
-			if let tf = self as? UITextField {
-				tf.inputAccessoryView = toolbar
-			} else if let tf = self as? UITextView {
-				tf.inputAccessoryView = toolbar
-			}
+		let segmentControl = UISegmentedControl(items: ["Prev","Next"])
+		segmentControl.sizeToFit()
+		segmentControl.momentary = true
+		segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), forControlEvents: .ValueChanged)
+		
+		let toolbar = UIToolbar()
+		toolbar.barStyle = tf.keyboardAppearance  == .Dark ? .Black : .Default
+		toolbar.sizeToFit()
+		
+		toolbar.items = [
+			UIBarButtonItem(customView: segmentControl)
+		,	UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+		,	UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(resignFirstResponder))
+		]
+
+		if let tf = self as? UITextField {
+			tf.inputAccessoryView = toolbar
+		} else if let tf = self as? UITextView {
+			tf.inputAccessoryView = toolbar
 		}
-		return toolbar
+		updatePreviousNextSegmentControlState()
 	}
 	
 	func becomePreviousFirstResponder(sender: UIResponder) -> Bool

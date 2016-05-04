@@ -3,10 +3,13 @@ import UIKit
 public class DatePickerInputView: UIDatePicker
 {
 	weak var textField: UITextField?
-	var dateFormatter: NSDateFormatter?
+	var dateFormatter: NSDateFormatter!
+	var dateString: String {
+		return dateFormatter.stringFromDate(date)
+	}
 	
 	func dateChanged() {
-		textField?.text = dateFormatter?.stringFromDate(date)
+		textField?.text = dateString
 		NSNotificationCenter.defaultCenter().postNotificationName(UITextFieldTextDidChangeNotification, object: textField)
 		textField?.sendActionsForControlEvents(.EditingChanged)
 	}
@@ -33,6 +36,14 @@ public extension UITextField
 	}
 	
 	var datePickerDate: NSDate? {
-		return !(text?.isEmpty ?? true) ? datePickerView?.date : nil
+		get {
+			return (text == datePickerView?.dateString) ? datePickerView?.date : nil
+		}
+		set {
+			if let date = newValue {
+				datePickerView?.date = date
+				text = datePickerView?.dateString
+			}
+		}
 	}
 }

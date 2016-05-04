@@ -46,3 +46,17 @@ public class WeakObjectRef: NSObject
 		self.object = object
 	}
 }
+
+public extension NSObject
+{
+	func startObserving(name: String, object: NSObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
+	{
+		associatedDictionary["Observing.\(name).\(object?.hashValue ?? 0)"] =
+			NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
+	}
+	
+	func stopObserving(name: String, object: NSObject? = nil)
+	{
+		associatedDictionary["Observing.\(name).\(object?.hashValue ?? 0)"] = nil
+	}
+}
