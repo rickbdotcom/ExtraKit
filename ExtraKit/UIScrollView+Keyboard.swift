@@ -4,7 +4,7 @@ public extension UIScrollView
 {
 	func adjustContentInsetForKeyboardFrame()
 	{
-		associatedDictionary.setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: "UIScrollView.enableTextReveal")
+		setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: "UIScrollView.enableTextReveal")
 	}
 }
 

@@ -51,12 +51,12 @@ public extension NSObject
 {
 	func startObserving(name: String, object: NSObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
 	{
-		associatedDictionary["Observing.\(name).\(object?.hashValue ?? 0)"] =
-			NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
+		setAssociatedValue(NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
+		, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
 	}
 	
 	func stopObserving(name: String, object: NSObject? = nil)
 	{
-		associatedDictionary["Observing.\(name).\(object?.hashValue ?? 0)"] = nil
+		setAssociatedValue(nil, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
 	}
 }

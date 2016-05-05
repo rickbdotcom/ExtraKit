@@ -13,11 +13,11 @@ public extension UIImage
 
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-		image.associatedDictionary["UIImage.imageWithColor"] = color
-        return image
+		image.setAssociatedValue(color, forKey: "UIImage.imageWithColor")
+		return image
     }
 	
 	var imageColor: UIColor? {
-		return associatedDictionary["UIImage.imageWithColor"] as? UIColor
+		return associatedValueForKey("UIImage.imageWithColor")
 	}
 }
