@@ -2,9 +2,9 @@ import UIKit
 
 public extension UIControl
 {
-	func addControlEvents(controlEvents: UIControlEvents, block: ()->Void) -> AnyObject {
+	func addControlEvents(controlEvents: UIControlEvents, block: (UIControl)->Void) -> AnyObject {
 		let actionBlock = ControlActionBlock(block: block)
-		addTarget(actionBlock, action: #selector(ControlActionBlock.execute), forControlEvents: controlEvents)
+		addTarget(actionBlock, action: #selector(ControlActionBlock.execute(_:)), forControlEvents: controlEvents)
 		actionBlocks.addObject(actionBlock)
 		return actionBlock
 	}
@@ -21,13 +21,13 @@ public extension UIControl
 
 public class ControlActionBlock: NSObject
 {
-	var block: ()->Void
+	var block: (UIControl)->Void
 	
-	init(block: ()->Void) {
+	init(block: (UIControl)->Void) {
 		self.block = block
 	}
 	
-	func execute() {
-		block()
+	func execute(control: UIControl) {
+		block(control)
 	}
 }

@@ -8,7 +8,7 @@ public extension UIImage
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
 
-        CGContextSetFillColorWithColor(context, color.CGColor)
+        color.set()
         CGContextFillRect(context, rect)
 
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -19,5 +19,20 @@ public extension UIImage
 	
 	var imageColor: UIColor? {
 		return associatedValueForKey("UIImage.imageWithColor")
+	}
+	
+	class func circle(radius r: CGFloat, color: UIColor) -> UIImage
+	{
+        let rect = CGRectMake(0.0, 0.0, r, r)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+
+        color.set()
+        CGContextFillEllipseInRect(context, rect)
+
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+		return image
 	}
 }

@@ -43,6 +43,8 @@ public extension UITextField
 			if let date = newValue {
 				datePickerView?.date = date
 				text = datePickerView?.dateString
+			}else {
+				text = nil
 			}
 		}
 	}

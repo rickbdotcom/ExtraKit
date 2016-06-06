@@ -19,9 +19,9 @@ public extension Dictionary {
 }
 
 public extension Array {
-	func find<T>(predicate: (Element) -> Bool) -> T? {
+	func find(predicate: (Element) -> Bool) -> Element? {
 		if let index = indexOf(predicate) {
-			return self[index] as? T
+			return self[index]
 		}
 		return nil
 	}
@@ -34,7 +34,7 @@ public extension NSObjectProtocol {
 	}
 }
 
-public class Lift<T>: NSObject {
+public class WrapAny<T>: NSObject {
 	public var value: T!
 	
 	public init(_ value: T) {

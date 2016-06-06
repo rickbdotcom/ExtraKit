@@ -49,13 +49,13 @@ public class WeakObjectRef: NSObject
 
 public extension NSObject
 {
-	func startObserving(name: String, object: NSObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
+	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
 	{
 		setAssociatedValue(NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
 		, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
 	}
 	
-	func stopObserving(name: String, object: NSObject? = nil)
+	func stopObserving(name: String, object: AnyObject? = nil)
 	{
 		setAssociatedValue(nil, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
 	}
