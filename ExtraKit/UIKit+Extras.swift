@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIView {
+public extension UIView {
 	func textFieldBecomeFirstResponder() -> Bool {
 		if let tf = self as? UITextField {
 			return tf.becomeFirstResponder()
@@ -14,7 +14,7 @@ extension UIView {
 	}
 }
 
-extension UIViewController {
+public extension UIViewController {
 	func prepareForSegue(segue: UIStoryboardSegue, action: AnyObject?) -> Bool {
 		guard let action = action as? SegueAction  else { return false }
 		action.block(segue: segue)
@@ -22,21 +22,20 @@ extension UIViewController {
 	}
 }
 
-class SegueAction {
+public class SegueAction {
 	var block: (segue: UIStoryboardSegue)->Void
 	init(_ block: (segue: UIStoryboardSegue)->Void) {
 		self.block = block
 	}
 }
 
-extension UIViewController
-{
+public extension UIViewController {
 	func typedParentViewController<T>() -> T? {
 		return self as? T ?? parentViewController?.typedParentViewController()
 	}
 }
 
-extension UIView {
+public extension UIView {
 
 	func typedParentViewController<T>() -> T? {
 		return self as? T ?? parentViewController?.typedParentViewController()
