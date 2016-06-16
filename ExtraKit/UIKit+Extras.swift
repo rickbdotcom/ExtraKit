@@ -28,3 +28,28 @@ class SegueAction {
 		self.block = block
 	}
 }
+
+extension UIViewController
+{
+	func typedParentViewController<T>() -> T? {
+		return self as? T ?? parentViewController?.typedParentViewController()
+	}
+}
+
+extension UIView {
+
+	func typedParentViewController<T>() -> T? {
+		return self as? T ?? parentViewController?.typedParentViewController()
+	}
+
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.nextResponder()
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}

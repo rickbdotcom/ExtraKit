@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D35B1321CDFAF0B00601560 /* UIImagePickerController+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D35B1311CDFAF0B00601560 /* UIImagePickerController+Extras.swift */; };
 		0D4A31371D0D1DBF0054AA55 /* LiveObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A31361D0D1DBF0054AA55 /* LiveObjectList.swift */; };
+		0D57072A1D1269900045C6AE /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5707291D1269900045C6AE /* Segues.swift */; };
 		0D6E473A1CD0648A009FAA0C /* UIimage+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6E47391CD0648A009FAA0C /* UIimage+Extras.swift */; };
 		0D7BA03A1CD55AA10037DD1B /* UIControl+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BA0391CD55AA10037DD1B /* UIControl+Blocks.swift */; };
 		0D7BA04F1CD5D5850037DD1B /* UITextField+PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7BA04E1CD5D5850037DD1B /* UITextField+PickerView.swift */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		0D35B1311CDFAF0B00601560 /* UIImagePickerController+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePickerController+Extras.swift"; sourceTree = "<group>"; };
 		0D4A31361D0D1DBF0054AA55 /* LiveObjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveObjectList.swift; sourceTree = "<group>"; };
+		0D5707291D1269900045C6AE /* Segues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		0D6E47391CD0648A009FAA0C /* UIimage+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIimage+Extras.swift"; sourceTree = "<group>"; };
 		0D7BA0391CD55AA10037DD1B /* UIControl+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Blocks.swift"; sourceTree = "<group>"; };
 		0D7BA04E1CD5D5850037DD1B /* UITextField+PickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+PickerView.swift"; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				0D35B1311CDFAF0B00601560 /* UIImagePickerController+Extras.swift */,
 				0DABFE6D1CC48F9B00C9A44A /* UITextField+DatePicker.swift */,
 				0D85AD9E1CDFCBC100BC5B07 /* String+Extras.swift */,
+				0D5707291D1269900045C6AE /* Segues.swift */,
 				0D7BA04E1CD5D5850037DD1B /* UITextField+PickerView.swift */,
 				0D9C64851CC4807200B7AA5C /* UIScrollView+Keyboard.swift */,
 				0D9ED7FF1D0501C500FFA284 /* UIResponder+TextInput.swift */,
@@ -167,6 +170,7 @@
 				0D6E473A1CD0648A009FAA0C /* UIimage+Extras.swift in Sources */,
 				0D9ED8001D0501C500FFA284 /* UIResponder+TextInput.swift in Sources */,
 				0D35B1321CDFAF0B00601560 /* UIImagePickerController+Extras.swift in Sources */,
+				0D57072A1D1269900045C6AE /* Segues.swift in Sources */,
 				0D7BA03A1CD55AA10037DD1B /* UIControl+Blocks.swift in Sources */,
 				0D7BA04F1CD5D5850037DD1B /* UITextField+PickerView.swift in Sources */,
 				0D9C64751CC45C1800B7AA5C /* NSObject+AssociatedObject.swift in Sources */,
