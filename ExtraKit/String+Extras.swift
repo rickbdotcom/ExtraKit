@@ -18,3 +18,9 @@ public extension NSMutableAttributedString {
         endEditing()
     }
 }
+
+public extension String {
+	var localized: String {
+		return NSLocalizedString(self, comment: "")
+	}
+}
