@@ -44,6 +44,10 @@ public extension UIViewController {
 
 public extension UIView {
 
+	func typedSuperview<T>() -> T? {
+		return self as? T ?? superview?.typedSuperview()
+	}
+
 	func typedParentViewController<T>() -> T? {
 		return self as? T ?? parentViewController?.typedParentViewController()
 	}
@@ -58,4 +62,21 @@ public extension UIView {
         }
         return nil
     }
+}
+
+public extension UIViewController {
+	@IBAction func previousViewControllerExitSegue(segue: UIStoryboardSegue) {
+	}
+}
+
+public extension UIView {
+	
+	@IBInspectable var borderColor: UIColor? {
+		get {
+			return layer.borderColor != nil ? UIColor(CGColor: layer.borderColor!) : nil
+		}
+		set {
+			layer.borderColor = newValue?.CGColor
+		}
+	}
 }
