@@ -2,7 +2,7 @@ import UIKit
 
 public extension UIControl
 {
-	func addControlEvents(controlEvents: UIControlEvents, block: (UIControl)->Void) -> AnyObject {
+	func addControlEvents(controlEvents: UIControlEvents = .TouchUpInside, block: (UIControl)->Void) -> AnyObject {
 		let actionBlock = ControlActionBlock(block: block)
 		addTarget(actionBlock, action: #selector(ControlActionBlock.execute(_:)), forControlEvents: controlEvents)
 		actionBlocks.addObject(actionBlock)

@@ -65,7 +65,7 @@ public extension UIView {
 }
 
 public extension UIViewController {
-	@IBAction func previousViewControllerExitSegue(segue: UIStoryboardSegue) {
+	@IBAction func previousViewControllerSegue(segue: UIStoryboardSegue) {
 	}
 }
 
@@ -79,4 +79,15 @@ public extension UIView {
 			layer.borderColor = newValue?.CGColor
 		}
 	}
+}
+
+public class StoryboardSegueWithCompletion: UIStoryboardSegue {
+	public var completion: (() -> Void)?
+
+    public override func perform() {
+		CATransaction.begin()
+        super.perform()
+		CATransaction.setCompletionBlock(completion)
+		CATransaction.commit()
+    }
 }
