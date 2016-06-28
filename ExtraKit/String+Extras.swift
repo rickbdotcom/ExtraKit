@@ -20,7 +20,12 @@ public extension NSMutableAttributedString {
 }
 
 public extension String {
+	
 	var localized: String {
 		return NSLocalizedString(self, comment: "")
+	}
+	
+	func localizedFormat(args: [CVarArgType]) -> String {
+		return String(format: self.localized, locale: NSLocale.currentLocale(), arguments: args)
 	}
 }

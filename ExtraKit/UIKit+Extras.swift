@@ -26,7 +26,7 @@ public extension UIViewController {
 
 public class SegueAction {
 	var block: (segue: UIStoryboardSegue)->Void
-	init(_ block: (segue: UIStoryboardSegue)->Void) {
+	public init(_ block: (segue: UIStoryboardSegue)->Void) {
 		self.block = block
 	}
 }

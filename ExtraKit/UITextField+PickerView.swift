@@ -1,4 +1,4 @@
-import UIKit
+ import UIKit
 
 public class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate
 {
@@ -9,11 +9,11 @@ public class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerView
 	var selectedValues: [String?]
 	{
 		return (0..<components.count).map {
-			selectedValueInComponent($0)
+			selectedValue($0)
 		}
 	}
 	
-	public func selectedValueInComponent(component: Int) -> String?
+	public func selectedValue(component: Int = 0) -> String?
 	{
 		let selectedRow = selectedRowInComponent(component)
 		if selectedRow < 0 { return nil }
@@ -59,5 +59,17 @@ public extension UITextField
 		inputView = pickerView
 		
 		return pickerView
+	}
+	
+	func selectRow(row: Int, component: Int = 0, animated: Bool = false) {
+		pickerView?.selectRow(row, inComponent: component, animated: true)
+		text = pickerView?.components[component][row]
+	}
+	
+	func selectValue(value: String, component: Int = 0, animated: Bool = false) {
+		if let index = pickerView?.components[component].indexOf(value) {
+			pickerView?.selectRow(index, inComponent: component, animated: animated)
+		}
+		text = value
 	}
 }
