@@ -21,18 +21,33 @@ public extension UIImage
 		return associatedValueForKey("UIImage.imageWithColor")
 	}
 	
-	class func circle(radius r: CGFloat, color: UIColor) -> UIImage
+	class func draw(size: CGSize, draw: (context: CGContext, bounds: CGRect)->Void) -> UIImage?
 	{
-        let rect = CGRectMake(0.0, 0.0, r, r)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-
-        color.set()
-        CGContextFillEllipseInRect(context, rect)
-
+        UIGraphicsBeginImageContext(size)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+		
+		draw(context: context, bounds: CGRectMake(0.0, 0.0, size.width, size.height))
+		
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
 		return image
+	}
+	
+	class func filledCircle(radius r: CGFloat, color: UIColor) -> UIImage?
+	{
+		return draw(CGSizeMake(r,r)) { context, bounds in
+			color.set()
+			CGContextFillEllipseInRect(context, bounds)
+		}
+	}
+
+	class func strokeCircle(radius r: CGFloat, width w: CGFloat, color: UIColor) -> UIImage?
+	{
+		return draw(CGSizeMake(r,r)) { context, bounds in
+			color.set()
+			CGContextSetLineWidth(context, w)
+			CGContextStrokeEllipseInRect(context, bounds)
+		}
 	}
 }
