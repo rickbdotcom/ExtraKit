@@ -42,3 +42,8 @@ public class WrapAny<T>: NSObject {
 		self.value = value
 	}
 }
+
+public func clamp<T: Comparable>(value: T, min mn: T, max mx: T) -> T
+{
+	return min(max(value,mn),mx)
+}
