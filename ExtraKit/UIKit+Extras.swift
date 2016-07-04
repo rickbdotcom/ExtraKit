@@ -17,22 +17,6 @@ public extension UIView {
 
 public extension UIViewController {
 
-	func prepareForSegue(segue: UIStoryboardSegue, action: AnyObject?) -> Bool {
-		guard let action = action as? SegueAction  else { return false }
-		action.block(segue: segue)
-		return true
-	}
-}
-
-public class SegueAction {
-	var block: (segue: UIStoryboardSegue)->Void
-	public init(_ block: (segue: UIStoryboardSegue)->Void) {
-		self.block = block
-	}
-}
-
-public extension UIViewController {
-
 	func typedParentViewController<T>() -> T? {
 		return self as? T ?? parentViewController?.typedParentViewController()
 	}
@@ -64,11 +48,6 @@ public extension UIView {
     }
 }
 
-public extension UIViewController {
-	@IBAction func previousViewControllerSegue(segue: UIStoryboardSegue) {
-	}
-}
-
 public extension UIView {
 	
 	@IBInspectable var borderColor: UIColor? {
@@ -81,13 +60,50 @@ public extension UIView {
 	}
 }
 
-public class StoryboardSegueWithCompletion: UIStoryboardSegue {
-	public var completion: (() -> Void)?
+public extension UIViewController {
+	
+	public func showOKAlert(title: String, message: String)
+	{
+		let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+		alert.addAction(UIAlertAction(title: "OK".localized, style: .Default, handler: nil))
+		presentViewController(alert, animated: true, completion: nil)
+	}
+}
 
-    public override func perform() {
-		CATransaction.begin()
-        super.perform()
-		CATransaction.setCompletionBlock(completion)
-		CATransaction.commit()
+public func showOKAlert(title: String, message: String)
+{
+	visibleViewController()?.showOKAlert(title, message: message)
+}
+
+public func visibleViewController() -> UIViewController? {
+	return UIApplication.sharedApplication().delegate?.window??.visibleViewController
+}
+
+public extension UIWindow {
+    public var visibleViewController: UIViewController? {
+        return UIWindow.getVisibleViewControllerFrom(self.rootViewController)
     }
+
+    public static func getVisibleViewControllerFrom(vc: UIViewController?) -> UIViewController? {
+        if let nc = vc as? UINavigationController {
+            return UIWindow.getVisibleViewControllerFrom(nc.visibleViewController)
+        } else if let tc = vc as? UITabBarController {
+            return UIWindow.getVisibleViewControllerFrom(tc.selectedViewController)
+        } else {
+            if let pvc = vc?.presentedViewController {
+                return UIWindow.getVisibleViewControllerFrom(pvc)
+            } else {
+                return vc
+            }
+        }
+    }
+}
+
+public extension UINavigationBar
+{
+	public func makeTransparent(transparent: Bool)
+	{
+		setBackgroundImage(transparent ? UIImage() : nil, forBarMetrics: UIBarMetrics.Default)
+		shadowImage = transparent ? UIImage() : nil
+	}
 }

@@ -20,7 +20,7 @@ class KeyboardNotificationObserver: NSObject
 		self.scrollView = scrollView
 
 		startObserving(UIKeyboardWillShowNotification) { [weak self] note in
-			if let scrollView = self?.scrollView, keyboardFrame = note.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
+			if let scrollView = self?.scrollView, keyboardFrame = note.keyboardFrameEnd {
 				self?.contentInset = scrollView.contentInset
 				scrollView.contentInset.bottom = keyboardFrame.size.height
 			}
@@ -32,4 +32,16 @@ class KeyboardNotificationObserver: NSObject
 			}
 		}
 	}
+}
+
+extension NSNotification
+{
+	var keyboardFrameEnd: CGRect?
+	{
+        if let info = self.userInfo, value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            return value.CGRectValue()
+        } else {
+            return nil
+        }
+    }
 }

@@ -25,10 +25,15 @@ public extension Array {
 		}
 		return nil
 	}
+
+	func truncate(count: Int) -> Array
+	{
+		return Array(self[0..<min(self.count,count)])
+	}
 }
 
 public extension NSObjectProtocol {
-	func configure(block: (Self)->Void) -> Self {
+	func configure(@noescape block: (Self)->Void) -> Self {
 		block(self)
 		return self
 	}

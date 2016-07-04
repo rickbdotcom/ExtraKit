@@ -1,0 +1,48 @@
+import UIKit
+
+class RootNavigationControllerSegue: UIStoryboardSegue {
+	override func perform() {
+		sourceViewController.navigationController?.viewControllers = [destinationViewController]
+	}
+}
+
+class ModalWithNavigationControllerSegue: UIStoryboardSegue {
+	override func perform() {
+		sourceViewController.presentViewController(UINavigationController(rootViewController: destinationViewController), animated: true, completion: nil)
+	}
+}
+
+class PushReplaceSegue : UIStoryboardSegue {
+	override func perform() {
+		if let nvc = sourceViewController.navigationController {
+			let n = nvc.viewControllers.count-1
+			CATransaction.begin()
+			nvc.pushViewController(destinationViewController, animated: true)
+			CATransaction.setCompletionBlock {
+				nvc.viewControllers.removeAtIndex(n)
+			}
+			CATransaction.commit()
+		}
+	}
+}
+
+public extension UIViewController {
+
+	func prepareForSegue(segue: UIStoryboardSegue, action: AnyObject?) -> Bool {
+		guard let action = action as? SegueAction  else { return false }
+		action.block(segue: segue)
+		return true
+	}
+}
+
+public class SegueAction {
+	var block: (segue: UIStoryboardSegue)->Void
+	public init(_ block: (segue: UIStoryboardSegue)->Void) {
+		self.block = block
+	}
+}
+
+public extension UIViewController {
+	@IBAction func previousViewControllerSegue(segue: UIStoryboardSegue) {
+	}
+}
