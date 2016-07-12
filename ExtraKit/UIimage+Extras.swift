@@ -45,4 +45,21 @@ public extension UIImage
 			CGContextStrokeEllipseInRect(context, bounds.insetBy(dx: w/2.0, dy: w/2.0))
 		}
 	}
+	
+	class func filledRect(size s: CGSize, color: UIColor, scale: CGFloat = UIScreen.mainScreen().scale) -> UIImage
+	{
+		return draw(s) { context, bounds in
+			color.set()
+			CGContextFillRect(context, bounds)
+		}
+	}
+	
+	class func strokeRect(size s: CGSize, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.mainScreen().scale) -> UIImage
+	{
+		return draw(s) { context, bounds in
+			color.set()
+			CGContextSetLineWidth(context, w)
+			CGContextStrokeRect(context, bounds.insetBy(dx: w/2.0, dy: w/2.0))
+		}	
+	}
 }

@@ -62,17 +62,19 @@ public extension UIView {
 
 public extension UIViewController {
 	
-	public func showOKAlert(title: String, message: String)
+	public func showOKAlert(title: String?, message: String?, completion: (()->Void)? = nil)
 	{
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-		alert.addAction(UIAlertAction(title: "OK".localized, style: .Default, handler: nil))
+		alert.addAction(UIAlertAction(title: "OK".localized, style: .Default) { _ in
+			completion?()
+		})
 		presentViewController(alert, animated: true, completion: nil)
 	}
 }
 
-public func showOKAlert(title: String, message: String)
+public func showOKAlert(title: String?, message: String?, completion: (()->Void)? = nil)
 {
-	visibleViewController()?.showOKAlert(title, message: message)
+	visibleViewController()?.showOKAlert(title, message: message, completion: completion)
 }
 
 public func visibleViewController() -> UIViewController? {

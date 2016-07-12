@@ -41,6 +41,7 @@
 		0D9ED8011D0501D900FFA284 /* UIKit+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extras.swift"; sourceTree = "<group>"; };
 		0DABFE6D1CC48F9B00C9A44A /* UITextField+DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+DatePicker.swift"; sourceTree = "<group>"; };
 		0DABFE6F1CC4958B00C9A44A /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
+		0DCC98811D34781B0022FB0D /* genswiftimages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftimages.swift; sourceTree = "<group>"; };
 		0DCEB27D1CD273C100B4ABDF /* genswiftstrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftstrings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +75,7 @@
 		0D9C64671CC4575400B7AA5C /* ExtraKit */ = {
 			isa = PBXGroup;
 			children = (
+				0DCC98811D34781B0022FB0D /* genswiftimages.swift */,
 				0D0F10C01D298FC500C91AE9 /* genswiftstoryboards.swift */,
 				0DCEB27D1CD273C100B4ABDF /* genswiftstrings.swift */,
 				0D7BA0391CD55AA10037DD1B /* UIControl+Blocks.swift */,

@@ -59,7 +59,7 @@ func generateStoryboardIdentifierSourceFile(path: String) {
 	if segues.isEmpty == false {
 		outputString.addLine()
 		segues.forEach { sb in
-			outputString.addLine("enum \(sb.storyboardIdentifier)Segue: String, StoryboardSceneSegue {", tabs: 1)
+			outputString.addLine("enum \(sb.storyboardIdentifier)Segues: String, StoryboardSceneSegue {", tabs: 1)
 			sb.segues.forEach {
 				outputString.addLine("case \($0)", tabs:2)
 			}
