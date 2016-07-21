@@ -32,12 +32,36 @@ public extension Array {
 	}
 }
 
+public protocol Configure {
+}
+
+public extension Configure where Self: Any {
+    public func then(@noescape block: inout Self -> Void) -> Self {
+        var copy = self
+        block(&copy)
+        return copy
+    }
+}
+
+public extension Configure where Self: AnyObject {
+    public func then(@noescape block: Self -> Void) -> Self {
+        block(self)
+        return self
+    }
+}
+
 public extension NSObjectProtocol {
 	func configure(@noescape block: (Self)->Void) -> Self {
 		block(self)
 		return self
 	}
 }
+
+public func configure<V>(inout object:V, @noescape block:(V) -> Void) -> V {
+	block(object)
+    return object
+}
+
 
 public class WrapAny<T>: NSObject {
 	public var value: T!

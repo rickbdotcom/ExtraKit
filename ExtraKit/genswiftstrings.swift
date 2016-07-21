@@ -14,7 +14,6 @@ func generateStringsSourceFile(stringsPath: String) {
 	stringsDict.allKeys.forEach {
 		outputString += "\tcase \($0)\n"
 	}
-	outputString += "\n\tvar localized: String {\n\t\treturn rawValue.localized\n\t}\n"
 	outputString += "}\n"
 }
 
@@ -26,7 +25,6 @@ func generateFormatStringsSourceFile(stringsDictPath: String) {
 	stringsDict.allKeys.forEach {
 		outputString += "\tcase \($0)\n"
 	}
-	outputString += "\n\tfunc localized(args: CVarArgType...) -> String{\n\t\treturn rawValue.localizedFormat(args)\n\t}\n"
 	outputString += "}\n"
 }
 

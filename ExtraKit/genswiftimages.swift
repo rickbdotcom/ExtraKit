@@ -20,11 +20,11 @@ outputString.addLine("enum Images: String {")
 
 Process.arguments[2..<Process.arguments.count].forEach {
 	let url = NSURL(fileURLWithPath: $0)
-	outputString.addLine("case \(url.URLByDeletingPathExtension!.lastPathComponent!)", tabs:1)
+	outputString.addLine("case \(url.URLByDeletingPathExtension!.lastPathComponent!.stringByReplacingOccurrencesOfString("-", withString:"__"))", tabs:1)
 }
 outputString.addLine("")
 outputString.addLine("var image: UIImage? {", tabs: 1)
-outputString.addLine("return UIImage(named: rawValue)", tabs: 2)
+outputString.addLine("return UIImage(named: rawValue.stringByReplacingOccurrencesOfString(\"__\", withString:\"-\"))", tabs: 2)
 outputString.addLine("}", tabs: 1)
 outputString.addLine("}")
 

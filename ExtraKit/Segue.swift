@@ -26,11 +26,11 @@ class PushReplaceSegue : UIStoryboardSegue {
 	}
 }
 
-public extension UIViewController {
+public extension UIStoryboardSegue {
 
-	func prepareForSegue(segue: UIStoryboardSegue, action: AnyObject?) -> Bool {
+	func performAction(action: AnyObject?) -> Bool {
 		guard let action = action as? SegueAction  else { return false }
-		action.block(segue: segue)
+		action.block(segue: self)
 		return true
 	}
 }

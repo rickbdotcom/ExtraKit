@@ -29,3 +29,13 @@ public extension String {
 		return String(format: self.localized, locale: NSLocale.currentLocale(), arguments: args)
 	}
 }
+
+public extension RawRepresentable where RawValue==String{
+	var localized: RawValue {
+		return rawValue.localized
+	}
+
+	func localized(args: CVarArgType...) -> RawValue {
+		return rawValue.localizedFormat(args)
+	}
+}
