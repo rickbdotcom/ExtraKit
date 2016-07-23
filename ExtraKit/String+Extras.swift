@@ -39,3 +39,12 @@ public extension RawRepresentable where RawValue==String{
 		return rawValue.localizedFormat(args)
 	}
 }
+
+public protocol OptionalString { }
+extension String: OptionalString { }
+
+public extension Optional where Wrapped: OptionalString {
+    var isEmptyOrNil: Bool {
+        return ((self as? String) ?? "").isEmpty
+    }
+}

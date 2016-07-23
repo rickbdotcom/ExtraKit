@@ -32,19 +32,19 @@ public extension Array {
 	}
 }
 
-public protocol Configure {
+public protocol Configurable {
 }
 
-public extension Configure where Self: Any {
-    public func then(@noescape block: inout Self -> Void) -> Self {
+public extension Configurable where Self: Any {
+    public func configure(@noescape block: inout Self -> Void) -> Self {
         var copy = self
         block(&copy)
         return copy
     }
 }
 
-public extension Configure where Self: AnyObject {
-    public func then(@noescape block: Self -> Void) -> Self {
+public extension Configurable where Self: AnyObject {
+    public func configure(@noescape block: Self -> Void) -> Self {
         block(self)
         return self
     }
