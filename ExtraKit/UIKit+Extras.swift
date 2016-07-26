@@ -60,21 +60,30 @@ public extension UIView {
 	}
 }
 
-public extension UIViewController {
-	
-	public func showOKAlert(title: String?, message: String?, completion: (()->Void)? = nil)
-	{
-		let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-		alert.addAction(UIAlertAction(title: "OK".localized, style: .Default) { _ in
-			completion?()
-		})
-		presentViewController(alert, animated: true, completion: nil)
-	}
-}
+public extension UIAlertController {
 
-public func showOKAlert(title: String?, message: String?, completion: (()->Void)? = nil)
-{
-	visibleViewController()?.showOKAlert(title, message: message, completion: completion)
+	public static func alert(title title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .Alert) -> UIAlertController {
+		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+	}
+	
+	public func ok(style: UIAlertActionStyle = .Default, action inAction: (()->Void)? = nil) -> UIAlertController {
+		return action(title: "OK".localized, style: style, action: inAction)
+	}
+
+	public func cancel(style: UIAlertActionStyle = .Cancel, inAction: (()->Void)? = nil) -> UIAlertController {
+		return action(title: "Cancel".localized, style: style, action: inAction)
+	}
+	
+	public func action(title title: String?, style: UIAlertActionStyle = .Default, action: (()->Void)? = nil) -> UIAlertController {
+		addAction(UIAlertAction(title: title, style: style) { _ in
+			action?()
+		})
+		return self
+	}
+	
+	public func show(viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) {
+		(viewController ?? visibleViewController())?.presentViewController(self, animated: animated, completion: completion)
+	}
 }
 
 public func visibleViewController() -> UIViewController? {
