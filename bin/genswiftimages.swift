@@ -28,5 +28,4 @@ outputString.addLine("return UIImage(named: rawValue.stringByReplacingOccurrence
 outputString.addLine("}", tabs: 1)
 outputString.addLine("}")
 
-print(outputString)
 try! outputString.writeToFile(outputPath, atomically: true, encoding: NSUTF8StringEncoding)
