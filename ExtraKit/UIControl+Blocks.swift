@@ -4,9 +4,19 @@ private let associatedValueKey = "com.rickb.extrakit.UIControl.actionBlocks"
 
 public extension UIControl
 {
-	func addControlEvents(controlEvents: UIControlEvents = .TouchUpInside, block: (UIControl)->Void) -> AnyObject {
+
+	func addControlEvents<T:UIControl>(controlEvents: UIControlEvents = .TouchUpInside, block: (T)->Void) -> AnyObject? {
+		guard self is T else { return nil }
+		
 		let actionBlock = ControlActionBlock(block: block)
 		addTarget(actionBlock, action: #selector(ControlActionBlock.execute(_:)), forControlEvents: controlEvents)
+		actionBlocks.addObject(actionBlock)
+		return actionBlock
+	}
+
+	func addControlEvents(controlEvents: UIControlEvents = .TouchUpInside, block: ()->Void) -> AnyObject? {
+		let actionBlock = VoidControlActionBlock(block: block)
+		addTarget(actionBlock, action: #selector(VoidControlActionBlock.execute), forControlEvents: controlEvents)
 		actionBlocks.addObject(actionBlock)
 		return actionBlock
 	}
@@ -21,15 +31,29 @@ public extension UIControl
 	}
 }
 
-public class ControlActionBlock: NSObject
-{
-	var block: (UIControl)->Void
+public class VoidControlActionBlock: NSObject {
 	
-	init(block: (UIControl)->Void) {
+	var block: ()->Void
+	
+	init(block: ()->Void) {
+		self.block = block
+	}
+	
+	func execute() {
+		block()
+	}
+}
+public class ControlActionBlock<T:UIControl>: NSObject {
+	
+	var block: (T)->Void
+	
+	init(block: (T)->Void) {
 		self.block = block
 	}
 	
 	func execute(control: UIControl) {
-		block(control)
+		if let control = control as? T {
+			block(control)
+		}
 	}
 }
