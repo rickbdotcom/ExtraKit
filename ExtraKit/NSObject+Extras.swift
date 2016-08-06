@@ -47,6 +47,8 @@ public class WeakObjectRef: NSObject
 	}
 }
 
+private let associatedValueKey = "com.rickb.extrakit.Observing"
+
 public extension NSObject
 {
 	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
@@ -57,6 +59,6 @@ public extension NSObject
 	
 	func stopObserving(name: String, object: AnyObject? = nil)
 	{
-		setAssociatedValue(nil, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
+		setAssociatedValue(nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 }

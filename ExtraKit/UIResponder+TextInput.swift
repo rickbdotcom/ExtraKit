@@ -1,14 +1,17 @@
 import ObjectiveC
 import UIKit
 
+private let prevAssociatedValueKey = "com.rickb.extrakit.UIResponder.previousTextInputResponder"
+private let nextAssociatedValueKey = "com.rickb.extrakit.UIResponder.nextTextInputResponder"
+
 public extension UIResponder
 {
 	@IBOutlet weak var nextTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValueForKey("UIResponder.nextTextInputResponder")
+			return weakAssociatedValueForKey(nextAssociatedValueKey)
 		}
 		set {
-			setWeakAssociatedValue(newValue, forKey: "UIResponder.nextTextInputResponder")
+			setWeakAssociatedValue(newValue, forKey: nextAssociatedValueKey)
 
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
@@ -20,10 +23,10 @@ public extension UIResponder
 	
 	@IBOutlet weak var previousTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValueForKey("UIResponder.previousTextInputResponder")
+			return weakAssociatedValueForKey(prevAssociatedValueKey)
 		}
 		set {
-			setWeakAssociatedValue(newValue, forKey: "UIResponder.previousTextInputResponder")
+			setWeakAssociatedValue(newValue, forKey: prevAssociatedValueKey)
 
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self
@@ -53,7 +56,7 @@ public extension UIResponder
 	{
 		guard let tf = self as? UITextInputTraits where previousNextDoneInputAccessory == nil else { return }
 
-		let segmentControl = UISegmentedControl(items: ["Prev","Next"])
+		let segmentControl = UISegmentedControl(items: ["Prev".localized,"Next".localized])
 		segmentControl.sizeToFit()
 		segmentControl.momentary = true
 		segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), forControlEvents: .ValueChanged)

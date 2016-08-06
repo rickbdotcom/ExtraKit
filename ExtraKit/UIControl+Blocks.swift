@@ -1,5 +1,7 @@
 import UIKit
 
+private let associatedValueKey = "com.rickb.extrakit.UIControl.actionBlocks"
+
 public extension UIControl
 {
 	func addControlEvents(controlEvents: UIControlEvents = .TouchUpInside, block: (UIControl)->Void) -> AnyObject {
@@ -10,11 +12,11 @@ public extension UIControl
 	}
 	
 	var actionBlocks: NSMutableSet {
-		if let set: NSMutableSet = associatedValueForKey("UIControl.actionBlocks") {
+		if let set: NSMutableSet = associatedValueForKey(associatedValueKey) {
 			return set
 		}
 		let set = NSMutableSet()
-		setAssociatedValue(set, forKey: "UIControl.actionBlocks")
+		setAssociatedValue(set, forKey: associatedValueKey)
 		return set
 	}
 }

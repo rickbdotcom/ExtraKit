@@ -1,10 +1,12 @@
 import UIKit
 
+private let associatedValueKey = "com.rickb.extrakit.UIScrollView.enableTextReveal"
+
 public extension UIScrollView
 {
 	func adjustContentInsetForKeyboardFrame()
 	{
-		setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: "UIScrollView.enableTextReveal")
+		setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: associatedValueKey)
 	}
 }
 
@@ -22,6 +24,12 @@ class KeyboardNotificationObserver: NSObject
 		startObserving(UIKeyboardWillShowNotification) { [weak self] note in
 			if let scrollView = self?.scrollView, keyboardFrame = note.keyboardFrameEnd {
 				self?.contentInset = scrollView.contentInset
+				scrollView.contentInset.bottom = keyboardFrame.size.height
+			}
+		}
+
+		startObserving(UIKeyboardWillChangeFrameNotification) { [weak self] note in
+			if let scrollView = self?.scrollView, keyboardFrame = note.keyboardFrameEnd {
 				scrollView.contentInset.bottom = keyboardFrame.size.height
 			}
 		}

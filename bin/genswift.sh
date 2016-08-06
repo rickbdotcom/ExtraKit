@@ -26,5 +26,5 @@ if [ -n "$STORYBOARDS_SRC" ]; then
 fi
 
 if [ -n "$IMAGES_SRC" ]; then
-	find "$IMAGES_SRC" -name "*.imageset" -print0 | xargs -0 "$DIR/genswiftimages.swift" "$IMAGES_SRC"
+	find "$IMAGESET" -name "*.imageset" -print0 | xargs -0 "$DIR/genswiftimages.swift" "$IMAGES_SRC"
 fi
