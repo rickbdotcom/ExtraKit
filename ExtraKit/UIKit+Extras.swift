@@ -118,3 +118,33 @@ public extension UINavigationBar
 		shadowImage = transparent ? UIImage() : nil
 	}
 }
+
+public extension NSNotification
+{
+	public var keyboardFrameEnd: CGRect?
+	{
+        if let info = self.userInfo, value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            return value.CGRectValue()
+        } else {
+            return nil
+        }
+    }
+}
+
+public extension UIView {
+
+	public func findFirstResponder() -> UIView? {
+
+		if isFirstResponder() {
+			return self
+		}
+		
+		for subview in subviews {
+			if let responder = subview.findFirstResponder() {
+				return responder
+			}
+		}
+
+		return nil
+	}
+}
