@@ -15,10 +15,6 @@ public extension StoryboardScene {
 	public func instantiateViewController(bundle: NSBundle? = nil) -> UIViewController {
 		return storyboard(bundle).instantiateViewControllerWithIdentifier(storyboardID)
 	}
-	
-	public func instantiateTypedViewController<T>(bundle: NSBundle? = nil) -> T? {
-		return instantiateViewController(bundle) as? T
-	}
 }
 
 public protocol StoryboardSceneSegue {
