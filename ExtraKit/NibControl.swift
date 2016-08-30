@@ -4,49 +4,52 @@ import UIKit
 
 	@IBInspectable var nibName: String = ""
 
-	var view: UIView? {
+	@IBOutlet var contentView: UIView? {
 		didSet {
 			oldValue?.removeFromSuperview()
-			addNibView(view)
+			addNibView(contentView)
 		}
 	}
-	
+		
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 
-	public init(nibName: String) {
-		let view = UINib(nibName: nibName, bundle: nil).instantiateView()
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+	}
 
-		super.init(frame: view?.bounds ?? CGRectZero)
-		self.nibName = nibName
-		self.view = view
-		addNibView(view)
+	public init(nibName: String) {
+		super.init(frame: CGRectMake(0,0,320,320))
+		if !nibName.isEmpty {
+			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
+		}
 	}
 	
 	public override func awakeFromNib() {
 		super.awakeFromNib()
-		view = UINib(nibName: nibName, bundle: nil).instantiateView()
+		if !nibName.isEmpty {
+			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
+		}
 	}
 	
 	public override func prepareForInterfaceBuilder() {
 		super.prepareForInterfaceBuilder()
-		view = UINib(nibName: nibName, bundle: NSBundle(forClass: self.dynamicType)).instantiateView()
+		if !nibName.isEmpty {
+			UINib(nibName: nibName, bundle: NSBundle(forClass: self.dynamicType)).instantiateWithOwner(self, options: nil)
+		}
 	}
 
 	func addNibView(view: UIView?) {
-		guard let view = view  else { return }
+		guard let view = view  else {
+			return
+		}
 		addSubview(view)
+		view.frame = bounds
 		view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
 		view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
 		view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
 		view.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
-	}
-}
-
-extension UINib {
-	func instantiateView() -> UIView? {
-		return instantiateWithOwner(nil, options: nil).first as? UIView
 	}
 }
 

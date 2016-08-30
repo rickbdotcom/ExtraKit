@@ -26,6 +26,10 @@ extension UIViewController {
 	public func performSegue(segue: StoryboardSceneSegue, sender: AnyObject? = nil) {
 		performSegueWithIdentifier(segue.segueID, sender: sender)
 	}
+
+	public func performSegue(segue: StoryboardSceneSegue, action: (segue: UIStoryboardSegue)->Void) {
+		performSegueWithIdentifier(segue.segueID, sender: SegueAction(action))
+	}
 }
 
 public extension StoryboardScene where Self:RawRepresentable, Self.RawValue == String  {
