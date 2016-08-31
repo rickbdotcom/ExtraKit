@@ -4,12 +4,23 @@ import Foundation
 
 let outputPath = Process.arguments[1]
 
+var tabs = 0
+
 extension String {
-	mutating func addLine(line: String = "", tabs: Int = 0) {
+	mutating func addLine(line: String = "") {
+		
+		if line.characters.last == "}" {
+			tabs -= 1
+		}
 		if tabs > 0 {
 			self += String(count: tabs, repeatedValue: Character("\t"))
 		}
+
 		self += "\(line)\n"
+
+		if line.characters.last == "{" {
+			tabs += 1
+		}
 	}
 }
 
@@ -47,38 +58,63 @@ func generateStoryboardIdentifierSourceFile(path: String) {
 	
 	let fileName = url.URLByDeletingPathExtension!.lastPathComponent!
 	
-	outputString.addLine("enum \(fileName)Storyboard: String, StoryboardScene {")
-	
+	outputString.addLine("struct \(fileName) {")
 	outputString.addLine()
 	
 	ids.forEach {
-		outputString.addLine("case \($0.storyboardIdentifier)", tabs: 1)
-	}
-	
-	let segues = ids.filter { !$0.segues.isEmpty }
-	if segues.isEmpty == false {
-		outputString.addLine()
-		segues.forEach { sb in
-			outputString.addLine("enum \(sb.storyboardIdentifier)Segues: String, StoryboardSceneSegue {", tabs: 1)
-			sb.segues.forEach {
-				outputString.addLine("case \($0)", tabs:2)
+		outputString.addLine("struct \($0.storyboardIdentifier): StoryboardScene {")
+
+		if !$0.segues.isEmpty {
+			outputString.addLine("enum Segues: String, StoryboardSceneSegue {")
+			$0.segues.forEach { segue in
+				outputString.addLine("case \(segue)")
 			}
-			outputString.addLine("}", tabs: 1)
+			outputString.addLine("}")
 		}
+		outputString.addLine("let identifier = (\"\($0.storyboardIdentifier)\", \"\(fileName)\")")
+		outputString.addLine("}")
 	}
-	outputString.addLine()
-	
-	outputString.addLine("var storyboardName: String {", tabs: 1)
-	outputString.addLine(" return \"\(fileName)\"", tabs: 2)
-	outputString.addLine("}", tabs: 1)
 
 	outputString.addLine("}")
 	outputString.addLine()
 }
-
+outputString.addLine("struct Storyboards {")
+outputString.addLine("")
 Process.arguments[2..<Process.arguments.count].forEach {
 	generateStoryboardIdentifierSourceFile($0)
 }
-
+outputString.addLine("}")
 
 try! outputString.writeToFile(outputPath, atomically: true, encoding: NSUTF8StringEncoding)
+
+
+/*
+	enum LoginSegues: String, StoryboardSceneSegue {
+		case Register
+		case LoggedIn
+	}
+
+
+struct Storyboards {
+	struct Login {
+
+		struct Welcome: StoryboardScene {
+			let storyboardName = "Login"
+			let storyboardID = "Welcome"
+
+			enum Segues: String, StoryboardSceneSegue {
+				case Register
+			}
+		}
+
+		struct Login: StoryboardScene {
+			var storyboardName = "Login"
+			var storyboardID = "Login"
+
+			enum Segues: String, StoryboardSceneSegue {
+				case LoggedIn
+			}
+		}
+	}
+}
+*/

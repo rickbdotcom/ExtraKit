@@ -2,18 +2,17 @@ import UIKit
 
 public protocol StoryboardScene {
 
-	var storyboardName: String { get }
-	var storyboardID: String { get }
+	var identifier: (String, String) { get }
 }
 
 public extension StoryboardScene {
 	
 	public func storyboard(bundle: NSBundle? = nil) -> UIStoryboard {
-		return UIStoryboard(name: storyboardName, bundle: bundle)
+		return UIStoryboard(name: identifier.1, bundle: bundle)
 	}
 	
 	public func instantiateViewController(bundle: NSBundle? = nil) -> UIViewController {
-		return storyboard(bundle).instantiateViewControllerWithIdentifier(storyboardID)
+		return storyboard(bundle).instantiateViewControllerWithIdentifier(identifier.0)
 	}
 }
 
