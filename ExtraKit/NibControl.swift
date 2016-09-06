@@ -10,7 +10,9 @@ import UIKit
 			addNibView(contentView)
 		}
 	}
-		
+	
+	private var resizeToNib = false
+	
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
@@ -21,7 +23,9 @@ import UIKit
 
 	public init(nibName: String) {
 		super.init(frame: CGRectMake(0,0,320,320))
+
 		if !nibName.isEmpty {
+			resizeToNib = true
 			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
 		}
 	}
@@ -45,7 +49,11 @@ import UIKit
 			return
 		}
 		addSubview(view)
-		view.frame = bounds
+		if resizeToNib {
+			bounds = view.frame
+		} else {
+			view.frame = bounds
+		}
 		view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
 		view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
 		view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
