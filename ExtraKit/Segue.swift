@@ -43,6 +43,18 @@ public class SegueAction {
 }
 
 public extension UIViewController {
+	
+	class func swizzlePrepareForSegueAction() {
+		swizzle(#selector(prepareForSegue(_:sender:)), newSelector: #selector(prepareForSegueAction(_:sender:)))
+	}
+	
+	func prepareForSegueAction(segue: UIStoryboardSegue, sender: AnyObject?) {
+		prepareForSegueAction(segue, sender: sender)
+		segue.performAction(sender)
+	}
+}
+
+public extension UIViewController {
 	@IBAction func previousViewControllerSegue(segue: UIStoryboardSegue) {
 	}
 }

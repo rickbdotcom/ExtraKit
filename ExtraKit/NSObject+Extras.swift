@@ -51,14 +51,29 @@ private let associatedValueKey = "com.rickb.extrakit.Observing"
 
 public extension NSObject
 {
-	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void)
-	{
+	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void) {
 		setAssociatedValue(NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
 		, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
 	}
 	
-	func stopObserving(name: String, object: AnyObject? = nil)
-	{
+	func stopObserving(name: String, object: AnyObject? = nil) {
 		setAssociatedValue(nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
+	}
+}
+
+
+public extension NSObject {
+
+	class func swizzle(originalSelector: Selector, newSelector: Selector) {
+		
+		let originalMethod = class_getInstanceMethod(self, originalSelector)
+		let newMethod = class_getInstanceMethod(self, newSelector)
+		
+		let methodAdded = class_addMethod(self, originalSelector, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))
+		if methodAdded {
+			class_replaceMethod(self, newSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
+		} else {
+			method_exchangeImplementations(originalMethod, newMethod)
+		}
 	}
 }
