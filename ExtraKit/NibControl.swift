@@ -21,11 +21,11 @@ import UIKit
 		super.init(frame: frame)
 	}
 
-	public init(nibName: String) {
+	public init(nibName: String, resizeToNib: Bool = true) {
 		super.init(frame: CGRectMake(0,0,320,320))
-
+		self.resizeToNib = resizeToNib
+		
 		if !nibName.isEmpty {
-			resizeToNib = true
 			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
 		}
 	}
@@ -48,11 +48,11 @@ import UIKit
 		guard let view = view  else {
 			return
 		}
+		view.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(view)
+		
 		if resizeToNib {
 			bounds = view.frame
-		} else {
-			view.frame = bounds
 		}
 		view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
 		view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
@@ -62,14 +62,24 @@ import UIKit
 }
 
 public extension UIBarButtonItem {
-
-	public var control: UIControl? {
+	
+	var control: UIControl? {
 		return customView as? UIControl
 	}
+	
+	convenience init(nibName: String) {
+		self.init(customView: NibControl(nibName: nibName))
+		width = customView?.bounds.size.width ?? 0
+	}
+}
 
-	public class func nibControl(nibName: String) -> UIBarButtonItem {
-		return UIBarButtonItem(customView: NibControl(nibName: nibName)).configure {
-			$0.width = $0.control?.bounds.size.width ?? 0
+public class NibBarButtonItem: UIBarButtonItem {
+	@IBInspectable var nibName: String = ""
+
+	public override func awakeFromNib() {
+		super.awakeFromNib()
+		if !nibName.isEmpty {
+			customView = NibControl(nibName: nibName)
 		}
 	}
 }
