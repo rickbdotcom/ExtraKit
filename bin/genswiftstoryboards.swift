@@ -35,7 +35,12 @@ func generateStoryboardIdentifierSourceFile(path: String) {
 	
 	let url = NSURL(fileURLWithPath: path)
 	let doc = try! NSXMLDocument(contentsOfURL: url, options: 0)
-	let vcs = try! doc.nodesForXPath("//viewController") as! [NSXMLElement]
+	guard var vcs = try? doc.nodesForXPath("//viewController") as? [NSXMLElement] ?? [NSXMLElement]() else {
+		return
+	}
+	if let tvcs = try? doc.nodesForXPath("//tableViewController") as? [NSXMLElement] ?? [NSXMLElement]() {
+		vcs.appendContentsOf(tvcs)
+	}
 	
 	let ids: [(storyboardIdentifier: String, id: String, segues: [String])]! = vcs.flatMap { vc in
 		if let storyboardIdentifier = vc.attributeForName("storyboardIdentifier")?.stringValue
@@ -86,35 +91,3 @@ Process.arguments[2..<Process.arguments.count].forEach {
 outputString.addLine("}")
 
 try! outputString.writeToFile(outputPath, atomically: true, encoding: NSUTF8StringEncoding)
-
-
-/*
-	enum LoginSegues: String, StoryboardSceneSegue {
-		case Register
-		case LoggedIn
-	}
-
-
-struct Storyboards {
-	struct Login {
-
-		struct Welcome: StoryboardScene {
-			let storyboardName = "Login"
-			let storyboardID = "Welcome"
-
-			enum Segues: String, StoryboardSceneSegue {
-				case Register
-			}
-		}
-
-		struct Login: StoryboardScene {
-			var storyboardName = "Login"
-			var storyboardID = "Login"
-
-			enum Segues: String, StoryboardSceneSegue {
-				case LoggedIn
-			}
-		}
-	}
-}
-*/

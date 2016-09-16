@@ -148,3 +148,10 @@ public extension UIView {
 		return nil
 	}
 }
+
+public extension UIView {
+	func add(to view: UIView) -> Self {
+		view.addSubview(self)
+		return self
+	}
+}

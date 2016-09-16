@@ -151,6 +151,7 @@
 				TargetAttributes = {
 					0D9C64641CC4575400B7AA5C = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -313,6 +314,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -331,6 +333,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rickb.extrakit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = "Release-QA";
 		};
@@ -391,6 +394,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rickb.extrakit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = "Release-Perf";
 		};
@@ -451,6 +455,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rickb.extrakit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = "Release-Prod";
 		};
