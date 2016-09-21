@@ -53,7 +53,7 @@ public extension NSObject
 {
 	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void) {
 		setAssociatedValue(NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
-		, forKey: "Observing.\(name).\(object?.hashValue ?? 0)")
+		, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 	
 	func stopObserving(name: String, object: AnyObject? = nil) {
