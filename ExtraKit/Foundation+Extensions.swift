@@ -76,3 +76,12 @@ public func clamp<T: Comparable>(value: T, min mn: T, max mx: T) -> T
 {
 	return min(max(value,mn),mx)
 }
+
+public func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+        dispatch_time(
+            DISPATCH_TIME_NOW,
+            Int64(delay * Double(NSEC_PER_SEC))
+        ),
+        dispatch_get_main_queue(), closure)
+}

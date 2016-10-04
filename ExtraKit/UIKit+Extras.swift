@@ -154,4 +154,27 @@ public extension UIView {
 		view.addSubview(self)
 		return self
 	}
+	
+	func insert(in view: UIView, below: UIView) -> Self {
+		view.insertSubview(self, belowSubview: below)
+		return self
+	}
+
+	func insert(in view: UIView, above: UIView) -> Self {
+		view.insertSubview(self, aboveSubview: above)
+		return self
+	}
+	
+	func insert(in view: UIView, atIndex index: Int) -> Self {
+		view.insertSubview(self, atIndex: index)
+		return self
+	}
+}
+
+public func printFontNames() {
+	UIFont.familyNames().forEach {
+		UIFont.fontNamesForFamilyName($0).forEach {
+			print($0)
+		}
+	}
 }

@@ -15,14 +15,17 @@ import UIKit
 	
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+		translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	public init(nibName: String, resizeToNib: Bool = true) {
 		super.init(frame: CGRectMake(0,0,320,320))
+		translatesAutoresizingMaskIntoConstraints = false
 		self.resizeToNib = resizeToNib
 		
 		if !nibName.isEmpty {
