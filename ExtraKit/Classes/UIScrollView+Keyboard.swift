@@ -3,21 +3,18 @@ import UIKit
 private let observerAssociatedValueKey = "com.rickb.extrakit.UIScrollView.KeyboardNotificationObserver"
 private let revealViewAssociatedValueKey = "com.rickb.extrakit.UIScrollView.viewForKeyboardReveal"
 
-public extension UIScrollView
-{
+public extension UIScrollView {
 	func adjustContentInsetForKeyboardFrame()
 	{
 		setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: observerAssociatedValueKey)
 	}
 }
 
-class KeyboardNotificationObserver: NSObject
-{
+class KeyboardNotificationObserver: NSObject {
 	weak var scrollView: UIScrollView?
 	var contentInset: UIEdgeInsets?
 	
-	init(scrollView: UIScrollView)
-	{
+	init(scrollView: UIScrollView) {
 		super.init()
 
 		self.scrollView = scrollView
@@ -51,7 +48,14 @@ class KeyboardNotificationObserver: NSObject
 				h += dh
 			}
 		}
-		return h // currently only for scrollviews that go all the way to the bottom the screen. TODO take into account scrollview bottom
+		let dh = UIScreen.main.bounds.size.height-scrollView.convert(scrollView.bounds, to: UIScreen.main.coordinateSpace).maxY
+		if dh > 0 {
+			h -= dh
+		}
+		if h < 0 {
+			h = 0
+		}
+		return h
 	}
 }
 

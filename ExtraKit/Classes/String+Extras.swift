@@ -12,6 +12,7 @@ public extension String {
 }
 
 public extension RawRepresentable where RawValue==String{
+
 	var localized: RawValue {
 		return rawValue.localized
 	}
@@ -25,6 +26,7 @@ public protocol OptionalString { }
 extension String: OptionalString { }
 
 public extension Optional where Wrapped: OptionalString {
+
     var isEmptyOrNil: Bool {
         return ((self as? String) ?? "").isEmpty
     }

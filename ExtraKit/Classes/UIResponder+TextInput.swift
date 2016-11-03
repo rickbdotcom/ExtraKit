@@ -4,8 +4,8 @@ import UIKit
 private let prevAssociatedValueKey = "com.rickb.extrakit.UIResponder.previousTextInputResponder"
 private let nextAssociatedValueKey = "com.rickb.extrakit.UIResponder.nextTextInputResponder"
 
-public extension UIResponder
-{
+public extension UIResponder {
+
 	@IBOutlet weak var nextTextInputResponder: UIResponder? {
 		get {
 			return weakAssociatedValueForKey(nextAssociatedValueKey)
@@ -52,8 +52,7 @@ public extension UIResponder
 		}
 	}
 	
-	func createPreviousNextDoneInputAccessory()
-	{
+	func createPreviousNextDoneInputAccessory() {
 		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
 		let segmentControl = UISegmentedControl(items: ["Prev".localized,"Next".localized])
@@ -79,28 +78,23 @@ public extension UIResponder
 		updatePreviousNextSegmentControlState()
 	}
 	
-	func becomePreviousFirstResponder(_ sender: UIResponder) -> Bool
-	{
+	func becomePreviousFirstResponder(_ sender: UIResponder) -> Bool {
 		return becomeFirstResponder()
 	}
 	
-	func becomeNextFirstResponder(_ sender: UIResponder) -> Bool
-	{
+	func becomeNextFirstResponder(_ sender: UIResponder) -> Bool {
 		return becomeFirstResponder()
 	}
 	
-	@discardableResult func becomePreviousInputResponder() -> Bool
-	{
+	@discardableResult func becomePreviousInputResponder() -> Bool {
 		return self.previousTextInputResponder?.becomePreviousFirstResponder(self) ?? false
 	}
 	
-	@discardableResult func becomeNextInputResponder() -> Bool
-	{
+	@discardableResult func becomeNextInputResponder() -> Bool {
 		return self.nextTextInputResponder?.becomeNextFirstResponder(self) ?? false
 	}
 
-	func prevNextResponder(_ sender: UISegmentedControl)
-	{
+	func prevNextResponder(_ sender: UISegmentedControl) {
 		if sender.selectedSegmentIndex == 0 {
 			becomePreviousInputResponder()
 		} else {
@@ -108,8 +102,7 @@ public extension UIResponder
 		}
 	}
 	
-	func updatePreviousNextSegmentControlState()
-	{
+	func updatePreviousNextSegmentControlState() {
 		previousNextSegmentControl?.setEnabled(previousTextInputResponder != nil, forSegmentAt: 0)
 		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil, forSegmentAt: 1)
 	}

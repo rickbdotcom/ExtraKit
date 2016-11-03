@@ -17,17 +17,18 @@ public extension NSObject {
 
 public extension UIControl {
 
-	@discardableResult func addControlEvents<T:UIControl>(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping (T)->Void) -> AnyObject? {
-		guard self is T else { return nil }
-		
-		return ActionBlock(block: block).configure {
+	@discardableResult func add<T:UIControl>(controlEvents: UIControlEvents = .touchUpInside, block: @escaping (T)->Void) -> AnyObject? {
+		guard self is T else {
+			return nil
+		}
+		return ActionBlock(block).configure {
 			addTarget($0, action: #selector(ActionBlock.execute(_:)), for: controlEvents)
 			self.actionBlocks.add($0)
 		}
 	}
 
-	@discardableResult func addControlEvents(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping ()->Void) -> AnyObject? {
-		return VoidActionBlock(block: block).configure {
+	@discardableResult func add(controlEvents: UIControlEvents = .touchUpInside, block: @escaping ()->Void) -> AnyObject? {
+		return VoidActionBlock(block).configure {
 			addTarget($0, action: #selector(VoidActionBlock.execute), for: controlEvents)
 			actionBlocks.add($0)
 		}
@@ -42,7 +43,7 @@ public extension UIGestureRecognizer {
 	}
 	
 	@discardableResult func addAction(_ block: @escaping (UIGestureRecognizer)->Void) -> AnyObject? {
-		return ActionBlock(block: block).configure {
+		return ActionBlock(block).configure {
 			addTarget($0, action: #selector(ActionBlock.execute(_:)))
 			self.actionBlocks.add($0)
 		}
@@ -57,7 +58,7 @@ public extension UIBarButtonItem {
 	}
 	
 	@discardableResult func setBlock(_ block: @escaping (UIBarButtonItem)->Void) -> AnyObject? {
-		return ActionBlock(block: block).configure {
+		return ActionBlock(block).configure {
 			target = $0
 			action = #selector(ActionBlock.execute(_:))
 			self.actionBlocks.removeAllObjects()
@@ -66,11 +67,11 @@ public extension UIBarButtonItem {
 	}
 }
 
-open class VoidActionBlock: NSObject {
+class VoidActionBlock: NSObject {
 	
 	var block: ()->Void
 	
-	init(block: @escaping ()->Void) {
+	init(_ block: @escaping ()->Void) {
 		self.block = block
 	}
 	
@@ -78,11 +79,12 @@ open class VoidActionBlock: NSObject {
 		block()
 	}
 }
-open class ActionBlock<T:NSObject>: NSObject {
+
+class ActionBlock<T:NSObject>: NSObject {
 	
 	var block: (T)->Void
 	
-	init(block: @escaping (T)->Void) {
+	init(_ block: @escaping (T)->Void) {
 		self.block = block
 	}
 	

@@ -2,8 +2,8 @@ import UIKit
 
 private let imageColorAssociatedValueKey = "com.rickb.extrakit.UIImage.imageWithColor"
 
-public extension UIImage
-{
+public extension UIImage {
+
 	var imageColor: UIColor? {
 		get {
 			return associatedValueForKey(imageColorAssociatedValueKey)
@@ -13,8 +13,8 @@ public extension UIImage
 		}
 	}
 
-	class func draw(_ size: CGSize,  scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect)->Void) -> UIImage?
-	{
+	class func draw(size: CGSize,  scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect)->Void) -> UIImage? {
+
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
 		guard let context = UIGraphicsGetCurrentContext() else {
 			return nil
@@ -28,9 +28,9 @@ public extension UIImage
 		return image
 	}
 
-    class func imageWithColor(_ color: UIColor)-> UIImage?
-	{
-		let image = draw(CGSize(width: 1,height: 1), scale:1.0) { context, bounds in
+    class func image(color: UIColor)-> UIImage? {
+
+		let image = draw(size: CGSize(width: 1,height: 1), scale:1.0) { context, bounds in
 			color.set()
 			context.fill(bounds)
 		}
@@ -38,34 +38,34 @@ public extension UIImage
 		return image
     }
 	
-	class func filledCircle(radius r: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage?
-	{
-		return draw(CGSize(width: r,height: r)) { context, bounds in
+	class func filledCircle(radius r: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+
+		return draw(size: CGSize(width: r,height: r)) { context, bounds in
 			color.set()
 			context.fillEllipse(in: bounds)
 		}
 	}
 
-	class func strokeCircle(radius r: CGFloat, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage?
-	{
-		return draw(CGSize(width: r,height: r)) { context, bounds in
+	class func strokeCircle(radius r: CGFloat, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+
+		return draw(size: CGSize(width: r,height: r)) { context, bounds in
 			color.set()
 			context.setLineWidth(w)
 			context.strokeEllipse(in: bounds.insetBy(dx: w/2.0, dy: w/2.0))
 		}
 	}
 	
-	class func filledRect(size s: CGSize, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage?
-	{
-		return draw(s) { context, bounds in
+	class func filledRect(size s: CGSize, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+
+		return draw(size: s) { context, bounds in
 			color.set()
 			context.fill(bounds)
 		}
 	}
 	
-	class func strokeRect(size s: CGSize, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage?
-	{
-		return draw(s) { context, bounds in
+	class func strokeRect(size s: CGSize, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
+
+		return draw(size: s) { context, bounds in
 			color.set()
 			context.setLineWidth(w)
 			context.stroke(bounds.insetBy(dx: w/2.0, dy: w/2.0))

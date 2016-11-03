@@ -22,11 +22,11 @@ public protocol StoryboardSceneSegue {
 
 extension UIViewController {
 
-	public func performSegue(_ segue: StoryboardSceneSegue, sender: AnyObject? = nil) {
+	public func perform(segue: StoryboardSceneSegue, sender: Any? = nil) {
 		self.performSegue(withIdentifier: segue.segueID, sender: sender)
 	}
 
-	public func performSegue(_ segue: StoryboardSceneSegue, action: @escaping (_ segue: UIStoryboardSegue)->Void) {
+	public func perform(segue: StoryboardSceneSegue, action: @escaping (UIStoryboardSegue)->Void) {
 		self.performSegue(withIdentifier: segue.segueID, sender: SegueAction(action))
 	}
 }

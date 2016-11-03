@@ -3,8 +3,8 @@ import ObjectiveC
 
 private var associatedDictionaryKey = 0
 
-public extension NSObject
-{
+public extension NSObject {
+
 	var associatedDictionary: NSMutableDictionary {
 		get {
 			if let dict = objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary {
@@ -16,51 +16,37 @@ public extension NSObject
 		}
 	}
 	
-	func associatedValueForKey<T>(_ key: String) -> T?
-	{
+	func associatedValueForKey<T>(_ key: String) -> T? {
 		return associatedDictionary[key] as? T
 	}
 	
-	func setAssociatedValue(_ value: Any?, forKey key: String)
-	{
+	func setAssociatedValue(_ value: Any?, forKey key: String) {
 		associatedDictionary[key] = value
 	}
 
-	func weakAssociatedValueForKey<T>(_ key: String) -> T?
-	{
+	func weakAssociatedValueForKey<T>(_ key: String) -> T? {
 		return (associatedDictionary[key] as? WeakObjectRef)?.object as? T
 	}
 	
-	func setWeakAssociatedValue(_ value: AnyObject?, forKey key: String)
-	{
-		associatedDictionary[key] = WeakObjectRef(object: value)
+	func setWeakAssociatedValue(_ value: AnyObject?, forKey key: String) {
+		associatedDictionary[key] = WeakObjectRef(value)
 	}
 
-}
-
-open class WeakObjectRef: NSObject
-{
-	weak var object: AnyObject?
-	
-	init(object: AnyObject?) {
-		self.object = object
-	}
 }
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
 
 public extension NSObject
 {
-	func startObserving(_ name: NSNotification.Name, object: AnyObject? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
+	func startObserving(_ name: NSNotification.Name, object: AnyHashable? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
 		setAssociatedValue(NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
 		, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 	
-	func stopObserving(_ name: NSNotification.Name, object: AnyObject? = nil) {
+	func stopObserving(_ name: NSNotification.Name, object: AnyHashable? = nil) {
 		setAssociatedValue(nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 }
-
 
 public extension NSObject {
 
@@ -75,5 +61,14 @@ public extension NSObject {
 		} else {
 			method_exchangeImplementations(originalMethod, newMethod)
 		}
+	}
+}
+
+
+open class WeakObjectRef: NSObject {
+	weak var object: AnyObject?
+	
+	init(_ object: AnyObject?) {
+		self.object = object
 	}
 }
