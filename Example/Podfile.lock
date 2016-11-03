@@ -1,0 +1,16 @@
+PODS:
+  - ExtraKit (0.1.0)
+
+DEPENDENCIES:
+  - ExtraKit (from `../`)
+
+EXTERNAL SOURCES:
+  ExtraKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ExtraKit: c55c205179f75606e8ca20b42dc0e6706a90526c
+
+PODFILE CHECKSUM: df596f871cbdef6efdfde6994ae3790c9b5d58b4
+
+COCOAPODS: 1.1.1
