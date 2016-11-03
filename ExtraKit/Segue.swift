@@ -2,24 +2,24 @@ import UIKit
 
 class RootNavigationControllerSegue: UIStoryboardSegue {
 	override func perform() {
-		sourceViewController.navigationController?.viewControllers = [destinationViewController]
+		source.navigationController?.viewControllers = [destination]
 	}
 }
 
 class ModalWithNavigationControllerSegue: UIStoryboardSegue {
 	override func perform() {
-		sourceViewController.presentViewController(UINavigationController(rootViewController: destinationViewController), animated: true, completion: nil)
+		source.present(UINavigationController(rootViewController: destination), animated: true, completion: nil)
 	}
 }
 
 class PushReplaceSegue : UIStoryboardSegue {
 	override func perform() {
-		if let nvc = sourceViewController.navigationController {
+		if let nvc = source.navigationController {
 			let n = nvc.viewControllers.count-1
 			CATransaction.begin()
-			nvc.pushViewController(destinationViewController, animated: true)
+			nvc.pushViewController(destination, animated: true)
 			CATransaction.setCompletionBlock {
-				nvc.viewControllers.removeAtIndex(n)
+				nvc.viewControllers.remove(at: n)
 			}
 			CATransaction.commit()
 		}
@@ -28,16 +28,16 @@ class PushReplaceSegue : UIStoryboardSegue {
 
 public extension UIStoryboardSegue {
 
-	func performAction(action: AnyObject?) -> Bool {
+	@discardableResult func performAction(_ action: AnyObject?) -> Bool {
 		guard let action = action as? SegueAction  else { return false }
-		action.block(segue: self)
+		action.block(self)
 		return true
 	}
 }
 
-public class SegueAction {
-	var block: (segue: UIStoryboardSegue)->Void
-	public init(_ block: (segue: UIStoryboardSegue)->Void) {
+open class SegueAction {
+	var block: (_ segue: UIStoryboardSegue)->Void
+	public init(_ block: @escaping (_ segue: UIStoryboardSegue)->Void) {
 		self.block = block
 	}
 }
@@ -45,16 +45,16 @@ public class SegueAction {
 public extension UIViewController {
 	
 	class func swizzlePrepareForSegueAction() {
-		swizzle(#selector(prepareForSegue(_:sender:)), newSelector: #selector(prepareForSegueAction(_:sender:)))
+		swizzle(#selector(prepare(for:sender:)), newSelector: #selector(prepareForSegueAction(_:sender:)))
 	}
 	
-	func prepareForSegueAction(segue: UIStoryboardSegue, sender: AnyObject?) {
+	func prepareForSegueAction(_ segue: UIStoryboardSegue, sender: AnyObject?) {
 		prepareForSegueAction(segue, sender: sender)
 		segue.performAction(sender)
 	}
 }
 
 public extension UIViewController {
-	@IBAction func previousViewControllerSegue(segue: UIStoryboardSegue) {
+	@IBAction func previousViewControllerSegue(_ segue: UIStoryboardSegue) {
 	}
 }

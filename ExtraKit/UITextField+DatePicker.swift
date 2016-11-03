@@ -1,17 +1,17 @@
 import UIKit
 
-public class DatePickerInputView: UIDatePicker
+open class DatePickerInputView: UIDatePicker
 {
 	weak var textField: UITextField?
-	var dateFormatter: NSDateFormatter!
+	var dateFormatter: DateFormatter!
 	var dateString: String {
-		return dateFormatter.stringFromDate(date)
+		return dateFormatter.string(from: date)
 	}
 	
 	func dateChanged() {
 		textField?.text = dateString
-		NSNotificationCenter.defaultCenter().postNotificationName(UITextFieldTextDidChangeNotification, object: textField)
-		textField?.sendActionsForControlEvents(.EditingChanged)
+		NotificationCenter.default.post(name: NSNotification.Name.UITextFieldTextDidChange, object: textField)
+		textField?.sendActions(for: .editingChanged)
 	}
 }
 
@@ -21,21 +21,21 @@ public extension UITextField
 		return inputView as? DatePickerInputView
 	}
 	
-	func setDatePickerInputView(datePickerMode mode:UIDatePickerMode, dateFormatter: NSDateFormatter) -> DatePickerInputView
+	func setDatePickerInputView(datePickerMode mode:UIDatePickerMode, dateFormatter: DateFormatter) -> DatePickerInputView
 	{
 		let picker = DatePickerInputView()
 		picker.dateFormatter = dateFormatter
 		picker.datePickerMode = mode
 		picker.textField = self
-		if let text = text where !text.isEmpty {
-			picker.date = dateFormatter.dateFromString(text) ?? NSDate()
+		if let text = text , !text.isEmpty {
+			picker.date = dateFormatter.date(from: text) ?? Date()
 		}
-		picker.addTarget(picker, action: #selector(DatePickerInputView.dateChanged), forControlEvents: .ValueChanged)
+		picker.addTarget(picker, action: #selector(DatePickerInputView.dateChanged), for: .valueChanged)
 		inputView = picker
 		return picker
 	}
 	
-	var datePickerDate: NSDate? {
+	var datePickerDate: Date? {
 		get {
 			return (text == datePickerView?.dateString) ? datePickerView?.date : nil
 		}

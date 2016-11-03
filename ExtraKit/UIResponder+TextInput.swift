@@ -54,21 +54,21 @@ public extension UIResponder
 	
 	func createPreviousNextDoneInputAccessory()
 	{
-		guard let tf = self as? UITextInputTraits where previousNextDoneInputAccessory == nil else { return }
+		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
 		let segmentControl = UISegmentedControl(items: ["Prev".localized,"Next".localized])
 		segmentControl.sizeToFit()
-		segmentControl.momentary = true
-		segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), forControlEvents: .ValueChanged)
+		segmentControl.isMomentary = true
+		segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), for: .valueChanged)
 		
 		let toolbar = UIToolbar()
-		toolbar.barStyle = tf.keyboardAppearance  == .Dark ? .Black : .Default
+		toolbar.barStyle = tf.keyboardAppearance  == .dark ? .black : .default
 		toolbar.sizeToFit()
 		
 		toolbar.items = [
 			UIBarButtonItem(customView: segmentControl)
-		,	UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-		,	UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(resignFirstResponder))
+		,	UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+		,	UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(resignFirstResponder))
 		]
 
 		if let tf = self as? UITextField {
@@ -79,27 +79,27 @@ public extension UIResponder
 		updatePreviousNextSegmentControlState()
 	}
 	
-	func becomePreviousFirstResponder(sender: UIResponder) -> Bool
+	func becomePreviousFirstResponder(_ sender: UIResponder) -> Bool
 	{
 		return becomeFirstResponder()
 	}
 	
-	func becomeNextFirstResponder(sender: UIResponder) -> Bool
+	func becomeNextFirstResponder(_ sender: UIResponder) -> Bool
 	{
 		return becomeFirstResponder()
 	}
 	
-	func becomePreviousInputResponder() -> Bool
+	@discardableResult func becomePreviousInputResponder() -> Bool
 	{
 		return self.previousTextInputResponder?.becomePreviousFirstResponder(self) ?? false
 	}
 	
-	func becomeNextInputResponder() -> Bool
+	@discardableResult func becomeNextInputResponder() -> Bool
 	{
 		return self.nextTextInputResponder?.becomeNextFirstResponder(self) ?? false
 	}
 
-	func prevNextResponder(sender: UISegmentedControl)
+	func prevNextResponder(_ sender: UISegmentedControl)
 	{
 		if sender.selectedSegmentIndex == 0 {
 			becomePreviousInputResponder()
@@ -110,7 +110,7 @@ public extension UIResponder
 	
 	func updatePreviousNextSegmentControlState()
 	{
-		previousNextSegmentControl?.setEnabled(previousTextInputResponder != nil, forSegmentAtIndex: 0)
-		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil, forSegmentAtIndex: 1)
+		previousNextSegmentControl?.setEnabled(previousTextInputResponder != nil, forSegmentAt: 0)
+		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil, forSegmentAt: 1)
 	}
 }

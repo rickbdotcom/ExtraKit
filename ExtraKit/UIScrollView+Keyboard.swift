@@ -22,14 +22,14 @@ class KeyboardNotificationObserver: NSObject
 
 		self.scrollView = scrollView
 
-		startObserving(UIKeyboardWillChangeFrameNotification) { [weak self] note in
+		startObserving(NSNotification.Name.UIKeyboardWillChangeFrame) { [weak self] note in
 			if self?.contentInset == nil {
 				self?.contentInset = scrollView.contentInset
 			}
 			scrollView.contentInset.bottom = self?.adjustedKeyboardFrameHeight(note) ?? 0
 		}
 		
-		startObserving(UIKeyboardWillHideNotification) { [weak self] note in
+		startObserving(NSNotification.Name.UIKeyboardWillHide) { [weak self] note in
 			if let contentInset = self?.contentInset {
 				self?.scrollView?.contentInset = contentInset
 				self?.contentInset = nil
@@ -37,15 +37,15 @@ class KeyboardNotificationObserver: NSObject
 		}
 	}
 	
-	func adjustedKeyboardFrameHeight(note: NSNotification) -> CGFloat {
-		guard let scrollView = scrollView, keyboardFrame = note.keyboardFrameEnd else {
+	func adjustedKeyboardFrameHeight(_ note: Notification) -> CGFloat {
+		guard let scrollView = scrollView, let keyboardFrame = note.keyboardFrameEnd else {
 			return 0
 		}
 		
 		var h = keyboardFrame.size.height
-		if let responder = scrollView.findFirstResponder(), revealView = responder.viewForKeyboardReveal {
-			let responderY = scrollView.convertRect(responder.bounds, fromView: responder).maxY
-			let revealY = scrollView.convertRect(revealView.bounds, fromView: revealView).maxY
+		if let responder = scrollView.findFirstResponder(), let revealView = responder.viewForKeyboardReveal {
+			let responderY = scrollView.convert(responder.bounds, from: responder).maxY
+			let revealY = scrollView.convert(revealView.bounds, from: revealView).maxY
 			let dh = revealY - responderY
 			if dh > 0 {
 				h += dh

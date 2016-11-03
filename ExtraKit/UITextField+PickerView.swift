@@ -1,6 +1,6 @@
  import UIKit
 
-public class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate
+open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate
 {
 	var components = [[String]]()
 
@@ -13,33 +13,33 @@ public class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerView
 		}
 	}
 	
-	public func selectedValue(component: Int = 0) -> String?
+	open func selectedValue(_ component: Int = 0) -> String?
 	{
-		let selectedRow = selectedRowInComponent(component)
+		let selectedRow = self.selectedRow(inComponent: component)
 		if selectedRow < 0 { return nil }
 		return components[component][selectedRow]
 	}
 
-	public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+	open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
 	{
 		return components[component][row]
 	}
 	
-	public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+	open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
 	{
 		return components[component].count
 	}
 	
-	public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+	open func numberOfComponents(in pickerView: UIPickerView) -> Int
 	{
 		return components.count
 	}
 	
-	public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+	open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
 	{
-		textField?.text = selectedValues.flatMap{$0}.joinWithSeparator(" ")
-		NSNotificationCenter.defaultCenter().postNotificationName(UITextFieldTextDidChangeNotification, object: textField)
-		textField?.sendActionsForControlEvents(.EditingChanged)
+		textField?.text = selectedValues.flatMap{$0}.joined(separator: " ")
+		NotificationCenter.default.post(name: NSNotification.Name.UITextFieldTextDidChange, object: textField)
+		textField?.sendActions(for: .editingChanged)
 	}
 }
 
@@ -49,7 +49,7 @@ public extension UITextField
 		return inputView as? PickerInputView
 	}
 	
-	func setPickerComponents(components: [[String]]) -> PickerInputView
+	func setPickerComponents(_ components: [[String]]) -> PickerInputView
 	{
 		let pickerView = PickerInputView()
 		pickerView.components = components
@@ -61,13 +61,13 @@ public extension UITextField
 		return pickerView
 	}
 	
-	func selectRow(row: Int, component: Int = 0, animated: Bool = false) {
+	func selectRow(_ row: Int, component: Int = 0, animated: Bool = false) {
 		pickerView?.selectRow(row, inComponent: component, animated: true)
 		text = pickerView?.components[component][row]
 	}
 	
-	func selectValue(value: String, component: Int = 0, animated: Bool = false) {
-		if let index = pickerView?.components[component].indexOf(value) {
+	func selectValue(_ value: String, component: Int = 0, animated: Bool = false) {
+		if let index = pickerView?.components[component].index(of: value) {
 			pickerView?.selectRow(index, inComponent: component, animated: animated)
 		}
 		text = value

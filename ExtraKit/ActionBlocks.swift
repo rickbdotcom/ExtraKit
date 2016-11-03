@@ -17,60 +17,60 @@ public extension NSObject {
 
 public extension UIControl {
 
-	func addControlEvents<T:UIControl>(controlEvents: UIControlEvents = .TouchUpInside, block: (T)->Void) -> AnyObject? {
+	@discardableResult func addControlEvents<T:UIControl>(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping (T)->Void) -> AnyObject? {
 		guard self is T else { return nil }
 		
 		return ActionBlock(block: block).configure {
-			addTarget($0, action: #selector(ActionBlock.execute(_:)), forControlEvents: controlEvents)
-			self.actionBlocks.addObject($0)
+			addTarget($0, action: #selector(ActionBlock.execute(_:)), for: controlEvents)
+			self.actionBlocks.add($0)
 		}
 	}
 
-	func addControlEvents(controlEvents: UIControlEvents = .TouchUpInside, block: ()->Void) -> AnyObject? {
+	@discardableResult func addControlEvents(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping ()->Void) -> AnyObject? {
 		return VoidActionBlock(block: block).configure {
-			addTarget($0, action: #selector(VoidActionBlock.execute), forControlEvents: controlEvents)
-			actionBlocks.addObject($0)
+			addTarget($0, action: #selector(VoidActionBlock.execute), for: controlEvents)
+			actionBlocks.add($0)
 		}
 	}
 }
 
 public extension UIGestureRecognizer {
 
-	convenience init(block: (UIGestureRecognizer)->Void) {
+	convenience init(block: @escaping (UIGestureRecognizer)->Void) {
 		self.init()
 		addAction(block)
 	}
 	
-	func addAction(block: (UIGestureRecognizer)->Void) -> AnyObject? {
+	@discardableResult func addAction(_ block: @escaping (UIGestureRecognizer)->Void) -> AnyObject? {
 		return ActionBlock(block: block).configure {
 			addTarget($0, action: #selector(ActionBlock.execute(_:)))
-			self.actionBlocks.addObject($0)
+			self.actionBlocks.add($0)
 		}
 	}
 }
 
 public extension UIBarButtonItem {
 
-	convenience init(block: (UIBarButtonItem)->Void) {
+	convenience init(block: @escaping (UIBarButtonItem)->Void) {
 		self.init()
 		setBlock(block)
 	}
 	
-	func setBlock(block: (UIBarButtonItem)->Void) -> AnyObject? {
+	@discardableResult func setBlock(_ block: @escaping (UIBarButtonItem)->Void) -> AnyObject? {
 		return ActionBlock(block: block).configure {
 			target = $0
 			action = #selector(ActionBlock.execute(_:))
 			self.actionBlocks.removeAllObjects()
-			self.actionBlocks.addObject($0)
+			self.actionBlocks.add($0)
 		}
 	}
 }
 
-public class VoidActionBlock: NSObject {
+open class VoidActionBlock: NSObject {
 	
 	var block: ()->Void
 	
-	init(block: ()->Void) {
+	init(block: @escaping ()->Void) {
 		self.block = block
 	}
 	
@@ -78,15 +78,15 @@ public class VoidActionBlock: NSObject {
 		block()
 	}
 }
-public class ActionBlock<T:NSObject>: NSObject {
+open class ActionBlock<T:NSObject>: NSObject {
 	
 	var block: (T)->Void
 	
-	init(block: (T)->Void) {
+	init(block: @escaping (T)->Void) {
 		self.block = block
 	}
 	
-	func execute(control: UIControl) {
+	func execute(_ control: UIControl) {
 		if let control = control as? T {
 			block(control)
 		}

@@ -1,6 +1,6 @@
 import UIKit
 
-@IBDesignable public class NibControl: UIControl {
+@IBDesignable open class NibControl: UIControl {
 
 	@IBInspectable var nibName: String = ""
 
@@ -11,7 +11,7 @@ import UIKit
 		}
 	}
 	
-	private var resizeToNib = false
+	fileprivate var resizeToNib = false
 	
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
@@ -24,30 +24,30 @@ import UIKit
 	}
 
 	public init(nibName: String, resizeToNib: Bool = true) {
-		super.init(frame: CGRectMake(0,0,320,320))
+		super.init(frame: CGRect(x: 0,y: 0,width: 320,height: 320))
 		translatesAutoresizingMaskIntoConstraints = false
 		self.resizeToNib = resizeToNib
 		
 		if !nibName.isEmpty {
-			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
+			UINib(nibName: nibName, bundle: nil).instantiate(withOwner: self, options: nil)
 		}
 	}
 	
-	public override func awakeFromNib() {
+	open override func awakeFromNib() {
 		super.awakeFromNib()
 		if !nibName.isEmpty {
-			UINib(nibName: nibName, bundle: nil).instantiateWithOwner(self, options: nil)
+			UINib(nibName: nibName, bundle: nil).instantiate(withOwner: self, options: nil)
 		}
 	}
 	
-	public override func prepareForInterfaceBuilder() {
+	open override func prepareForInterfaceBuilder() {
 		super.prepareForInterfaceBuilder()
 		if !nibName.isEmpty {
-			UINib(nibName: nibName, bundle: NSBundle(forClass: self.dynamicType)).instantiateWithOwner(self, options: nil)
+			UINib(nibName: nibName, bundle: Bundle(for: type(of: self))).instantiate(withOwner: self, options: nil)
 		}
 	}
 
-	func addNibView(view: UIView?) {
+	func addNibView(_ view: UIView?) {
 		guard let view = view  else {
 			return
 		}
@@ -57,10 +57,10 @@ import UIKit
 		if resizeToNib {
 			bounds = view.frame
 		}
-		view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-		view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-		view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
-		view.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
+		view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+		view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+		view.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		view.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
 	}
 }
 
@@ -76,10 +76,10 @@ public extension UIBarButtonItem {
 	}
 }
 
-public class NibBarButtonItem: UIBarButtonItem {
+open class NibBarButtonItem: UIBarButtonItem {
 	@IBInspectable var nibName: String = ""
 
-	public override func awakeFromNib() {
+	open override func awakeFromNib() {
 		super.awakeFromNib()
 		if !nibName.isEmpty {
 			customView = NibControl(nibName: nibName)

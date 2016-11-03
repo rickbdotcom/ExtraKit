@@ -6,8 +6,8 @@ public extension String {
 		return NSLocalizedString(self, comment: "")
 	}
 	
-	func localizedFormat(args: [CVarArgType]) -> String {
-		return String(format: self.localized, locale: NSLocale.currentLocale(), arguments: args)
+	func localizedFormat(_ args: [CVarArg]) -> String {
+		return String(format: self.localized, locale: Locale.current, arguments: args)
 	}
 }
 
@@ -16,7 +16,7 @@ public extension RawRepresentable where RawValue==String{
 		return rawValue.localized
 	}
 
-	func localized(args: CVarArgType...) -> RawValue {
+	func localized(_ args: CVarArg...) -> RawValue {
 		return rawValue.localizedFormat(args)
 	}
 }

@@ -4,21 +4,21 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
 {
 	var pickedMedia: ((UIImage)->Void)?
 	
-	func pickImageSheet(completion: (Void)->Void) -> UIAlertController
+	func pickImageSheet(_ completion: @escaping (Void)->Void) -> UIAlertController
 	{
-		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		
-		if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary){
-			alert.addAction(UIAlertAction(title: "Photo Library", style: .Default) { _ in
-				self.sourceType = .PhotoLibrary
+		if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+			alert.addAction(UIAlertAction(title: "Photo Library", style: .default) { _ in
+				self.sourceType = .photoLibrary
 				self.delegate = self
 				completion()
 			})
 		}
 		
-		if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-			alert.addAction(UIAlertAction(title: "Take Photo", style: .Default) { _ in
-				self.sourceType = .Camera
+		if UIImagePickerController.isSourceTypeAvailable(.camera) {
+			alert.addAction(UIAlertAction(title: "Take Photo", style: .default) { _ in
+				self.sourceType = .camera
 				self.delegate = self
 				completion()
 			})
@@ -26,9 +26,9 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
 		return alert
 	}
 	
-	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
 	{
-		dismissViewControllerAnimated(true) { _ in
+		dismiss(animated: true) { _ in
 			if let image = info[UIImagePickerControllerEditedImage] as? UIImage ??  info[UIImagePickerControllerOriginalImage] as? UIImage
 			{
 				self.pickedMedia?(image)
@@ -36,20 +36,20 @@ class ImagePickerController: UIImagePickerController, UIImagePickerControllerDel
 		}
 	}
 	
-	func imagePickerControllerDidCancel(picker: UIImagePickerController)
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
 	{
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 }
 
 public extension UIViewController
 {
-	func pickImage(completion: (image: UIImage)->Void)
+	func pickImage(_ completion: @escaping (_ image: UIImage)->Void)
 	{
 		let controller = ImagePickerController()
 		controller.pickedMedia = completion
-		presentViewController(controller.pickImageSheet {
-			self.presentViewController(controller, animated: true, completion: nil)
+		present(controller.pickImageSheet {
+			self.present(controller, animated: true, completion: nil)
 		}, animated: true, completion: nil)
 	}
 }

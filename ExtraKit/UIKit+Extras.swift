@@ -18,7 +18,7 @@ public extension UIView {
 public extension UIViewController {
 
 	func typedParentViewController<T>() -> T? {
-		return self as? T ?? parentViewController?.typedParentViewController()
+		return self as? T ?? parent?.typedParentViewController()
 	}
 	
 	func typedChildViewController<T>() -> T? {
@@ -39,7 +39,7 @@ public extension UIView {
     var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {
-            parentResponder = parentResponder!.nextResponder()
+            parentResponder = parentResponder!.next
             if let viewController = parentResponder as? UIViewController {
                 return viewController
             }
@@ -52,42 +52,43 @@ public extension UIView {
 	
 	@IBInspectable var borderColor: UIColor? {
 		get {
-			return layer.borderColor != nil ? UIColor(CGColor: layer.borderColor!) : nil
+			return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : nil
 		}
 		set {
-			layer.borderColor = newValue?.CGColor
+			layer.borderColor = newValue?.cgColor
 		}
 	}
 }
 
 public extension UIAlertController {
 
-	public static func alert(title title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .Alert) -> UIAlertController {
+	public static func alert(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .alert) -> UIAlertController {
 		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
 	}
 	
-	public func ok(style: UIAlertActionStyle = .Default, action inAction: (()->Void)? = nil) -> UIAlertController {
+	public func ok(_ style: UIAlertActionStyle = .default, action inAction: (()->Void)? = nil) -> UIAlertController {
 		return action(title: "OK".localized, style: style, action: inAction)
 	}
 
-	public func cancel(style: UIAlertActionStyle = .Cancel, inAction: (()->Void)? = nil) -> UIAlertController {
+	public func cancel(_ style: UIAlertActionStyle = .cancel, inAction: (()->Void)? = nil) -> UIAlertController {
 		return action(title: "Cancel".localized, style: style, action: inAction)
 	}
 	
-	public func action(title title: String?, style: UIAlertActionStyle = .Default, action: (()->Void)? = nil) -> UIAlertController {
+	public func action(title: String?, style: UIAlertActionStyle = .default, action: (()->Void)? = nil) -> UIAlertController {
 		addAction(UIAlertAction(title: title, style: style) { _ in
 			action?()
 		})
 		return self
 	}
 	
-	public func show(viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) {
-		(viewController ?? visibleViewController())?.presentViewController(self, animated: animated, completion: completion)
+	@discardableResult public func show(_ viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIAlertController {
+		(viewController ?? visibleViewController())?.present(self, animated: animated, completion: completion)
+			return self
 	}
 }
 
 public func visibleViewController() -> UIViewController? {
-	return UIApplication.sharedApplication().delegate?.window??.visibleViewController
+	return UIApplication.shared.delegate?.window??.visibleViewController
 }
 
 public extension UIWindow {
@@ -95,7 +96,7 @@ public extension UIWindow {
         return UIWindow.getVisibleViewControllerFrom(self.rootViewController)
     }
 
-    public static func getVisibleViewControllerFrom(vc: UIViewController?) -> UIViewController? {
+    public static func getVisibleViewControllerFrom(_ vc: UIViewController?) -> UIViewController? {
         if let nc = vc as? UINavigationController {
             return UIWindow.getVisibleViewControllerFrom(nc.visibleViewController)
         } else if let tc = vc as? UITabBarController {
@@ -112,19 +113,19 @@ public extension UIWindow {
 
 public extension UINavigationBar
 {
-	public func makeTransparent(transparent: Bool)
+	public func makeTransparent(_ transparent: Bool)
 	{
-		setBackgroundImage(transparent ? UIImage() : nil, forBarMetrics: UIBarMetrics.Default)
+		setBackgroundImage(transparent ? UIImage() : nil, for: UIBarMetrics.default)
 		shadowImage = transparent ? UIImage() : nil
 	}
 }
 
-public extension NSNotification
+public extension Notification
 {
 	public var keyboardFrameEnd: CGRect?
 	{
-        if let info = self.userInfo, value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            return value.CGRectValue()
+        if let info = (self as NSNotification).userInfo, let value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            return value.cgRectValue
         } else {
             return nil
         }
@@ -135,7 +136,7 @@ public extension UIView {
 
 	public func findFirstResponder() -> UIView? {
 
-		if isFirstResponder() {
+		if isFirstResponder {
 			return self
 		}
 		
@@ -150,31 +151,46 @@ public extension UIView {
 }
 
 public extension UIView {
-	func add(to view: UIView) -> Self {
+	@discardableResult func add(to view: UIView) -> Self {
 		view.addSubview(self)
 		return self
 	}
+
+	@discardableResult func addArranged(to view: UIStackView) -> Self {
+		view.addArrangedSubview(self)
+		return self
+	}
+
 	
-	func insert(in view: UIView, below: UIView) -> Self {
+	@discardableResult func insert(in view: UIView, below: UIView) -> Self {
 		view.insertSubview(self, belowSubview: below)
 		return self
 	}
 
-	func insert(in view: UIView, above: UIView) -> Self {
+	@discardableResult func insert(in view: UIView, above: UIView) -> Self {
 		view.insertSubview(self, aboveSubview: above)
 		return self
 	}
 	
-	func insert(in view: UIView, atIndex index: Int) -> Self {
-		view.insertSubview(self, atIndex: index)
+	@discardableResult func insert(in view: UIView, atIndex index: Int) -> Self {
+		view.insertSubview(self, at: index)
 		return self
 	}
 }
 
 public func printFontNames() {
-	UIFont.familyNames().forEach {
-		UIFont.fontNamesForFamilyName($0).forEach {
+	UIFont.familyNames.forEach {
+		UIFont.fontNames(forFamilyName: $0).forEach {
 			print($0)
+		}
+	}
+}
+
+public extension UIViewController {
+
+	func dismissPresentedViewControllers() {
+		presentedViewController?.dismiss(animated: false){
+			self.dismissPresentedViewControllers()
 		}
 	}
 }

@@ -7,12 +7,12 @@ public protocol StoryboardScene {
 
 public extension StoryboardScene {
 	
-	public func storyboard(bundle: NSBundle? = nil) -> UIStoryboard {
+	public func storyboard(_ bundle: Bundle? = nil) -> UIStoryboard {
 		return UIStoryboard(name: identifier.1, bundle: bundle)
 	}
 	
-	public func instantiateViewController(bundle: NSBundle? = nil) -> UIViewController {
-		return storyboard(bundle).instantiateViewControllerWithIdentifier(identifier.0)
+	public func instantiateViewController(_ bundle: Bundle? = nil) -> UIViewController {
+		return storyboard(bundle).instantiateViewController(withIdentifier: identifier.0)
 	}
 }
 
@@ -22,12 +22,12 @@ public protocol StoryboardSceneSegue {
 
 extension UIViewController {
 
-	public func performSegue(segue: StoryboardSceneSegue, sender: AnyObject? = nil) {
-		performSegueWithIdentifier(segue.segueID, sender: sender)
+	public func performSegue(_ segue: StoryboardSceneSegue, sender: AnyObject? = nil) {
+		self.performSegue(withIdentifier: segue.segueID, sender: sender)
 	}
 
-	public func performSegue(segue: StoryboardSceneSegue, action: (segue: UIStoryboardSegue)->Void) {
-		performSegueWithIdentifier(segue.segueID, sender: SegueAction(action))
+	public func performSegue(_ segue: StoryboardSceneSegue, action: @escaping (_ segue: UIStoryboardSegue)->Void) {
+		self.performSegue(withIdentifier: segue.segueID, sender: SegueAction(action))
 	}
 }
 

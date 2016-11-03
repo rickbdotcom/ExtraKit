@@ -16,29 +16,29 @@ public extension NSObject
 		}
 	}
 	
-	func associatedValueForKey<T>(key: String) -> T?
+	func associatedValueForKey<T>(_ key: String) -> T?
 	{
 		return associatedDictionary[key] as? T
 	}
 	
-	func setAssociatedValue(value: AnyObject?, forKey key: String)
+	func setAssociatedValue(_ value: Any?, forKey key: String)
 	{
 		associatedDictionary[key] = value
 	}
 
-	func weakAssociatedValueForKey<T>(key: String) -> T?
+	func weakAssociatedValueForKey<T>(_ key: String) -> T?
 	{
 		return (associatedDictionary[key] as? WeakObjectRef)?.object as? T
 	}
 	
-	func setWeakAssociatedValue(value: AnyObject?, forKey key: String)
+	func setWeakAssociatedValue(_ value: AnyObject?, forKey key: String)
 	{
 		associatedDictionary[key] = WeakObjectRef(object: value)
 	}
 
 }
 
-public class WeakObjectRef: NSObject
+open class WeakObjectRef: NSObject
 {
 	weak var object: AnyObject?
 	
@@ -51,12 +51,12 @@ private let associatedValueKey = "com.rickb.extrakit.Observing"
 
 public extension NSObject
 {
-	func startObserving(name: String, object: AnyObject? = nil, queue: NSOperationQueue? = nil, usingBlock block: (NSNotification) -> Void) {
-		setAssociatedValue(NSNotificationCenter.defaultCenter().addObserverForName(name, object: object, queue: queue, usingBlock: block)
+	func startObserving(_ name: NSNotification.Name, object: AnyObject? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
+		setAssociatedValue(NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
 		, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 	
-	func stopObserving(name: String, object: AnyObject? = nil) {
+	func stopObserving(_ name: NSNotification.Name, object: AnyObject? = nil) {
 		setAssociatedValue(nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 }
@@ -64,7 +64,7 @@ public extension NSObject
 
 public extension NSObject {
 
-	class func swizzle(originalSelector: Selector, newSelector: Selector) {
+	class func swizzle(_ originalSelector: Selector, newSelector: Selector) {
 		
 		let originalMethod = class_getInstanceMethod(self, originalSelector)
 		let newMethod = class_getInstanceMethod(self, newSelector)

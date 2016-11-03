@@ -2,18 +2,18 @@
 
 import Foundation
 
-let outputPath = Process.arguments[1]
+let outputPath = CommandLine.arguments[1]
 
 var tabs = 0
 
 extension String {
-	mutating func addLine(line: String = "") {
+	mutating func addLine(_ line: String = "") {
 		
 		if line.characters.last == "}" {
 			tabs -= 1
 		}
 		if tabs > 0 {
-			self += String(count: tabs, repeatedValue: Character("\t"))
+			self += String(repeating: "\t", count: tabs)
 		}
 
 		self += "\(line)\n"
@@ -31,26 +31,26 @@ outputString.addLine("")
 outputString.addLine("import UIKit")
 outputString.addLine("import ExtraKit\n")
 
-func generateStoryboardIdentifierSourceFile(path: String) {
+func generateStoryboardIdentifierSourceFile(_ path: String) {
 	
-	let url = NSURL(fileURLWithPath: path)
-	let doc = try! NSXMLDocument(contentsOfURL: url, options: 0)
-	guard var vcs = try? doc.nodesForXPath("//viewController") as? [NSXMLElement] ?? [NSXMLElement]() else {
+	let url = URL(fileURLWithPath: path)
+	let doc = try! XMLDocument(contentsOf: url, options: 0)
+	guard var vcs = try? doc.nodes(forXPath:"//viewController") as? [XMLElement] ?? [XMLElement]() else {
 		return
 	}
-	if let tvcs = try? doc.nodesForXPath("//tableViewController") as? [NSXMLElement] ?? [NSXMLElement]() {
-		vcs.appendContentsOf(tvcs)
+	if let tvcs = try? doc.nodes(forXPath:"//tableViewController") as? [XMLElement] ?? [XMLElement]() {
+		vcs.append(contentsOf: tvcs)
 	}
 	
 	let ids: [(storyboardIdentifier: String, id: String, segues: [String])]! = vcs.flatMap { vc in
-		if let storyboardIdentifier = vc.attributeForName("storyboardIdentifier")?.stringValue
-		, id = vc.attributeForName("id")?.stringValue {
+		if let storyboardIdentifier = vc.attribute(forName:"storyboardIdentifier")?.stringValue
+		, let id = vc.attribute(forName:"id")?.stringValue {
 			var segues = [String]()
-			if let segueNodes = try? vc.nodesForXPath(".//segue") {
+			if let segueNodes = try? vc.nodes(forXPath:".//segue") {
 				segueNodes.forEach {
-					if let elem = ($0 as? NSXMLElement)
-					, identifier = elem.attributeForName("identifier")?.stringValue
-					where !identifier.isEmpty {
+					if let elem = ($0 as? XMLElement)
+					,  let identifier = elem.attribute(forName:"identifier")?.stringValue
+					, !identifier.isEmpty {
 						segues.append(identifier)
 					}
 				}
@@ -61,7 +61,7 @@ func generateStoryboardIdentifierSourceFile(path: String) {
 	}
 	guard ids.isEmpty == false else { return }
 	
-	let fileName = url.URLByDeletingPathExtension!.lastPathComponent!
+	let fileName = url.deletingPathExtension().lastPathComponent
 	
 	outputString.addLine("struct \(fileName) {")
 	outputString.addLine()
@@ -85,9 +85,9 @@ func generateStoryboardIdentifierSourceFile(path: String) {
 }
 outputString.addLine("struct Storyboards {")
 outputString.addLine("")
-Process.arguments[2..<Process.arguments.count].forEach {
+CommandLine.arguments[2..<CommandLine.arguments.count].forEach {
 	generateStoryboardIdentifierSourceFile($0)
 }
 outputString.addLine("}")
 
-try! outputString.writeToFile(outputPath, atomically: true, encoding: NSUTF8StringEncoding)
+try! outputString.write(toFile:outputPath, atomically: true, encoding: String.Encoding.utf8)
