@@ -183,3 +183,12 @@ public extension UIView {
         return nil
     }
 }
+
+public extension UIViewController {
+	
+	func withNavigationController(_ navbarHidden: Bool = false) -> UINavigationController {
+		return UINavigationController(rootViewController: self).configure {
+			$0.isNavigationBarHidden = navbarHidden
+		}
+	}
+}

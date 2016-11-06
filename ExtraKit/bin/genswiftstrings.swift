@@ -12,7 +12,7 @@ func generateStringsSourceFile(_ stringsPath: String) {
 		return
 	}
 	
-	outputString += "enum Strings: String\n{\n"
+	outputString += "enum Strings: String{\n\n"
 
 	stringsDict.allKeys.forEach {
 		outputString += "\tcase \($0)\n"
@@ -34,7 +34,7 @@ func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 		return
 	}
 	
-	outputString += "\nenum FormatStrings: String\n{\n"
+	outputString += "\nenum FormatStrings: String{\n\n"
 
 	stringsDict.allKeys.forEach {
 		outputString += "\tcase \($0)\n"
