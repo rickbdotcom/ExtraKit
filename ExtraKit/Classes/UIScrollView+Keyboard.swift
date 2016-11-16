@@ -6,7 +6,7 @@ private let revealViewAssociatedValueKey = "com.rickb.extrakit.UIScrollView.view
 public extension UIScrollView {
 	func adjustContentInsetForKeyboardFrame()
 	{
-		setAssociatedValue(KeyboardNotificationObserver(scrollView: self), forKey: observerAssociatedValueKey)
+		set(associatedValue: KeyboardNotificationObserver(scrollView: self), forKey: observerAssociatedValueKey)
 	}
 }
 
@@ -63,10 +63,10 @@ public extension UIResponder {
 
 	@IBOutlet public weak var viewForKeyboardReveal: UIView? {
 		get {
-			return weakAssociatedValueForKey(observerAssociatedValueKey)
+			return weakAssociatedValue(forKey: observerAssociatedValueKey)
 		}
 		set {
-			setWeakAssociatedValue(newValue, forKey: observerAssociatedValueKey)
+			set(weakAssociatedValue: newValue, forKey: observerAssociatedValueKey)
 		}
 	}
 }

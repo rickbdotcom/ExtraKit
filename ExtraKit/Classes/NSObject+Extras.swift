@@ -16,19 +16,19 @@ public extension NSObject {
 		}
 	}
 	
-	func associatedValueForKey<T>(_ key: String) -> T? {
+	func associatedValue<T>(forKey key: String) -> T? {
 		return associatedDictionary[key] as? T
 	}
 	
-	func setAssociatedValue(_ value: Any?, forKey key: String) {
+	func set(associatedValue value: Any?, forKey key: String) {
 		associatedDictionary[key] = value
 	}
 
-	func weakAssociatedValueForKey<T>(_ key: String) -> T? {
+	func weakAssociatedValue<T>(forKey key: String) -> T? {
 		return (associatedDictionary[key] as? WeakObjectRef)?.object as? T
 	}
 	
-	func setWeakAssociatedValue(_ value: AnyObject?, forKey key: String) {
+	func set(weakAssociatedValue value: AnyObject?, forKey key: String) {
 		associatedDictionary[key] = WeakObjectRef(value)
 	}
 
@@ -39,12 +39,12 @@ private let associatedValueKey = "com.rickb.extrakit.Observing"
 public extension NSObject
 {
 	func startObserving(_ name: NSNotification.Name, object: AnyHashable? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
-		setAssociatedValue(NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
+		set(associatedValue: NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
 		, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 	
 	func stopObserving(_ name: NSNotification.Name, object: AnyHashable? = nil) {
-		setAssociatedValue(nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
+		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
 	}
 }
 

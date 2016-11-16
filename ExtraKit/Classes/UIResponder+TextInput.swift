@@ -8,10 +8,10 @@ public extension UIResponder {
 
 	@IBOutlet weak var nextTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValueForKey(nextAssociatedValueKey)
+			return weakAssociatedValue(forKey: nextAssociatedValueKey)
 		}
 		set {
-			setWeakAssociatedValue(newValue, forKey: nextAssociatedValueKey)
+			set(weakAssociatedValue: newValue, forKey: nextAssociatedValueKey)
 
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
@@ -23,10 +23,10 @@ public extension UIResponder {
 	
 	@IBOutlet weak var previousTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValueForKey(prevAssociatedValueKey)
+			return weakAssociatedValue(forKey: prevAssociatedValueKey)
 		}
 		set {
-			setWeakAssociatedValue(newValue, forKey: prevAssociatedValueKey)
+			set(weakAssociatedValue: newValue, forKey: prevAssociatedValueKey)
 
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self

@@ -6,10 +6,10 @@ public extension UIImage {
 
 	var imageColor: UIColor? {
 		get {
-			return associatedValueForKey(imageColorAssociatedValueKey)
+			return associatedValue(forKey: imageColorAssociatedValueKey)
 		}
 		set {
-			setAssociatedValue(newValue, forKey: imageColorAssociatedValueKey)
+			set(associatedValue: newValue, forKey: imageColorAssociatedValueKey)
 		}
 	}
 

@@ -6,18 +6,18 @@ private let associatedValueKey = "com.rickb.extrakit.actionBlocks"
 public extension NSObject {
 	
 	var actionBlocks: NSMutableSet {
-		if let set: NSMutableSet = associatedValueForKey(associatedValueKey) {
+		if let set: NSMutableSet = associatedValue(forKey: associatedValueKey) {
 			return set
 		}
-		let set = NSMutableSet()
-		setAssociatedValue(set, forKey: associatedValueKey)
-		return set
+		let mset = NSMutableSet()
+		set(associatedValue: mset, forKey: associatedValueKey)
+		return mset
 	}
 }
 
 public extension UIControl {
 
-	@discardableResult func add<T:UIControl>(controlEvents: UIControlEvents = .touchUpInside, block: @escaping (T)->Void) -> AnyObject? {
+	@discardableResult func addControlEvents<T:UIControl>(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping (T)->Void) -> Any? {
 		guard self is T else {
 			return nil
 		}
@@ -27,7 +27,7 @@ public extension UIControl {
 		}
 	}
 
-	@discardableResult func add(controlEvents: UIControlEvents = .touchUpInside, block: @escaping ()->Void) -> AnyObject? {
+	@discardableResult func addControlEvents(_ controlEvents: UIControlEvents = .touchUpInside, block: @escaping ()->Void) -> Any {
 		return VoidActionBlock(block).configure {
 			addTarget($0, action: #selector(VoidActionBlock.execute), for: controlEvents)
 			actionBlocks.add($0)
@@ -42,7 +42,7 @@ public extension UIGestureRecognizer {
 		addAction(block)
 	}
 	
-	@discardableResult func addAction(_ block: @escaping (UIGestureRecognizer)->Void) -> AnyObject? {
+	@discardableResult func addAction(_ block: @escaping (UIGestureRecognizer)->Void) -> Any {
 		return ActionBlock(block).configure {
 			addTarget($0, action: #selector(ActionBlock.execute(_:)))
 			self.actionBlocks.add($0)
@@ -57,7 +57,7 @@ public extension UIBarButtonItem {
 		setBlock(block)
 	}
 	
-	@discardableResult func setBlock(_ block: @escaping (UIBarButtonItem)->Void) -> AnyObject? {
+	@discardableResult func setBlock(_ block: @escaping (UIBarButtonItem)->Void) -> Any {
 		return ActionBlock(block).configure {
 			target = $0
 			action = #selector(ActionBlock.execute(_:))
