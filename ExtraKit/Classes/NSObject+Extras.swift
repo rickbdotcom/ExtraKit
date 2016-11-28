@@ -31,7 +31,6 @@ public extension NSObject {
 	func set(weakAssociatedValue value: AnyObject?, forKey key: String) {
 		associatedDictionary[key] = WeakObjectRef(value)
 	}
-
 }
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
@@ -64,11 +63,13 @@ public extension NSObject {
 	}
 }
 
-
-open class WeakObjectRef: NSObject {
+class WeakObjectRef: NSObject {
 	weak var object: AnyObject?
 	
-	init(_ object: AnyObject?) {
+	init?(_ object: AnyObject?) {
+		guard let object = object else {
+			return nil
+		}
 		self.object = object
 	}
 }

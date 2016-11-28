@@ -11,7 +11,11 @@ public extension UIResponder {
 			return weakAssociatedValue(forKey: nextAssociatedValueKey)
 		}
 		set {
-			set(weakAssociatedValue: newValue, forKey: nextAssociatedValueKey)
+// don't know why I have to do this to avoid crashes when more than 2 textfields are hooked up
+// started doing this when transitioned code to Swift
+// just moved this line of code from the set function to here
+//			set(weakAssociatedValue: newValue, forKey: nextAssociatedValueKey)
+			associatedDictionary[nextAssociatedValueKey] = WeakObjectRef(newValue)
 
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
@@ -26,7 +30,8 @@ public extension UIResponder {
 			return weakAssociatedValue(forKey: prevAssociatedValueKey)
 		}
 		set {
-			set(weakAssociatedValue: newValue, forKey: prevAssociatedValueKey)
+//			set(weakAssociatedValue: newValue, forKey: prevAssociatedValueKey)
+			associatedDictionary[prevAssociatedValueKey] = WeakObjectRef(newValue)
 
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self
@@ -103,7 +108,7 @@ public extension UIResponder {
 	}
 	
 	func updatePreviousNextSegmentControlState() {
-		previousNextSegmentControl?.setEnabled(previousTextInputResponder != nil, forSegmentAt: 0)
-		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil, forSegmentAt: 1)
+		previousNextSegmentControl?.setEnabled(previousTextInputResponder != nil && previousTextInputResponder!.canBecomeFirstResponder, forSegmentAt: 0)
+		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil && nextTextInputResponder!.canBecomeFirstResponder, forSegmentAt: 1)
 	}
 }

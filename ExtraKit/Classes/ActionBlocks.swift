@@ -13,6 +13,12 @@ public extension NSObject {
 		set(associatedValue: mset, forKey: associatedValueKey)
 		return mset
 	}
+	
+	func removeActionBlock(_ block: Any?) {
+		if let block = block {
+			actionBlocks.remove(block)
+		}
+	}
 }
 
 public extension UIControl {

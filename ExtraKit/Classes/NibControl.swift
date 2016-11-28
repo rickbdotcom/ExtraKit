@@ -15,7 +15,6 @@ import UIKit
 	
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	override init(frame: CGRect) {
@@ -56,6 +55,8 @@ import UIKit
 		
 		if resizeToNib {
 			bounds = view.frame
+		} else {
+			view.frame = bounds
 		}
 		view.topAnchor.constraint(equalTo: topAnchor).isActive = true
 		view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
