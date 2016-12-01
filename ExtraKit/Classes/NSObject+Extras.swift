@@ -73,3 +73,44 @@ class WeakObjectRef: NSObject {
 		self.object = object
 	}
 }
+
+private let associatedValueKVOKey = "com.rickb.extrakit.KVOObserving"
+
+class KVOObserver: NSObject {
+
+	weak var object: NSObject?
+	var keyPath: String
+	var block:(Void)->Void
+	
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+	 	block()
+	}
+	
+	deinit {
+		object?.removeObserver(self, forKeyPath: keyPath)
+	}
+	
+	init(object: NSObject, keyPath: String, block: @escaping (Void)->Void) {
+		self.object = object
+		self.keyPath = keyPath
+		self.block = block
+
+		super.init()
+		
+		object.addObserver(self, forKeyPath: keyPath, options: .new, context: nil)
+	}
+}
+
+public extension NSObject {
+
+	@discardableResult func observe(keyPath: String, block: @escaping (Void)->Void) -> AnyHashable {
+		let observer = KVOObserver(object: self, keyPath: keyPath, block: block)
+		set(associatedValue: observer, forKey: "\(associatedValueKVOKey).\(observer.hashValue)")
+		return observer
+		
+	}
+	
+	func stopObserving(keyPathObserver: AnyHashable) {
+		set(associatedValue: nil, forKey: "\(associatedValueKVOKey).\(keyPathObserver.hashValue)")
+	}
+}
