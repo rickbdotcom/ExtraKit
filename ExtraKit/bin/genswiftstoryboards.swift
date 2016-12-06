@@ -46,6 +46,9 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 		if let cs = try doc.nodes(forXPath:"//tabBarController") as? [XMLElement] {
 			vcs.append(contentsOf: cs)
 		}
+		if let cs = try doc.nodes(forXPath:"//navigationController") as? [XMLElement] {
+			vcs.append(contentsOf: cs)
+		}
 		guard vcs.count > 0 else {
 			return
 		}
