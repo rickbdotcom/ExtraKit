@@ -1,4 +1,5 @@
 import UIKit
+import MobileCoreServices
 
 public extension String {
 	
@@ -30,4 +31,25 @@ public extension Optional where Wrapped: OptionalString {
     var isEmptyOrNil: Bool {
         return ((self as? String) ?? "").isEmpty
     }
+
+    var isEmptyOrNilOrSpaces: Bool {
+        return isEmptyOrNil
+		|| (self as? String)?.trimmingCharacters(in: .whitespacesAndNewlines).characters.count == 0
+    }
+}
+
+
+public extension String {
+	
+	var fileExtensionForMimeType: String? {
+		if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, self as CFString, nil)?.takeRetainedValue()
+		,  let ext = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension)?.takeRetainedValue() {
+			return ext as String
+		}
+		return  nil
+	}
+	
+	var UTI: String? {
+		return UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, self as CFString, nil)?.takeRetainedValue() as? String
+	}
 }
