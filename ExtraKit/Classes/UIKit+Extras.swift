@@ -6,15 +6,15 @@ public extension UIAlertController {
 		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
 	}
 	
-	func ok(_ style: UIAlertActionStyle = .default, action inAction: (()->Void)? = nil) -> UIAlertController {
+	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: (()->Void)? = nil) -> UIAlertController {
 		return action(title: "OK".localized, style: style, action: inAction)
 	}
 
-	func cancel(_ style: UIAlertActionStyle = .cancel, inAction: (()->Void)? = nil) -> UIAlertController {
+	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: (()->Void)? = nil) -> UIAlertController {
 		return action(title: "Cancel".localized, style: style, action: inAction)
 	}
 	
-	func action(title: String?, style: UIAlertActionStyle = .default, action: (()->Void)? = nil) -> UIAlertController {
+	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: (()->Void)? = nil) -> UIAlertController {
 		addAction(UIAlertAction(title: title, style: style) { _ in
 			action?()
 		})
@@ -92,6 +92,11 @@ public extension UIView {
 
 	@discardableResult func addArranged(to view: UIStackView) -> Self {
 		view.addArrangedSubview(self)
+		return self
+	}
+
+	@discardableResult func insertArranged(in view: UIStackView, at index: Int) -> Self {
+		view.insertArrangedSubview(view, at: index)
 		return self
 	}
 	

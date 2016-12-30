@@ -35,11 +35,14 @@ if CommandLine.arguments.count > 2 {
 
 	CommandLine.arguments[2..<CommandLine.arguments.count].forEach {
 		let url = NSURL(fileURLWithPath: $0)
-		outputString.addLine("case \(url.deletingPathExtension!.lastPathComponent.replacingOccurrences(of: "-", with:"__"))")
+		let enumName = url.deletingPathExtension!.lastPathComponent
+		if enumName.rangeOfCharacter(from: CharacterSet(charactersIn: ".-")) == nil {
+			outputString.addLine("case \(enumName)")
+		}
 	}
 	outputString.addLine("")
 	outputString.addLine("var image: UIImage? {")
-	outputString.addLine("return UIImage(named: rawValue.replacingOccurrences(of: \"__\", with:\"-\"))")
+	outputString.addLine("return UIImage(named: rawValue)")
 	outputString.addLine("}")
 	outputString.addLine("}")
 }

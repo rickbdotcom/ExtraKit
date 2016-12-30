@@ -32,24 +32,39 @@ public extension Optional where Wrapped: OptionalString {
         return ((self as? String) ?? "").isEmpty
     }
 
-    var isEmptyOrNilOrSpaces: Bool {
-        return isEmptyOrNil
-		|| (self as? String)?.trimmingCharacters(in: .whitespacesAndNewlines).characters.count == 0
+    var isEmptyOrNilOrOnlySpaces: Bool {
+        return isEmptyOrNil || ((self as? String)?.isOnlySpaces ?? false)
     }
 }
 
 
 public extension String {
-	
-	var fileExtensionForMimeType: String? {
-		if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, self as CFString, nil)?.takeRetainedValue()
-		,  let ext = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension)?.takeRetainedValue() {
-			return ext as String
-		}
-		return  nil
+
+	func tag(withClass: CFString) -> String? {
+		return UTTypeCopyPreferredTagWithClass(withClass, self as CFString)?.takeRetainedValue() as? String
 	}
 	
-	var UTI: String? {
-		return UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, self as CFString, nil)?.takeRetainedValue() as? String
+	func uti(withClass: CFString) -> String? {
+		return UTTypeCreatePreferredIdentifierForTag(withClass, self as CFString, nil)?.takeRetainedValue() as? String
+	}
+	
+	var utiMimeType: String? {
+		return tag(withClass: kUTTagClassMIMEType)
+	}
+	
+	var utiFileExtension: String? {
+		return tag(withClass: kUTTagClassFilenameExtension)
+	}
+	
+	var mimeTypeUTI: String? {
+		return uti(withClass: kUTTagClassMIMEType)
+	}
+
+	var fileExtensionUTI: String? {
+		return uti(withClass: kUTTagClassFilenameExtension)
+	}
+	
+	var isOnlySpaces: Bool {
+		return trimmingCharacters(in: .whitespacesAndNewlines).characters.count == 0
 	}
 }
