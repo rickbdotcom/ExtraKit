@@ -22,6 +22,21 @@ extension String {
 	}
 }
 
+func validSwiftString(_ string: String) -> Bool {
+	guard !string.isEmpty else {
+		return false
+	}
+	let invalidSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "_")).inverted
+	if string.rangeOfCharacter(from: invalidSet) != nil {
+		return false
+	}
+	if let first = string.unicodeScalars.first, CharacterSet.decimalDigits.contains(first) {
+		return false
+	}
+	return true
+}
+
+
 let outputPath = CommandLine.arguments[1]
 
 var outputString = ""
@@ -36,7 +51,7 @@ if CommandLine.arguments.count > 2 {
 	CommandLine.arguments[2..<CommandLine.arguments.count].forEach {
 		let url = NSURL(fileURLWithPath: $0)
 		let enumName = url.deletingPathExtension!.lastPathComponent
-		if enumName.rangeOfCharacter(from: CharacterSet(charactersIn: ".-")) == nil {
+		if validSwiftString(enumName) {
 			outputString.addLine("case \(enumName)")
 		}
 	}

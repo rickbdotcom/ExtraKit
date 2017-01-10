@@ -15,7 +15,9 @@ func generateStringsSourceFile(_ stringsPath: String) {
 	outputString += "enum Strings: String{\n\n"
 
 	stringsDict.allKeys.forEach {
-		outputString += "\tcase \($0)\n"
+		if let s = $0 as? String, validSwiftString(s) {
+			outputString += "\tcase \(s)\n"
+		}
 	}
 	outputString += "}\n"
 }
@@ -28,6 +30,20 @@ func systemcommand(_ args: [String]) {
     task.waitUntilExit()
 }
 
+func validSwiftString(_ string: String) -> Bool {
+	guard !string.isEmpty else {
+		return false
+	}
+	let invalidSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "_")).inverted
+	if string.rangeOfCharacter(from: invalidSet) != nil {
+		return false
+	}
+	if let first = string.unicodeScalars.first, CharacterSet.decimalDigits.contains(first) {
+		return false
+	}
+	return true
+}
+
 func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 	guard let stringsDict = NSDictionary(contentsOfFile: stringsDictPath)
 	, stringsDict.count > 0 else {
@@ -37,10 +53,13 @@ func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 	outputString += "\nenum FormatStrings: String{\n\n"
 
 	stringsDict.allKeys.forEach {
-		outputString += "\tcase \($0)\n"
+		if let s = $0 as? String, validSwiftString(s) {
+			outputString += "\tcase \($0)\n"
+		}
 	}
 	outputString += "}\n"
 }
+
 
 let outputPath = CommandLine.arguments[2]
 
