@@ -210,3 +210,14 @@ public extension UIView {
 		}
 	}
 }
+
+public extension UITableView {
+
+	func update(_ update:(Void)->Void, animated: Bool) {
+		UIView.setAnimationsEnabled(animated)
+		beginUpdates()
+		update()
+		endUpdates()
+		UIView.setAnimationsEnabled(false)
+	}
+}
