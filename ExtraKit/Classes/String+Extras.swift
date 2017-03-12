@@ -33,7 +33,7 @@ public extension Optional where Wrapped: OptionalString {
     }
 
     var isEmptyOrNilOrSpaces: Bool {
-        return isEmptyOrNil || ((self as? String)?.isSpaces ?? false)
+        return isEmptyOrNil || ((self as? String)?.isOnlySpaces ?? false)
     }
 }
 
