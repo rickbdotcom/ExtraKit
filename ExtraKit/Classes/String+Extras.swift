@@ -32,8 +32,8 @@ public extension Optional where Wrapped: OptionalString {
         return ((self as? String) ?? "").isEmpty
     }
 
-    var isEmptyOrNilOrOnlySpaces: Bool {
-        return isEmptyOrNil || ((self as? String)?.isOnlySpaces ?? false)
+    var isEmptyOrNilOrSpaces: Bool {
+        return isEmptyOrNil || ((self as? String)?.isSpaces ?? false)
     }
 }
 
@@ -63,8 +63,25 @@ public extension String {
 	var fileExtensionUTI: String? {
 		return uti(withClass: kUTTagClassFilenameExtension)
 	}
-	
+}
+
+public extension String {
+
 	var isOnlySpaces: Bool {
 		return trimmingCharacters(in: .whitespacesAndNewlines).characters.count == 0
+	}
+
+	var emptyNil: String? {
+		return isEmpty ? nil : self
+	}
+
+	var emptyNilSpace: String? {
+		return isEmpty || isOnlySpaces ? nil : self
+	}
+}
+
+public extension Sequence where Iterator.Element == String {
+    public func joinedEmptyNilSpace(separator: String = "") -> String {
+		return flatMap { $0.emptyNilSpace }.joined(separator: separator)
 	}
 }

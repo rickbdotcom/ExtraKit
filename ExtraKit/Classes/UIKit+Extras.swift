@@ -218,6 +218,6 @@ public extension UITableView {
 		beginUpdates()
 		update()
 		endUpdates()
-		UIView.setAnimationsEnabled(false)
+		UIView.setAnimationsEnabled(true)
 	}
 }
