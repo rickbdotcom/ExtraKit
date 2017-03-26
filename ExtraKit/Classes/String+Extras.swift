@@ -63,6 +63,10 @@ public extension String {
 	var fileExtensionUTI: String? {
 		return uti(withClass: kUTTagClassFilenameExtension)
 	}
+
+	func utiConforms(to: String) -> Bool {
+		return UTTypeConformsTo(self as CFString, to as CFString)
+	}
 }
 
 public extension String {
