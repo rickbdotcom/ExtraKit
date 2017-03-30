@@ -209,6 +209,16 @@ public extension UIView {
 			layer.borderColor = newValue?.cgColor
 		}
 	}
+	
+	@IBInspectable var cornerRadius: CGFloat {
+		get {
+			return layer.cornerRadius
+		}
+		set {
+			layer.masksToBounds = true
+			layer.cornerRadius = newValue
+		}
+	}
 }
 
 public extension UITableView {
