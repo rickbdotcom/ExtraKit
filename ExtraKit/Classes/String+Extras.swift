@@ -41,11 +41,11 @@ public extension Optional where Wrapped: OptionalString {
 public extension String {
 
 	func tag(withClass: CFString) -> String? {
-		return UTTypeCopyPreferredTagWithClass(withClass, self as CFString)?.takeRetainedValue() as? String
+		return UTTypeCopyPreferredTagWithClass(withClass, self as CFString)?.takeRetainedValue() as String?
 	}
 	
 	func uti(withClass: CFString) -> String? {
-		return UTTypeCreatePreferredIdentifierForTag(withClass, self as CFString, nil)?.takeRetainedValue() as? String
+		return UTTypeCreatePreferredIdentifierForTag(withClass, self as CFString, nil)?.takeRetainedValue() as String?
 	}
 	
 	var utiMimeType: String? {

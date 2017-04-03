@@ -31,12 +31,6 @@ public extension UIViewController {
 	}
 }
 
-public extension UIViewController {
-
-	@IBAction func previousViewController(segue: UIStoryboardSegue) {
-	}
-}
-
 class RootNavigationControllerSegue: UIStoryboardSegue {
 
 	override func perform() {

@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DDC0EAE1DCAF3FF00B002C7 /* ActionBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA01DCAF3FF00B002C7 /* ActionBlocks.swift */; };
+		0DDC0EAE1DCAF3FF00B002C7 /* UIControl+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */; };
 		0DDC0EAF1DCAF3FF00B002C7 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */; };
-		0DDC0EB01DCAF3FF00B002C7 /* NibControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA21DCAF3FF00B002C7 /* NibControl.swift */; };
 		0DDC0EB11DCAF3FF00B002C7 /* NSObject+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */; };
-		0DDC0EB21DCAF3FF00B002C7 /* Segue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA41DCAF3FF00B002C7 /* Segue.swift */; };
-		0DDC0EB31DCAF3FF00B002C7 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA51DCAF3FF00B002C7 /* Storyboard.swift */; };
+		0DDC0EB21DCAF3FF00B002C7 /* Segue+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */; };
+		0DDC0EB31DCAF3FF00B002C7 /* Storyboard+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */; };
 		0DDC0EB41DCAF3FF00B002C7 /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */; };
 		0DDC0EB51DCAF3FF00B002C7 /* UIimage+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */; };
 		0DDC0EB71DCAF3FF00B002C7 /* UIKit+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */; };
@@ -42,12 +41,11 @@
 		07FE21AA690FABF659C25A2DC3DF5298 /* Pods_ExtraKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExtraKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		094C233D8772B34B0ADA68BD98BDCD9A /* Pods-ExtraKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExtraKit_Tests-umbrella.h"; sourceTree = "<group>"; };
 		0C0977A390B7A5F42C8793935711CF82 /* ExtraKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExtraKit-dummy.m"; sourceTree = "<group>"; };
-		0DDC0EA01DCAF3FF00B002C7 /* ActionBlocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBlocks.swift; sourceTree = "<group>"; };
+		0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Blocks.swift"; sourceTree = "<group>"; };
 		0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
-		0DDC0EA21DCAF3FF00B002C7 /* NibControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibControl.swift; sourceTree = "<group>"; };
 		0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA41DCAF3FF00B002C7 /* Segue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segue.swift; sourceTree = "<group>"; };
-		0DDC0EA51DCAF3FF00B002C7 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Segue+Extras.swift"; sourceTree = "<group>"; };
+		0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+Extras.swift"; sourceTree = "<group>"; };
 		0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
 		0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIimage+Extras.swift"; sourceTree = "<group>"; };
 		0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extras.swift"; sourceTree = "<group>"; };
@@ -190,12 +188,11 @@
 		DA325B3E61983772E398A059CBD8CD5A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0DDC0EA01DCAF3FF00B002C7 /* ActionBlocks.swift */,
+				0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */,
 				0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */,
-				0DDC0EA21DCAF3FF00B002C7 /* NibControl.swift */,
 				0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */,
-				0DDC0EA41DCAF3FF00B002C7 /* Segue.swift */,
-				0DDC0EA51DCAF3FF00B002C7 /* Storyboard.swift */,
+				0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */,
+				0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */,
 				0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */,
 				0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */,
 				0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */,
@@ -324,15 +321,14 @@
 				0DDC0EB51DCAF3FF00B002C7 /* UIimage+Extras.swift in Sources */,
 				142FC4E156B47660C251E351B30C5B09 /* ExtraKit-dummy.m in Sources */,
 				0DDC0EBB1DCAF3FF00B002C7 /* UITextField+PickerView.swift in Sources */,
-				0DDC0EB21DCAF3FF00B002C7 /* Segue.swift in Sources */,
+				0DDC0EB21DCAF3FF00B002C7 /* Segue+Extras.swift in Sources */,
 				0DDC0EB11DCAF3FF00B002C7 /* NSObject+Extras.swift in Sources */,
-				0DDC0EB31DCAF3FF00B002C7 /* Storyboard.swift in Sources */,
-				0DDC0EB01DCAF3FF00B002C7 /* NibControl.swift in Sources */,
+				0DDC0EB31DCAF3FF00B002C7 /* Storyboard+Extras.swift in Sources */,
 				0DDC0EB81DCAF3FF00B002C7 /* UIResponder+TextInput.swift in Sources */,
 				0DDC0EBA1DCAF3FF00B002C7 /* UITextField+DatePicker.swift in Sources */,
 				0DDC0EB91DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift in Sources */,
 				0DDC0EB71DCAF3FF00B002C7 /* UIKit+Extras.swift in Sources */,
-				0DDC0EAE1DCAF3FF00B002C7 /* ActionBlocks.swift in Sources */,
+				0DDC0EAE1DCAF3FF00B002C7 /* UIControl+Blocks.swift in Sources */,
 				0DDC0EAF1DCAF3FF00B002C7 /* Foundation+Extensions.swift in Sources */,
 				0DDC0EB41DCAF3FF00B002C7 /* String+Extras.swift in Sources */,
 			);
@@ -476,6 +472,7 @@
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -485,6 +482,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -520,6 +518,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -530,6 +529,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
