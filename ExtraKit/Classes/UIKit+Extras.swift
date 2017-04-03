@@ -55,18 +55,6 @@ public extension UIWindow {
     }
 }
 
-public extension Notification {
-
-	var keyboardFrameEnd: CGRect?
-	{
-        if let info = (self as NSNotification).userInfo, let value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            return value.cgRectValue
-        } else {
-            return nil
-        }
-    }
-}
-
 public extension UIView {
 
 	func findFirstResponder() -> UIView? {

@@ -28,7 +28,7 @@ public extension UIControl {
 			return nil
 		}
 		return TargetBlock(block).configure {
-			addTarget($0, action: #selector(TargetBlock.execute(_:)), for: controlEvents)
+			addTarget($0, action: #selector(TargetBlock.execute(_:)), for: event)
 			self.targetBlocks.add($0)
 		}
 	}
