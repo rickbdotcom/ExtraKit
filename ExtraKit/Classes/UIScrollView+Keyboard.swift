@@ -13,6 +13,7 @@ public extension UIScrollView {
 class KeyboardNotificationObserver: NSObject {
 	weak var scrollView: UIScrollView?
 	var contentInset: UIEdgeInsets?
+	var scrollIndicatorInsets: UIEdgeInsets?
 	
 	init(scrollView: UIScrollView) {
 		super.init()
@@ -23,7 +24,11 @@ class KeyboardNotificationObserver: NSObject {
 			if self?.contentInset == nil {
 				self?.contentInset = scrollView.contentInset
 			}
+			if self?.scrollIndicatorInsets == nil {
+				self?.scrollIndicatorInsets = scrollView.scrollIndicatorInsets
+			}
 			scrollView.contentInset.bottom = self?.adjustedKeyboardFrameHeight(note) ?? 0
+			scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
 			self?.scrollToVisibleResponder(note)
 		}
 		
@@ -31,6 +36,10 @@ class KeyboardNotificationObserver: NSObject {
 			if let contentInset = self?.contentInset {
 				self?.scrollView?.contentInset = contentInset
 				self?.contentInset = nil
+			}
+			if let scrollIndicatorInsets = self?.scrollIndicatorInsets {
+				self?.scrollView?.scrollIndicatorInsets = scrollIndicatorInsets
+				self?.scrollIndicatorInsets = nil
 			}
 		}
 	}

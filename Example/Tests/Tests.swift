@@ -16,7 +16,7 @@ class Tests: XCTestCase {
 		let button = UIButton()
 		button.on(.touchUpInside) { (b: UIButton) in
 			print("touch up inside")
-		}
+		}g
         XCTAssert(true, "Pass")
     }
 }
