@@ -16,7 +16,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/rickbdotcom/ExtraKit.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '9.0'
-
+  s.module_name = 'ExtraKit'
   s.source_files = 'ExtraKit/Classes/**/*'
   s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DAPPEX' }
 end
