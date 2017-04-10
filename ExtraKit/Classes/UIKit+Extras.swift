@@ -30,7 +30,11 @@ public extension UIAlertController {
 public extension UIApplication {
 
 	class func visibleViewController() -> UIViewController? {
+#if APPEX
+		return nil
+#else
 		return shared.delegate?.window??.visibleViewController
+#endif
 	}
 }
 

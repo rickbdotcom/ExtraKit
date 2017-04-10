@@ -1,9 +1,9 @@
 #
-# Be sure to run `pod lib lint ExtraKit.podspec' to ensure this is a
+# Be sure to run `pod lib lint ExtraKitAppEx.podspec' to ensure this is a
 # valid spec before submitting.
 
 Pod::Spec.new do |s|
-  s.name             = 'ExtraKit'
+  s.name             = 'ExtraKitAppEx'
   s.version          = '0.1.1'
   s.summary          = 'A collection of useful Swift extensions.'
   s.description      = <<-DESC
@@ -18,4 +18,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'ExtraKit/Classes/**/*'
+  s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DAPPEX' }
 end
+
+
