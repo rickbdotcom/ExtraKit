@@ -26,8 +26,8 @@ public extension UIAlertController {
 			return self
 	}
 
-	class func set(rootWindow w: UIWindow?) {
-		rootWindow = w
+	class func set(rootWindow window: UIWindow?) {
+		rootWindow = window
 	}
 }
 
