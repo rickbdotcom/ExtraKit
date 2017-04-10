@@ -22,21 +22,16 @@ public extension UIAlertController {
 	}
 	
 	@discardableResult func show(_ viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> UIAlertController {
-		(viewController ?? UIApplication.visibleViewController())?.present(self, animated: animated, completion: completion)
+		(viewController ?? rootWindow?.visibleViewController)?.present(self, animated: animated, completion: completion)
 			return self
 	}
-}
 
-public extension UIApplication {
-
-	class func visibleViewController() -> UIViewController? {
-#if APPEX
-		return nil
-#else
-		return shared.delegate?.window??.visibleViewController
-#endif
+	class func set(rootWindow w: UIWindow?) {
+		rootWindow = w
 	}
 }
+
+fileprivate weak var rootWindow: UIWindow?
 
 public extension UIWindow {
 
