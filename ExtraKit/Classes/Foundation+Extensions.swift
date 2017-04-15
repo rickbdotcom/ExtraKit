@@ -24,6 +24,6 @@ public func clamp<T: Comparable>(_ value: T, min mn: T, max mx: T) -> T
 
 public extension URL {
 	static func temporaryFile(withExtension ext: String? = nil) -> URL {
-		return URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + (ext ?? ""))
+		return URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + (".\(ext)" ?? ""))
 	}
 }
