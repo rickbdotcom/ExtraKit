@@ -7,7 +7,11 @@ public extension String {
 		return NSLocalizedString(self, comment: "")
 	}
 	
-	func localizedFormat(_ args: [CVarArg]) -> String {
+	func localized(key: String, tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> String {
+		return NSLocalizedString(key, tableName:  tableName, bundle: bundle ?? Bundle.main, value: value ?? self, comment: "")
+	}
+	
+	func localized(format args: [CVarArg]) -> String {
 		return String(format: self.localized, locale: Locale.current, arguments: args)
 	}
 }
@@ -18,15 +22,16 @@ public extension RawRepresentable where RawValue==String{
 		return rawValue.localized
 	}
 
-	func localized(_ args: CVarArg...) -> RawValue {
-		return rawValue.localizedFormat(args)
+	func localized(key: String, tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> RawValue {
+		return rawValue.localized(key: key, tableName: tableName, bundle: bundle, value: value)
+	}
+
+	func localized(format args: CVarArg...) -> RawValue {
+		return rawValue.localized(format: args)
 	}
 }
 
-public protocol OptionalString { }
-extension String: OptionalString { }
-
-public extension Optional where Wrapped: OptionalString {
+public extension Optional where Wrapped == String {
 
     var isEmptyOrNil: Bool {
         return ((self as? String) ?? "").isEmpty
@@ -36,7 +41,6 @@ public extension Optional where Wrapped: OptionalString {
         return isEmptyOrNil || ((self as? String)?.isOnlySpaces ?? false)
     }
 }
-
 
 public extension String {
 
@@ -85,6 +89,7 @@ public extension String {
 }
 
 public extension Sequence where Iterator.Element == String {
+
     public func joinedEmptyNilSpace(separator: String = "") -> String {
 		return flatMap { $0.emptyNilSpace }.joined(separator: separator)
 	}
