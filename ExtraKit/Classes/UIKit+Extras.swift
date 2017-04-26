@@ -7,11 +7,11 @@ public extension UIAlertController {
 	}
 	
 	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: (()->Void)? = nil) -> Self {
-		return action(title: "OK".localized, style: style, action: inAction)
+		return action(title: "OK".localized(), style: style, action: inAction)
 	}
 
 	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: (()->Void)? = nil) -> Self {
-		return action(title: "Cancel".localized, style: style, action: inAction)
+		return action(title: "Cancel".localized(), style: style, action: inAction)
 	}
 	
 	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: (()->Void)? = nil) -> Self {

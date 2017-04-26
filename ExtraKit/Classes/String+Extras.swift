@@ -3,31 +3,45 @@ import MobileCoreServices
 
 public extension String {
 	
-	var localized: String {
-		return NSLocalizedString(self, comment: "")
-	}
-	
-	func localized(_ tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> String {
+	func localized(tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> String {
 		return NSLocalizedString(self, tableName:  tableName, bundle: bundle ?? Bundle.main, value: value ?? self, comment: "")
 	}
 	
-	func localized(format args: [CVarArg]) -> String {
-		return String(format: self.localized, locale: Locale.current, arguments: args)
+	func localized(tableName: String? = nil, format args: [CVarArg]) -> String {
+		return String(format: self.localized(tableName: tableName), locale: Locale.current, arguments: args)
 	}
 }
 
 public extension RawRepresentable where RawValue==String{
 
-	var localized: RawValue {
-		return rawValue.localized
+	func localized(tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> RawValue {
+		return rawValue.localized(tableName: tableName, bundle: bundle, value: value)
 	}
 
-	func localized(_ tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> RawValue {
-		return rawValue.localized(tableName, bundle: bundle, value: value)
+	func localized(tableName: String? = nil, format args: CVarArg...) -> RawValue {
+		return rawValue.localized(tableName: tableName, format: args)
 	}
+}
 
-	func localized(format args: CVarArg...) -> RawValue {
-		return rawValue.localized(format: args)
+public protocol StringTable {
+	var tableName: String? { get }
+}
+
+public extension StringTable where Self: RawRepresentable, Self.RawValue == String {
+	
+	func localized(bundle: Bundle? = nil, value: String? = nil) -> RawValue {
+		return localized(tableName: tableName, bundle: bundle, value: value)
+	}
+}
+
+public protocol StringTableBundle: StringTable {
+	var bundle: Bundle? { get }
+}
+
+public extension StringTableBundle where Self: RawRepresentable, Self.RawValue == String {
+	
+	func localized(value: String? = nil) -> RawValue {
+		return localized(tableName: tableName, bundle: bundle, value: value)
 	}
 }
 

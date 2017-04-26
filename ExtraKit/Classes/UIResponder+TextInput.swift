@@ -60,7 +60,7 @@ public extension UIResponder {
 	func createPreviousNextDoneInputAccessory() {
 		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
-		let segmentControl = UISegmentedControl(items: ["Prev".localized,"Next".localized])
+		let segmentControl = UISegmentedControl(items: ["Prev".localized(),"Next".localized()])
 		segmentControl.sizeToFit()
 		segmentControl.isMomentary = true
 		segmentControl.addTarget(self, action: #selector(prevNextResponder(_:)), for: .valueChanged)
