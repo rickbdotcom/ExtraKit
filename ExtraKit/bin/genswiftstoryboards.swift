@@ -2,6 +2,7 @@
 
 import Foundation
 
+
 let outputPath = CommandLine.arguments[1]
 let structName = CommandLine.arguments[2]
 
@@ -49,6 +50,9 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 			vcs.append(contentsOf: cs)
 		}
 		if let cs = try doc.nodes(forXPath:"//navigationController") as? [XMLElement] {
+			vcs.append(contentsOf: cs)
+		}
+		if let cs = try doc.nodes(forXPath:"//splitViewController") as? [XMLElement] {
 			vcs.append(contentsOf: cs)
 		}
 		guard vcs.count > 0 else {
@@ -102,6 +106,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 
 outputString.addLine("struct \(structName) {")
 outputString.addLine("")
+
 CommandLine.arguments[3..<CommandLine.arguments.count].forEach {
 	generateStoryboardIdentifierSourceFile($0)
 }
