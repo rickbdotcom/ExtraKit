@@ -1,4 +1,4 @@
-w#!/bin/bash
+#!/bin/bash
 
 while true; do
   case "$1" in
