@@ -20,7 +20,12 @@ public extension UIAlertController {
 		})
 		return self
 	}
-	
+
+	@discardableResult func textField(configurationHandler: ((UITextField) -> Void)? = nil) -> Self {
+		addTextField(configurationHandler: configurationHandler)
+		return self
+	}
+
 	@discardableResult func show(_ viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
 		(viewController ?? rootWindow?.visibleViewController)?.present(self, animated: animated, completion: completion)
 			return self
