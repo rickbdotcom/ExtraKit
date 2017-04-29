@@ -54,6 +54,10 @@ public extension UITextField
 		return pickerView
 	}
 	
+	func pickerViewSelectedValue(component: Int = 0) -> String? {
+		return pickerView?.selectedValue(component)
+	}
+	
 	func pickerViewSelect(row: Int, component: Int = 0, animated: Bool = false) {
 		pickerView?.selectRow(row, inComponent: component, animated: true)
 		text = pickerView?.components[component][row]

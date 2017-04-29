@@ -7,7 +7,7 @@ public extension String {
 		return NSLocalizedString(self, tableName:  tableName, bundle: bundle ?? Bundle.main, value: value ?? self, comment: "")
 	}
 	
-	func localized(tableName: String? = nil, format args: [CVarArg]) -> String {
+	func localizedFormat(tableName: String? = nil, _ args: [CVarArg]) -> String {
 		return String(format: self.localized(tableName: tableName), locale: Locale.current, arguments: args)
 	}
 }
@@ -18,8 +18,8 @@ public extension RawRepresentable where RawValue==String{
 		return rawValue.localized(tableName: tableName, bundle: bundle, value: value)
 	}
 
-	func localized(tableName: String? = nil, format args: CVarArg...) -> RawValue {
-		return rawValue.localized(tableName: tableName, format: args)
+	func localizedFormat(tableName: String? = nil, _ args: CVarArg...) -> RawValue {
+		return rawValue.localizedFormat(tableName: tableName, args)
 	}
 }
 
