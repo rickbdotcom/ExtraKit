@@ -60,7 +60,7 @@ func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 		return
 	}
 	
-	outputString += "\nenum Format\(enumName): String {\n\n"
+	outputString += "\nenum Format\(enumName): String{\n\n"
 
 	stringsDict.allKeys.forEach {
 		if let s = $0 as? String, validSwiftString(s) {
