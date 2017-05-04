@@ -211,6 +211,15 @@ public extension UIView {
 			layer.cornerRadius = newValue
 		}
 	}
+
+	@IBInspectable var borderWidth: CGFloat {
+		get {
+			return layer.borderWidth
+		}
+		set {
+			layer.borderWidth = newValue
+		}
+	}
 }
 
 public extension UITableView {
