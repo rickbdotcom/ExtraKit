@@ -26,3 +26,7 @@ public extension URL {
 		return URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))
 	}
 }
+
+internal func ekFunction(_ functionName: String = #function) -> String {
+	return "com.rickb.extrakit.\(functionName)"
+}

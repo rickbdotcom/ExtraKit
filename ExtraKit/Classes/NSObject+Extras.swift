@@ -7,12 +7,10 @@ public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
 		get {
-			if let dict = objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary {
-				return dict
+			return objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary
+			?? NSMutableDictionary().configure {
+				objc_setAssociatedObject(self, &associatedDictionaryKey, $0, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 			}
-			let dict = NSMutableDictionary()
-			objc_setAssociatedObject(self, &associatedDictionaryKey, dict, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-			return dict
 		}
 	}
 	
