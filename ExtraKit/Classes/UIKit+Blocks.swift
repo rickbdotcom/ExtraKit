@@ -66,7 +66,7 @@ public extension UITextView {
 	var textViewDelegate: TextViewDelegate {
 		get {
 			return associatedValue(forKey: ekFunction()) ?? TextViewDelegate(textView: self).configure {
-				set(weakAssociatedValue: $0, forKey: ekFunction())
+				set(associatedValue: $0, forKey: ekFunction())
 			}
 		}
 	}
