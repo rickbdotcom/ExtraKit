@@ -1,6 +1,11 @@
 import UIKit
 import MobileCoreServices
 
+public protocol Localizable {
+	func localized(tableName: String?, bundle: Bundle?, value: String?) -> String
+	func localizedFormat(tableName: String?, _ args: CVarArg...) -> String
+}
+
 public extension String {
 	
 	func localized(tableName: String? = nil, bundle: Bundle? = nil, value: String? = nil) -> String {

@@ -15,7 +15,7 @@ func generateStringsSourceFile(_ stringsPath: String) {
 		return
 	}
 	
-	outputString += "enum \(enumName): String"
+	outputString += "enum \(enumName): String, Localizable"
 	if tableName != "nil" {
 		outputString += ", StringTable {\n\n"
 	} else {
@@ -60,7 +60,7 @@ func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 		return
 	}
 	
-	outputString += "\nenum Format\(enumName): String{\n\n"
+	outputString += "\nenum Format\(enumName): String, Localizable {\n\n"
 
 	stringsDict.allKeys.forEach {
 		if let s = $0 as? String, validSwiftString(s) {
