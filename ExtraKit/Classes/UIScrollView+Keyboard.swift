@@ -32,7 +32,8 @@ class KeyboardNotificationObserver: NSObject {
 			}
 			scrollView.contentInset.bottom = self?.adjustedKeyboardFrameHeight(note) ?? 0
 			scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
-			self?.scrollToVisibleResponder(note)
+// not sure about this	
+			// self?.scrollToVisibleResponder(note)
 		}
 		
 		startObserving(NSNotification.Name.UIKeyboardWillHide) { [weak self] note in
@@ -50,7 +51,7 @@ class KeyboardNotificationObserver: NSObject {
 		}
 	}
 	
-	func scrollToVisibleResponder(_ note: Notification) {
+/*	func scrollToVisibleResponder(_ note: Notification) {
 		if let scrollView = scrollView
 		, let window = scrollView.window
 		, let keyboardFrame = note.keyboardFrameEnd
@@ -58,7 +59,7 @@ class KeyboardNotificationObserver: NSObject {
 		, scrollView.convert(window.convert(keyboardFrame, from: nil), from: nil).intersects(revealView.frame) {
 			scrollView.scrollRectToVisible(revealView.frame, animated: true)
 		}
-	}
+	}*/
 	
 	func adjustedKeyboardFrameHeight(_ note: Notification) -> CGFloat {
 		guard let scrollView = scrollView, let keyboardFrame = note.keyboardFrameEnd else {
