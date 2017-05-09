@@ -21,6 +21,9 @@ class KeyboardNotificationObserver: NSObject {
 		self.scrollView = scrollView
 
 		startObserving(NSNotification.Name.UIKeyboardWillChangeFrame) { [weak self] note in
+			guard let scrollView = self?.scrollView else {
+				return
+			}
 			if self?.contentInset == nil {
 				self?.contentInset = scrollView.contentInset
 			}
@@ -33,12 +36,15 @@ class KeyboardNotificationObserver: NSObject {
 		}
 		
 		startObserving(NSNotification.Name.UIKeyboardWillHide) { [weak self] note in
+			guard let scrollView = self?.scrollView else {
+				return
+			}
 			if let contentInset = self?.contentInset {
-				self?.scrollView?.contentInset = contentInset
+				scrollView.contentInset = contentInset
 				self?.contentInset = nil
 			}
 			if let scrollIndicatorInsets = self?.scrollIndicatorInsets {
-				self?.scrollView?.scrollIndicatorInsets = scrollIndicatorInsets
+				scrollView.scrollIndicatorInsets = scrollIndicatorInsets
 				self?.scrollIndicatorInsets = nil
 			}
 		}
