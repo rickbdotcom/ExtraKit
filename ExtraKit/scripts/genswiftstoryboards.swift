@@ -59,7 +59,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 			if let storyboardIdentifier = vc.attribute(forName:"storyboardIdentifier")?.stringValue
 			, let id = vc.attribute(forName:"id")?.stringValue {
 				var segues = [String]()
-				if let segueNodes = try? vc.nodes(forXPath:".//segue") {
+				if let segueNodes = try? vc.nodes(forXPath:"..//segue") {
 					segueNodes.forEach {
 						if let elem = ($0 as? XMLElement)
 						,  let identifier = elem.attribute(forName:"identifier")?.stringValue
