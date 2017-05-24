@@ -100,6 +100,10 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 	}
 }
 
+outputString += "/**\n"
+outputString += "\tThese are generated from the storyboards used by the app.\n";
+outputString += "\tYou can use UIViewController.perform(segue: StoryboardSceneSegue) and StoryboardScene.instantiateViewController()\n";
+outputString += "*/\n"
 outputString.addLine("struct \(structName) {")
 outputString.addLine("")
 CommandLine.arguments[3..<CommandLine.arguments.count].forEach {

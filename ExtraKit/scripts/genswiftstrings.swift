@@ -15,6 +15,10 @@ func generateStringsSourceFile(_ stringsPath: String) {
 		return
 	}
 	
+	let fileName = URL(fileURLWithPath: stringsPath).lastPathComponent
+	outputString += "/**\n"
+	outputString += "\tThese are generated from \(fileName). Call localized() to get the localized string.\n";
+	outputString += "*/\n"
 	outputString += "enum \(enumName): String, Localizable"
 	if tableName != "nil" {
 		outputString += ", StringTable {\n\n"
