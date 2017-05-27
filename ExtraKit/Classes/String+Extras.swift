@@ -53,11 +53,11 @@ public extension StringTableBundle where Self: RawRepresentable, Self.RawValue =
 public extension Optional where Wrapped == String {
 
     var isEmptyOrNil: Bool {
-        return ((self as? String) ?? "").isEmpty
+        return (self ?? "").isEmpty
     }
 
     var isEmptyOrNilOrSpaces: Bool {
-        return isEmptyOrNil || ((self as? String)?.isOnlySpaces ?? false)
+        return isEmptyOrNil || (self?.isOnlySpaces ?? false)
     }
 }
 

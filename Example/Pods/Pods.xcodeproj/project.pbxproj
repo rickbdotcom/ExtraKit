@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DDC0EAE1DCAF3FF00B002C7 /* UIControl+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */; };
-		0DDC0EAF1DCAF3FF00B002C7 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */; };
-		0DDC0EB11DCAF3FF00B002C7 /* NSObject+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */; };
-		0DDC0EB21DCAF3FF00B002C7 /* Segue+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */; };
-		0DDC0EB31DCAF3FF00B002C7 /* Storyboard+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */; };
-		0DDC0EB41DCAF3FF00B002C7 /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */; };
-		0DDC0EB51DCAF3FF00B002C7 /* UIimage+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */; };
-		0DDC0EB71DCAF3FF00B002C7 /* UIKit+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */; };
-		0DDC0EB81DCAF3FF00B002C7 /* UIResponder+TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EAA1DCAF3FF00B002C7 /* UIResponder+TextInput.swift */; };
-		0DDC0EB91DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EAB1DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift */; };
-		0DDC0EBA1DCAF3FF00B002C7 /* UITextField+DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EAC1DCAF3FF00B002C7 /* UITextField+DatePicker.swift */; };
-		0DDC0EBB1DCAF3FF00B002C7 /* UITextField+PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDC0EAD1DCAF3FF00B002C7 /* UITextField+PickerView.swift */; };
+		0D064E5A1ED96019003AF941 /* CoreGraphics+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E4D1ED96019003AF941 /* CoreGraphics+Extras.swift */; };
+		0D064E5B1ED96019003AF941 /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E4E1ED96019003AF941 /* Foundation+Extensions.swift */; };
+		0D064E5C1ED96019003AF941 /* NSObject+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E4F1ED96019003AF941 /* NSObject+Extras.swift */; };
+		0D064E5D1ED96019003AF941 /* Segue+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E501ED96019003AF941 /* Segue+Extras.swift */; };
+		0D064E5E1ED96019003AF941 /* Storyboard+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E511ED96019003AF941 /* Storyboard+Extras.swift */; };
+		0D064E5F1ED96019003AF941 /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E521ED96019003AF941 /* String+Extras.swift */; };
+		0D064E601ED96019003AF941 /* UIimage+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E531ED96019003AF941 /* UIimage+Extras.swift */; };
+		0D064E611ED96019003AF941 /* UIKit+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E541ED96019003AF941 /* UIKit+Blocks.swift */; };
+		0D064E621ED96019003AF941 /* UIKit+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E551ED96019003AF941 /* UIKit+Extras.swift */; };
+		0D064E631ED96019003AF941 /* UIResponder+TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E561ED96019003AF941 /* UIResponder+TextInput.swift */; };
+		0D064E641ED96019003AF941 /* UIScrollView+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E571ED96019003AF941 /* UIScrollView+Keyboard.swift */; };
+		0D064E651ED96019003AF941 /* UITextField+DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E581ED96019003AF941 /* UITextField+DatePicker.swift */; };
+		0D064E661ED96019003AF941 /* UITextField+PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D064E591ED96019003AF941 /* UITextField+PickerView.swift */; };
 		142FC4E156B47660C251E351B30C5B09 /* ExtraKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0977A390B7A5F42C8793935711CF82 /* ExtraKit-dummy.m */; };
 		1AFAADBCCB4415B29829B8C45B28651A /* ExtraKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A99E6AF1D749CAEF2220231F7E2584E /* ExtraKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3562ED79E3F9B392A36EAD0805231C8C /* Pods-ExtraKit_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C91002D722FEFE34429C29CB43C50 /* Pods-ExtraKit_Tests-dummy.m */; };
@@ -41,18 +42,23 @@
 		07FE21AA690FABF659C25A2DC3DF5298 /* Pods_ExtraKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExtraKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		094C233D8772B34B0ADA68BD98BDCD9A /* Pods-ExtraKit_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExtraKit_Tests-umbrella.h"; sourceTree = "<group>"; };
 		0C0977A390B7A5F42C8793935711CF82 /* ExtraKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExtraKit-dummy.m"; sourceTree = "<group>"; };
-		0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Blocks.swift"; sourceTree = "<group>"; };
-		0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
-		0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Segue+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIimage+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extras.swift"; sourceTree = "<group>"; };
-		0DDC0EAA1DCAF3FF00B002C7 /* UIResponder+TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+TextInput.swift"; sourceTree = "<group>"; };
-		0DDC0EAB1DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Keyboard.swift"; sourceTree = "<group>"; };
-		0DDC0EAC1DCAF3FF00B002C7 /* UITextField+DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+DatePicker.swift"; sourceTree = "<group>"; };
-		0DDC0EAD1DCAF3FF00B002C7 /* UITextField+PickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+PickerView.swift"; sourceTree = "<group>"; };
+		0D064E4D1ED96019003AF941 /* CoreGraphics+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Extras.swift"; sourceTree = "<group>"; };
+		0D064E4E1ED96019003AF941 /* Foundation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
+		0D064E4F1ED96019003AF941 /* NSObject+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extras.swift"; sourceTree = "<group>"; };
+		0D064E501ED96019003AF941 /* Segue+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Segue+Extras.swift"; sourceTree = "<group>"; };
+		0D064E511ED96019003AF941 /* Storyboard+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+Extras.swift"; sourceTree = "<group>"; };
+		0D064E521ED96019003AF941 /* String+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
+		0D064E531ED96019003AF941 /* UIimage+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIimage+Extras.swift"; sourceTree = "<group>"; };
+		0D064E541ED96019003AF941 /* UIKit+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Blocks.swift"; sourceTree = "<group>"; };
+		0D064E551ED96019003AF941 /* UIKit+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extras.swift"; sourceTree = "<group>"; };
+		0D064E561ED96019003AF941 /* UIResponder+TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+TextInput.swift"; sourceTree = "<group>"; };
+		0D064E571ED96019003AF941 /* UIScrollView+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Keyboard.swift"; sourceTree = "<group>"; };
+		0D064E581ED96019003AF941 /* UITextField+DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+DatePicker.swift"; sourceTree = "<group>"; };
+		0D064E591ED96019003AF941 /* UITextField+PickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+PickerView.swift"; sourceTree = "<group>"; };
+		0D064E681ED960D2003AF941 /* buildnumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = buildnumber.sh; sourceTree = "<group>"; };
+		0D064E691ED960D2003AF941 /* genswift.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = genswift.sh; sourceTree = "<group>"; };
+		0D064E6A1ED960D2003AF941 /* genswiftstoryboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftstoryboards.swift; sourceTree = "<group>"; };
+		0D064E6B1ED960D2003AF941 /* genswiftstrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftstrings.swift; sourceTree = "<group>"; };
 		1AEDAADF9106E025D26587E805F00276 /* Pods-ExtraKit_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ExtraKit_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		3A99E6AF1D749CAEF2220231F7E2584E /* ExtraKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExtraKit-umbrella.h"; sourceTree = "<group>"; };
 		3D9FBE7A1ED9FE4DBF25E9748C8B9BD8 /* ExtraKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ExtraKit.modulemap; sourceTree = "<group>"; };
@@ -110,6 +116,18 @@
 			path = "Target Support Files/Pods-ExtraKit_Tests";
 			sourceTree = "<group>";
 		};
+		0D064E671ED960D2003AF941 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0D064E681ED960D2003AF941 /* buildnumber.sh */,
+				0D064E691ED960D2003AF941 /* genswift.sh */,
+				0D064E6A1ED960D2003AF941 /* genswiftstoryboards.swift */,
+				0D064E6B1ED960D2003AF941 /* genswiftstrings.swift */,
+			);
+			name = scripts;
+			path = ExtraKit/scripts;
+			sourceTree = "<group>";
+		};
 		3577115F3344F544AD9E267D53A942AB /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +166,7 @@
 		8689D530FC64C78E763B6304C739BFB5 /* ExtraKit */ = {
 			isa = PBXGroup;
 			children = (
+				0D064E671ED960D2003AF941 /* scripts */,
 				4A0C13A4F832ADAB8ADC27A221E19177 /* ExtraKit */,
 				89752E7B2985F69EB65558CC29EA437B /* Support Files */,
 			);
@@ -188,18 +207,19 @@
 		DA325B3E61983772E398A059CBD8CD5A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0DDC0EA01DCAF3FF00B002C7 /* UIControl+Blocks.swift */,
-				0DDC0EA11DCAF3FF00B002C7 /* Foundation+Extensions.swift */,
-				0DDC0EA31DCAF3FF00B002C7 /* NSObject+Extras.swift */,
-				0DDC0EA41DCAF3FF00B002C7 /* Segue+Extras.swift */,
-				0DDC0EA51DCAF3FF00B002C7 /* Storyboard+Extras.swift */,
-				0DDC0EA61DCAF3FF00B002C7 /* String+Extras.swift */,
-				0DDC0EA71DCAF3FF00B002C7 /* UIimage+Extras.swift */,
-				0DDC0EA91DCAF3FF00B002C7 /* UIKit+Extras.swift */,
-				0DDC0EAA1DCAF3FF00B002C7 /* UIResponder+TextInput.swift */,
-				0DDC0EAB1DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift */,
-				0DDC0EAC1DCAF3FF00B002C7 /* UITextField+DatePicker.swift */,
-				0DDC0EAD1DCAF3FF00B002C7 /* UITextField+PickerView.swift */,
+				0D064E4D1ED96019003AF941 /* CoreGraphics+Extras.swift */,
+				0D064E4E1ED96019003AF941 /* Foundation+Extensions.swift */,
+				0D064E4F1ED96019003AF941 /* NSObject+Extras.swift */,
+				0D064E501ED96019003AF941 /* Segue+Extras.swift */,
+				0D064E511ED96019003AF941 /* Storyboard+Extras.swift */,
+				0D064E521ED96019003AF941 /* String+Extras.swift */,
+				0D064E531ED96019003AF941 /* UIimage+Extras.swift */,
+				0D064E541ED96019003AF941 /* UIKit+Blocks.swift */,
+				0D064E551ED96019003AF941 /* UIKit+Extras.swift */,
+				0D064E561ED96019003AF941 /* UIResponder+TextInput.swift */,
+				0D064E571ED96019003AF941 /* UIScrollView+Keyboard.swift */,
+				0D064E581ED96019003AF941 /* UITextField+DatePicker.swift */,
+				0D064E591ED96019003AF941 /* UITextField+PickerView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -283,7 +303,7 @@
 						LastSwiftMigration = 0810;
 					};
 					EDE0CC8E6812204B84E20D0644C9EEF7 = {
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -318,19 +338,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DDC0EB51DCAF3FF00B002C7 /* UIimage+Extras.swift in Sources */,
+				0D064E5A1ED96019003AF941 /* CoreGraphics+Extras.swift in Sources */,
+				0D064E631ED96019003AF941 /* UIResponder+TextInput.swift in Sources */,
+				0D064E651ED96019003AF941 /* UITextField+DatePicker.swift in Sources */,
 				142FC4E156B47660C251E351B30C5B09 /* ExtraKit-dummy.m in Sources */,
-				0DDC0EBB1DCAF3FF00B002C7 /* UITextField+PickerView.swift in Sources */,
-				0DDC0EB21DCAF3FF00B002C7 /* Segue+Extras.swift in Sources */,
-				0DDC0EB11DCAF3FF00B002C7 /* NSObject+Extras.swift in Sources */,
-				0DDC0EB31DCAF3FF00B002C7 /* Storyboard+Extras.swift in Sources */,
-				0DDC0EB81DCAF3FF00B002C7 /* UIResponder+TextInput.swift in Sources */,
-				0DDC0EBA1DCAF3FF00B002C7 /* UITextField+DatePicker.swift in Sources */,
-				0DDC0EB91DCAF3FF00B002C7 /* UIScrollView+Keyboard.swift in Sources */,
-				0DDC0EB71DCAF3FF00B002C7 /* UIKit+Extras.swift in Sources */,
-				0DDC0EAE1DCAF3FF00B002C7 /* UIControl+Blocks.swift in Sources */,
-				0DDC0EAF1DCAF3FF00B002C7 /* Foundation+Extensions.swift in Sources */,
-				0DDC0EB41DCAF3FF00B002C7 /* String+Extras.swift in Sources */,
+				0D064E601ED96019003AF941 /* UIimage+Extras.swift in Sources */,
+				0D064E621ED96019003AF941 /* UIKit+Extras.swift in Sources */,
+				0D064E5D1ED96019003AF941 /* Segue+Extras.swift in Sources */,
+				0D064E5E1ED96019003AF941 /* Storyboard+Extras.swift in Sources */,
+				0D064E5F1ED96019003AF941 /* String+Extras.swift in Sources */,
+				0D064E5C1ED96019003AF941 /* NSObject+Extras.swift in Sources */,
+				0D064E611ED96019003AF941 /* UIKit+Blocks.swift in Sources */,
+				0D064E641ED96019003AF941 /* UIScrollView+Keyboard.swift in Sources */,
+				0D064E661ED96019003AF941 /* UITextField+PickerView.swift in Sources */,
+				0D064E5B1ED96019003AF941 /* Foundation+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

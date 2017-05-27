@@ -232,3 +232,16 @@ public extension UITableView {
 		UIView.setAnimationsEnabled(true)
 	}
 }
+
+public extension UITextField {
+
+	@IBOutlet var leftViewOutlet: UIView? {
+		get { return leftView }
+		set { leftView = newValue; leftViewMode = .always }
+	}
+
+	@IBOutlet var rightViewOutlet: UIView? {
+		get { return rightView }
+		set { rightView = newValue; rightViewMode = .always }
+	}
+}
