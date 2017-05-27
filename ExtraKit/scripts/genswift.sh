@@ -16,6 +16,7 @@ while true; do
     --fonts-src) FONTS_SRC=$2; shift; shift ;;
     --fonts-enum) FONTS_ENUM=$2; shift; shift ;;
 
+	--info-plist) INFO_PLIST=$2; shift; shift ;;
     * ) break ;;
   esac
 done
@@ -31,5 +32,5 @@ if [ -n "$STORYBOARDS_SRC" ]; then
 fi
 
 if [ -n "$FONTS_SRC" ]; then
-	find "$FONTS_DIR" -type f \( -iname "*.ttf" -o -iname "*.otf" \) -print0 | xargs -0 "$DIR/genswiftfonts.swift" "$FONTS_SRC" $FONTS_ENUM
+	"$DIR/genswiftfonts.swift" "$FONTS_SRC" $FONTS_ENUM "$FONTS_DIR" "$INFO_PLIST"
 fi

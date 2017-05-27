@@ -122,7 +122,9 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 }
 
 outputString += "/**\n"
-outputString += "\tThese are generated from the storyboards used by the app.\n";
+outputString += "\tGenerated from the storyboards used by the app.\n";
+outputString += "\tUsage: \(structName).<StoryboardName>.<StoryboardId>.Segues().<SegueIdentifier>\n";
+outputString += "\tUsage: \(structName).<StoryboardName>.<StoryboardId>().instantiateViewController()\n";
 outputString += "*/\n"
 outputString.addLine("struct \(structName) {")
 outputString.addLine("")

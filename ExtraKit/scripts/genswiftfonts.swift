@@ -25,22 +25,24 @@ func generateFontEnum(_ path: String) {
 		}
 		outputString += "\n"
 	}
-	
 }
 
-
-CommandLine.arguments[0..<CommandLine.arguments.count].forEach {
-	print($0)
-}
 let outputPath = CommandLine.arguments[1]
 let enumName = CommandLine.arguments[2]
+let fontDir = CommandLine.arguments[3]
+let infoPlist = CommandLine.arguments[4]
 
-outputString += "enum \(enumName): String, FontRepresentable {\n\n"
+outputString += "/**\n"
+outputString += "\tGenerated from UIAppFonts in Info.plist and NSFont.fontName.\n"
+outputString += "\tUsage: \(enumName).<font>.font(size: <size>)\n"
+outputString += "*/\n"
 
-CommandLine.arguments[3..<CommandLine.arguments.count].forEach {
-	generateFontEnum($0)
+if let appFonts = (NSDictionary(contentsOfFile: infoPlist) as? [String: Any])?["UIAppFonts"] as? [String] {
+	outputString += "enum \(enumName): String, FontRepresentable {\n\n"
+	appFonts.forEach {
+		generateFontEnum("\(fontDir)/\($0)")
+	}
+	outputString += "}\n\n"
 }
-
-outputString += "}\n\n"
 
 try! outputString.write(toFile:outputPath, atomically: true, encoding: String.Encoding.utf8)
