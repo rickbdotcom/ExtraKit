@@ -16,33 +16,9 @@ public extension StoryboardScene {
 	}
 }
 
-public protocol StoryboardSceneSegue {
-	var segueID: String { get }
-}
-
 extension UIViewController {
-
-	public func perform(segue: StoryboardSceneSegue, sender: Any? = nil) {
-		self.performSegue(withIdentifier: segue.segueID, sender: sender)
-	}
-
-	public func perform(segue: StoryboardSceneSegue, action: @escaping (UIStoryboardSegue)->Void) {
-		self.performSegue(withIdentifier: segue.segueID, action: action)
-	}
 
 	public func performSegue(withIdentifier identifier: String, action: @escaping (UIStoryboardSegue)->Void) {
 		self.performSegue(withIdentifier: identifier, sender: SegueAction(action))
-	}
-}
-
-public extension StoryboardScene where Self:RawRepresentable, Self.RawValue == String  {
-	var storyboardID: String {
-		return rawValue
-	}
-}
-
-public extension StoryboardSceneSegue where Self:RawRepresentable, Self.RawValue == String  {
-	var segueID: String {
-		return rawValue
 	}
 }

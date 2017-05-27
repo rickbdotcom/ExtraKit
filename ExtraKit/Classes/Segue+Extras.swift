@@ -59,3 +59,8 @@ class PushReplaceSegue : UIStoryboardSegue {
 		}
 	}
 }
+
+public extension UIViewController {
+	@IBAction func unwindToPreviousViewController(_ segue: UIStoryboardSegue) {
+	}
+}
