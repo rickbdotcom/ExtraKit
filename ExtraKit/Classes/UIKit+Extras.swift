@@ -119,6 +119,18 @@ public extension UIFont {
 	}
 }
 
+public protocol FontRepresentable {
+	func font(size: CGFloat) -> UIFont?
+}
+
+
+public extension FontRepresentable where Self: RawRepresentable, Self.RawValue == String {
+
+	func font(size: CGFloat) -> UIFont? {
+		return UIFont(name: rawValue, size: size)
+	}
+}
+
 public extension UIViewController {
 
 	func dismissPresentedViewControllers() {
