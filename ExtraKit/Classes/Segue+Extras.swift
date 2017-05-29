@@ -41,7 +41,9 @@ class RootNavigationControllerSegue: UIStoryboardSegue {
 class ModalWithNavigationControllerSegue: UIStoryboardSegue {
 
 	override func perform() {
-		source.present(UINavigationController(rootViewController: destination), animated: true, completion: nil)
+		source.present(UINavigationController(rootViewController: destination).configure {
+			$0.modalTransitionStyle = destination.modalTransitionStyle
+		}, animated: true, completion: nil)
 	}
 }
 
