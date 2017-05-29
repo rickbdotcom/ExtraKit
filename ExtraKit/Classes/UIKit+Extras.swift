@@ -133,9 +133,13 @@ public extension FontRepresentable where Self: RawRepresentable, Self.RawValue =
 
 public extension UIViewController {
 
-	func dismissPresentedViewControllers() {
-		presentedViewController?.dismiss(animated: false){
-			self.dismissPresentedViewControllers()
+	func dismissPresentedViewControllers(_ completion: (()->Void)? = nil) {
+		if let presentedViewController = presentedViewController {
+			presentedViewController.dismiss(animated: false){
+				self.dismissPresentedViewControllers(completion)
+			}
+		} else {
+			completion?()
 		}
 	}
 }
