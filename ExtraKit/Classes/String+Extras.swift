@@ -64,7 +64,7 @@ public extension Optional where Wrapped == String {
 public extension String {
 
 	func tag(withClass: CFString) -> String? {
-		return UTTypeCopyPreferredTagWithClass(withClass, self as CFString)?.takeRetainedValue() as String?
+		return UTTypeCopyPreferredTagWithClass(self as CFString, withClass)?.takeRetainedValue() as String?
 	}
 	
 	func uti(withClass: CFString) -> String? {
