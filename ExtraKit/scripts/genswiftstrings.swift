@@ -10,8 +10,8 @@ var tableName = "nil"
 func generateStringsSourceFile(_ stringsPath: String) {
 	let tmpPath = "/var/tmp/strings.plist"
 	systemcommand(["/usr/bin/plutil", "-convert", "binary1", stringsPath, "-o", tmpPath])
-	guard let stringsDict = NSDictionary(contentsOfFile: tmpPath)
-	, stringsDict.count > 0 else {
+	guard let stringsDict = NSDictionary(contentsOfFile: tmpPath),
+	stringsDict.count > 0 else {
 		return
 	}
 	
@@ -60,8 +60,8 @@ func validSwiftString(_ string: String) -> Bool {
 }
 
 func generateFormatStringsSourceFile(_ stringsDictPath: String) {
-	guard let stringsDict = NSDictionary(contentsOfFile: stringsDictPath)
-	, stringsDict.count > 0 else {
+	guard let stringsDict = NSDictionary(contentsOfFile: stringsDictPath),
+	stringsDict.count > 0 else {
 		return
 	}
 	
@@ -91,4 +91,4 @@ if CommandLine.arguments.count >= 4 {
 	generateFormatStringsSourceFile(CommandLine.arguments[3])
 }
 
-try! outputString.write(toFile: outputPath, atomically: true, encoding: String.Encoding.utf8)
+try? outputString.write(toFile: outputPath, atomically: true, encoding: String.Encoding.utf8)
