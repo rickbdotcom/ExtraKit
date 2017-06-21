@@ -1,9 +1,9 @@
 {
   "name": "ExtraKit",
-  "version": "0.1.0",
-  "summary": "A short description of ExtraKit.",
+  "version": "0.1.1",
+  "summary": "A collection of useful Swift extensions.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/ExtraKit",
+  "homepage": "https://github.com/rickbdotcom/ExtraKit",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,15 @@
     "Richard Burgess": "rickb@rickb.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/ExtraKit.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/rickbdotcom/ExtraKit.git",
+    "tag": "0.1.1"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0",
+    "osx": "10.12"
   },
-  "source_files": "ExtraKit/Classes/**/*"
+  "source_files": "ExtraKit/common/*.swift",
+  "ios": {
+    "source_files": "ExtraKit/ios/*.swift"
+  }
 }

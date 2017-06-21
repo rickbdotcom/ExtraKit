@@ -1,4 +1,3 @@
-import UIKit
 import MobileCoreServices
 
 public protocol Localizable {

@@ -1,6 +1,4 @@
 use_frameworks!
 target 'ExtraKit_Tests' do
-  pod 'ExtraKit', :path => '../'
-  
-  
+  pod 'ExtraKit', :path => '../'  
 end

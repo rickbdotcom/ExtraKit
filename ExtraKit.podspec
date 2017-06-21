@@ -18,5 +18,6 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.12'
 
-  s.source_files = 'ExtraKit/Classes/**/*'
+  s.source_files = 'ExtraKit/common/*.swift'
+  s.ios.source_files = 'ExtraKit/ios/*.swift'
 end
