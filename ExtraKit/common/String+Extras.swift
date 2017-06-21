@@ -1,4 +1,9 @@
+
+#if os(OSX)
+import CoreServices
+#elseif os(iOS)
 import MobileCoreServices
+#endif
 
 public protocol Localizable {
 	func localized(tableName: String?, bundle: Bundle?, value: String?) -> String
