@@ -99,7 +99,7 @@ public extension UIResponder {
 		return self.nextTextInputResponder?.becomeNextFirstResponder(self) ?? false
 	}
 
-	func prevNextResponder(_ sender: UISegmentedControl) {
+	@objc func prevNextResponder(_ sender: UISegmentedControl) {
 		if sender.selectedSegmentIndex == 0 {
 			becomePreviousInputResponder()
 		} else {

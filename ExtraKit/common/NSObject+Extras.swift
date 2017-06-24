@@ -52,9 +52,9 @@ public extension NSObject {
 		let originalMethod = class_getInstanceMethod(self, originalSelector)
 		let newMethod = class_getInstanceMethod(self, newSelector)
 		
-		let methodAdded = class_addMethod(self, originalSelector, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))
+		let methodAdded = class_addMethod(self, originalSelector, method_getImplementation(newMethod!), method_getTypeEncoding(newMethod!))
 		if methodAdded {
-			class_replaceMethod(self, newSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
+			class_replaceMethod(self, newSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
 		} else {
 			method_exchangeImplementations(originalMethod, newMethod)
 		}

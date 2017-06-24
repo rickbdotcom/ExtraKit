@@ -240,10 +240,10 @@ public extension UIView {
 
 public extension UITableView {
 
-	func update(_ update:(Void)->Void, animated: Bool) {
+	func update(_ block:()->Void, animated: Bool) {
 		UIView.setAnimationsEnabled(animated)
 		beginUpdates()
-		update()
+		block()
 		endUpdates()
 		UIView.setAnimationsEnabled(true)
 	}

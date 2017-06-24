@@ -8,7 +8,7 @@ open class DatePickerInputView: UIDatePicker
 		return dateFormatter.string(from: date)
 	}
 	
-	func dateChanged() {
+	@objc func dateChanged() {
 		textField?.text = dateString
 		NotificationCenter.default.post(name: NSNotification.Name.UITextFieldTextDidChange, object: textField)
 		textField?.sendActions(for: .editingChanged)

@@ -25,7 +25,7 @@ public extension UIViewController {
 		swizzle(#selector(prepare(for:sender:)), newSelector: #selector(prepareForSegueAction(_:sender:)))
 	}
 	
-	func prepareForSegueAction(_ segue: UIStoryboardSegue, sender: AnyObject?) {
+	@objc func prepareForSegueAction(_ segue: UIStoryboardSegue, sender: AnyObject?) {
 		prepareForSegueAction(segue, sender: sender)
 		segue.perform(action: sender)
 	}

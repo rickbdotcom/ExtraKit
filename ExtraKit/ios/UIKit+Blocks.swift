@@ -110,7 +110,7 @@ class TargetBlock<T:NSObject>: NSObject {
 		self.block = block
 	}
 	
-	func execute(_ control: UIControl) {
+	@objc func execute(_ control: UIControl) {
 		if let control = control as? T {
 			block(control)
 		}
