@@ -238,17 +238,6 @@ public extension UIView {
 	}
 }
 
-public extension UITableView {
-
-	func update(_ block:()->Void, animated: Bool) {
-		UIView.setAnimationsEnabled(animated)
-		beginUpdates()
-		block()
-		endUpdates()
-		UIView.setAnimationsEnabled(true)
-	}
-}
-
 public extension UITextField {
 
 	@IBOutlet var leftViewOutlet: UIView? {
@@ -301,7 +290,7 @@ public extension UITextField {
 				leftView?.backgroundColor = .clear
 				leftViewMode = .always
 			}
-			leftView?.frame = CGRect(x: 0, y: 0, width: leftInset, height: bounds.size.height)
+			leftView?.frame = CGRect(x: 0, y: 0, width: newValue, height: bounds.size.height)
 		}
 	}
 
@@ -315,7 +304,7 @@ public extension UITextField {
 				rightView?.backgroundColor = .clear
 				rightViewMode = .always
 			}
-			rightView?.frame = CGRect(x: 0, y: 0, width: leftInset, height: bounds.size.height)
+			rightView?.frame = CGRect(x: 0, y: 0, width: newValue, height: bounds.size.height)
 		}
 	}
 }
