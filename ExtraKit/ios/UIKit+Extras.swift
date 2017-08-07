@@ -260,4 +260,62 @@ public extension UITextField {
 		get { return rightView }
 		set { rightView = newValue; rightViewMode = .always }
 	}
+	
+	@IBInspectable var leftImage: UIImage? {
+		get {
+			return (leftView as? UIImageView)?.image
+		}
+		set {
+			var imageView = rightView as? UIImageView
+			if imageView == nil {
+				leftView = UIImageView()
+				leftViewMode = .always
+			}
+			imageView?.bounds.size = newValue?.size ?? .zero
+			imageView?.image = newValue
+		}
+	}
+	
+	@IBInspectable var rightImage: UIImage? {
+		get {
+			return (rightView as? UIImageView)?.image
+		}
+		set {
+			var imageView = rightView as? UIImageView
+			if imageView == nil {
+				rightView = UIImageView()
+				rightViewMode = .always
+			}
+			imageView?.bounds.size = newValue?.size ?? .zero
+			imageView?.image = newValue
+		}
+	}
+	
+	@IBInspectable var leftInset: CGFloat {
+		get {
+			return leftView?.bounds.size.width ?? 0.0
+		}
+		set {
+			if leftView == nil {
+				leftView = UIView()
+				leftView?.backgroundColor = .clear
+				leftViewMode = .always
+			}
+			leftView?.frame = CGRect(x: 0, y: 0, width: leftInset, height: bounds.size.height)
+		}
+	}
+
+	@IBInspectable var rightInset: CGFloat {
+		get {
+			return rightView?.bounds.size.width ?? 0.0
+		}
+		set {
+			if rightView == nil {
+				rightView = UIView()
+				rightView?.backgroundColor = .clear
+				rightViewMode = .always
+			}
+			rightView?.frame = CGRect(x: 0, y: 0, width: leftInset, height: bounds.size.height)
+		}
+	}
 }
