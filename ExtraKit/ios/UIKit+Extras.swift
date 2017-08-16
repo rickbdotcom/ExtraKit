@@ -257,13 +257,14 @@ public extension UITextField {
 		set {
 			var imageView = rightView as? UIImageView
 			if imageView == nil {
-				leftView = UIImageView()
+				imageView = UIImageView()
 				leftViewMode = .always
+				leftView = imageView 
 			}
-			imageView?.bounds.size = newValue?.size ?? .zero
 			imageView?.image = newValue
+			imageView?.bounds.size = newValue?.size ?? .zero
 		}
-	}
+	} 
 	
 	@IBInspectable var rightImage: UIImage? {
 		get {
@@ -272,11 +273,12 @@ public extension UITextField {
 		set {
 			var imageView = rightView as? UIImageView
 			if imageView == nil {
-				rightView = UIImageView()
+				imageView = UIImageView()
 				rightViewMode = .always
+				rightView = imageView
 			}
-			imageView?.bounds.size = newValue?.size ?? .zero
 			imageView?.image = newValue
+			imageView?.bounds.size = newValue?.size ?? .zero
 		}
 	}
 	
