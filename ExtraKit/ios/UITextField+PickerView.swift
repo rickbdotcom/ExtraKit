@@ -42,7 +42,7 @@ open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDe
 		textField?.sendActions(for: .editingChanged)
 	}
 	
-	var getText: ((PickerInputView) -> String)?
+	open var getText: ((PickerInputView) -> String)?
 	
 	func text() -> String {
 		if let getText = getText {
