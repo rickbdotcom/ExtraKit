@@ -1,5 +1,7 @@
 #!/usr/bin/env xcrun --sdk macosx swift
 
+// genswift --fonts-dir ./ --fonts-src Fonts.swift --fonts-enum Fonts
+
 import Foundation
 import Cocoa
 

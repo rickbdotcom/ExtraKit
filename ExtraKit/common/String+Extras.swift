@@ -1,4 +1,4 @@
-
+import Foundation
 #if os(OSX)
 import CoreServices
 #elseif os(iOS)

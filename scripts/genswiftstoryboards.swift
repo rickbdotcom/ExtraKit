@@ -1,5 +1,7 @@
 #!/usr/bin/env xcrun --sdk macosx swift
 
+// genswift.sh --storyboards-dir ./ --storyboards-src Storyboards.swift --storyboards-struct Storyboards
+
 // swiftlint:disable cyclomatic_complexity
 
 import Foundation
