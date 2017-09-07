@@ -281,32 +281,45 @@ public extension UITextField {
 			imageView?.bounds.size = newValue?.size ?? .zero
 		}
 	}
+}
+
+public extension UILabel {
 	
-	@IBInspectable var leftInset: CGFloat {
-		get {
-			return leftView?.bounds.size.width ?? 0.0
+	class func useContentInsets() {
+		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
+		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
+		
+	}
+
+	@objc func drawTextWithContentInsets(in rect: CGRect) {
+        drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
+    }
+}
+
+public extension UIView {
+
+	@IBInspectable var contentInsetsString: String? {
+		get { return NSStringFromUIEdgeInsets(contentInsets) }
+		set { contentInsets = UIEdgeInsetsFromString(newValue ?? "") }
+	}
+	
+	var contentInsets: UIEdgeInsets {
+		get { 
+			return associatedValue(forKey: "contentInsets") ?? .zero 
 		}
-		set {
-			if leftView == nil {
-				leftView = UIView()
-				leftView?.backgroundColor = .clear
-				leftViewMode = .always
-			}
-			leftView?.frame = CGRect(x: 0, y: 0, width: newValue, height: bounds.size.height)
+		set { 
+			set(associatedValue: newValue, forKey: "contentInsets") 
+			invalidateIntrinsicContentSize()
 		}
 	}
 
-	@IBInspectable var rightInset: CGFloat {
-		get {
-			return rightView?.bounds.size.width ?? 0.0
-		}
-		set {
-			if rightView == nil {
-				rightView = UIView()
-				rightView?.backgroundColor = .clear
-				rightViewMode = .always
-			}
-			rightView?.frame = CGRect(x: 0, y: 0, width: newValue, height: bounds.size.height)
-		}
+	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
+		var size = intrinsicContentSizeWithContentInsets()
+        size.height += contentInsets.top + contentInsets.bottom 
+        size.width += contentInsets.left + contentInsets.right
+		return size
 	}
 }
+
+
+
