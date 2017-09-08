@@ -320,7 +320,7 @@ public extension UIView {
 	}
 }
 
-extension UIView {
+public extension UIView {
 
 	@IBOutlet weak var containerView: UIView? {
 		get { return weakAssociatedValue() ?? self }

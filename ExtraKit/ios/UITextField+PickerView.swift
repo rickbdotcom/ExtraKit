@@ -3,7 +3,6 @@
 open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate
 {
 	var components = [[String]]()
-	var textAttributes: [NSAttributedStringKey : Any]? = nil
 
 	weak var textField: UITextField?
 
@@ -28,15 +27,7 @@ open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDe
 	open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 		return components[component][row]
 	}
-    
-    open func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-		guard let textAttributes = textAttributes
-		, let string = self.pickerView(pickerView, titleForRow: row, forComponent: component) else {
-			return nil
-		}
-		return NSAttributedString(string: string, attributes: textAttributes)
-    }
-	
+    	
 	open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return components[component].count
 	}
@@ -68,8 +59,8 @@ public extension UITextField
 		return inputView as? PickerInputView
 	}
 	
-	@discardableResult func setPicker(components: [[String]]) -> PickerInputView {
-		let pickerView = PickerInputView()
+	@discardableResult func setPicker(components: [[String]], custom: PickerInputView? = nil) -> PickerInputView {
+		let pickerView = custom ?? PickerInputView()
 		pickerView.components = components
 		pickerView.textField = self
 		pickerView.dataSource = pickerView
