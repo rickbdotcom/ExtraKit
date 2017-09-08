@@ -2,9 +2,7 @@ import UIKit
 
 public extension NSObject {
 	
-	var targetBlocks: NSMutableSet {
-		return getAssociatedValue { NSMutableSet() }() 
-	}
+	var targetBlocks: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
 	
 	func remove(targetBlock: Any?) {
 		if let targetBlock = targetBlock {
@@ -62,9 +60,7 @@ public extension UIBarButtonItem {
 public extension UITextView {
 
 	var textViewDelegate: TextViewDelegate {
-		get {
-			return getAssociatedValue { TextViewDelegate(textView: self) } ()
-		}
+		get { return getAssociatedValue(TextViewDelegate(textView: self)) }
 	}
 }
 

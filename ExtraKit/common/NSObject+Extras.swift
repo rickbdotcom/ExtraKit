@@ -3,6 +3,10 @@ import ObjectiveC
 
 private var associatedDictionaryKey = 0
 
+public protocol NoArgInitable {
+	init()
+}
+
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
@@ -14,13 +18,22 @@ public extension NSObject {
 		}
 	}
 
-	func getAssociatedValue<T>(module: String? = nil, functionName: String? = #function, initialValue: @autoclosure ()-> T) -> T {
+	func getAssociatedValue<T>(module: String? = nil, functionName: String? = #function, _ initialValue: @autoclosure ()-> T) -> T {
 		let key = associatedKey(module: module, functionName: functionName)
 		if let value: T = associatedValue(forKey: key) {
 			return value
 		}
-
 		let value = initialValue()
+		set(associatedValue: value, forKey: key)
+		return value
+	}
+
+	func getAssociatedValue<T: NoArgInitable>(module: String? = nil, functionName: String? = #function) -> T {
+		let key = associatedKey(module: module, functionName: functionName)
+		if let value: T = associatedValue(forKey: key) {
+			return value
+		}
+		let value = T()
 		set(associatedValue: value, forKey: key)
 		return value
 	}
