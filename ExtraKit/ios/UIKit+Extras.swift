@@ -323,11 +323,7 @@ public extension UIView {
 extension UIView {
 
 	@IBOutlet weak var containerView: UIView? {
-		get {
-			return weakAssociatedValue(forKey: "containerView") ?? self
-		}
-		set {
-			set(weakAssociatedValue: newValue, forKey: "containerView")
-		}
+		get { return weakAssociatedValue() ?? self }
+		set { set(weakAssociatedValue: newValue) }
 	}
 }
