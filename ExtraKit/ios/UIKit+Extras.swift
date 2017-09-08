@@ -288,7 +288,6 @@ public extension UILabel {
 	class func useContentInsets() {
 		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
 		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
-		
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
@@ -305,10 +304,10 @@ public extension UIView {
 	
 	var contentInsets: UIEdgeInsets {
 		get { 
-			return associatedValue(forKey: "contentInsets") ?? .zero 
+			return associatedValue() ?? .zero 
 		}
 		set { 
-			set(associatedValue: newValue, forKey: "contentInsets") 
+			set(associatedValue: newValue) 
 			invalidateIntrinsicContentSize()
 		}
 	}
@@ -321,5 +320,14 @@ public extension UIView {
 	}
 }
 
+extension UIView {
 
-
+	@IBOutlet weak var containerView: UIView? {
+		get {
+			return weakAssociatedValue(forKey: "containerView") ?? self
+		}
+		set {
+			set(weakAssociatedValue: newValue, forKey: "containerView")
+		}
+	}
+}

@@ -1,21 +1,18 @@
 import ObjectiveC
 import UIKit
 
-private let prevAssociatedValueKey = "com.rickb.extrakit.UIResponder.previousTextInputResponder"
-private let nextAssociatedValueKey = "com.rickb.extrakit.UIResponder.nextTextInputResponder"
-
 public extension UIResponder {
 
 	@IBOutlet weak var nextTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValue(forKey: nextAssociatedValueKey)
+			return weakAssociatedValue()
 		}
 		set {
 // don't know why I have to do this to avoid crashes when more than 2 textfields are hooked up
 // started doing this when transitioned code to Swift
 // just moved this line of code from the set function to here
 //			set(weakAssociatedValue: newValue, forKey: nextAssociatedValueKey)
-			associatedDictionary[nextAssociatedValueKey] = WeakObjectRef(newValue)
+			associatedDictionary[associatedKey()] = WeakObjectRef(newValue)
 
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
@@ -27,11 +24,11 @@ public extension UIResponder {
 	
 	@IBOutlet weak var previousTextInputResponder: UIResponder? {
 		get {
-			return weakAssociatedValue(forKey: prevAssociatedValueKey)
+			return weakAssociatedValue()
 		}
 		set {
 //			set(weakAssociatedValue: newValue, forKey: prevAssociatedValueKey)
-			associatedDictionary[prevAssociatedValueKey] = WeakObjectRef(newValue)
+			associatedDictionary[associatedKey()] = WeakObjectRef(newValue)
 
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self

@@ -3,9 +3,7 @@ import UIKit
 public extension NSObject {
 	
 	var targetBlocks: NSMutableSet {
-		return associatedValue(forKey: ekFunction()) ?? NSMutableSet().configure {
-			set(associatedValue: $0, forKey: ekFunction())
-		}
+		return getAssociatedValue { NSMutableSet() }() 
 	}
 	
 	func remove(targetBlock: Any?) {
@@ -65,9 +63,7 @@ public extension UITextView {
 
 	var textViewDelegate: TextViewDelegate {
 		get {
-			return associatedValue(forKey: ekFunction()) ?? TextViewDelegate(textView: self).configure {
-				set(associatedValue: $0, forKey: ekFunction())
-			}
+			return getAssociatedValue { TextViewDelegate(textView: self) } ()
 		}
 	}
 }

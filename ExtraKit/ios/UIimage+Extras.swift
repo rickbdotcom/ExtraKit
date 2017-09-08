@@ -1,16 +1,10 @@
 import UIKit
 
-private let imageColorAssociatedValueKey = "com.rickb.extrakit.UIImage.imageWithColor"
-
 public extension UIImage {
 
 	var imageColor: UIColor? {
-		get {
-			return associatedValue(forKey: imageColorAssociatedValueKey)
-		}
-		set {
-			set(associatedValue: newValue, forKey: imageColorAssociatedValueKey)
-		}
+		get { return associatedValue(forKey: associatedKey()) }
+		set { set(associatedValue: newValue, forKey: associatedKey()) }
 	}
 
 	class func draw(size: CGSize,  scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect)->Void) -> UIImage? {

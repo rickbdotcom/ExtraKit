@@ -26,7 +26,3 @@ public extension FileManager {
 		return temporaryDirectory.appendingPathComponent(UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))
 	}
 }
-
-internal func ekFunction(_ functionName: String = #function) -> String {
-	return "com.rickb.extrakit.\(functionName)"
-}

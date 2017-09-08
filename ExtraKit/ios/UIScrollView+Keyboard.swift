@@ -1,12 +1,8 @@
 import UIKit
 
-private let observerAssociatedValueKey = "com.rickb.extrakit.UIScrollView.KeyboardNotificationObserver"
-private let revealViewAssociatedValueKey = "com.rickb.extrakit.UIScrollView.viewForKeyboardReveal"
-
 public extension UIScrollView {
-	func adjustContentInsetForKeyboardFrame()
-	{
-		set(associatedValue: KeyboardNotificationObserver(scrollView: self), forKey: observerAssociatedValueKey)
+	func adjustContentInsetForKeyboardFrame() {
+		set(associatedValue: KeyboardNotificationObserver(scrollView: self))
 	}
 }
 
@@ -81,12 +77,8 @@ class KeyboardNotificationObserver: NSObject {
 public extension UIResponder {
 
 	@IBOutlet public weak var viewForKeyboardReveal: UIView? {
-		get {
-			return weakAssociatedValue(forKey: observerAssociatedValueKey)
-		}
-		set {
-			set(weakAssociatedValue: newValue, forKey: observerAssociatedValueKey)
-		}
+		get { return weakAssociatedValue() }
+		set { set(weakAssociatedValue: newValue) }
 	}
 }
 
