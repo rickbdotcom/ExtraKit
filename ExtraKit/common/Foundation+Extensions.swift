@@ -23,6 +23,9 @@ public func clamp<T: Comparable>(_ value: T, min mn: T, max mx: T) -> T {
 
 public extension FileManager {
 	func temporaryFile(withExtension ext: String? = nil) -> URL {
-		return temporaryDirectory.appendingPathComponent(UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))
+		if #available(iOS 10.0, *) {
+			return temporaryDirectory.appendingPathComponent(UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))
+		} else {
+			return URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))		}
 	}
 }
