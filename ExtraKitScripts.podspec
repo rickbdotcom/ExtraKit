@@ -15,5 +15,5 @@ TODO: Add long description of the pod here.
   s.author           = { 'Richard Burgess' => 'rickb@rickb.com' }
   s.source           = { :http => "#{s.homepage}/releases/download/#{s.version}/scripts.zip" }
   s.preserve_paths = '*'
-  s.exclude_files  = '**/file.zip'
+  s.exclude_files  = '**/*'
 end
