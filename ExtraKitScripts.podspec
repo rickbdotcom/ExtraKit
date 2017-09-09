@@ -14,5 +14,4 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Richard Burgess' => 'rickb@rickb.com' }
   s.source           = { :http => "#{s.homepage}/releases/download/#{s.version}/scripts.zip" }
-  s.source_files     = '**/*'
 end
