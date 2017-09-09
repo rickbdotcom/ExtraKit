@@ -20,4 +20,6 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'ExtraKit/common/*.swift'
   s.ios.source_files = 'ExtraKit/ios/*.swift'
+  s.preserve_path = 'scripts/*'
+  
 end
