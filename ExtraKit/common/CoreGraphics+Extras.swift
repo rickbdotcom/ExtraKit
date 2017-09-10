@@ -42,6 +42,54 @@ public extension CGRect {
 		self.init(origin: CGPoint(x: center.x - size.width / 2.0, y: center.y - size.height / 2.0), size: size)
 	}
 
+	init(size: CGSize) {
+		self.init(origin: .zero, size: size)
+	}
+	
+	init(x: CGFloat? = nil, y : CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) {
+		self.init(x: x ?? 0, y: y ?? 0, width: width ?? 0, height: height ?? 0)
+	}
+	
+	var minXEdge: CGFloat {
+		get { return minX }
+		set { size.width += minX - newValue; origin.x = newValue }
+	}
+
+	var minYEdge: CGFloat {
+		get { return minY }
+		set { size.height += minY - newValue; origin.y = newValue }
+	}
+
+	var maxXEdge: CGFloat {
+		get { return maxX }
+		set { size.width += newValue - maxX }
+	}
+
+	var maxYEdge: CGFloat {
+		get { return maxY }
+		set { size.height += newValue - maxY }
+	}
+	
+	var minXminY: CGPoint {
+		get { return CGPoint(x: minX, y: minY) }
+		set { minXEdge = newValue.x; minYEdge = newValue.y }
+	}
+	
+	var minXmaxY: CGPoint {
+		get { return CGPoint(x: minX, y: maxY) }
+		set { minXEdge = newValue.x; maxYEdge = newValue.y }
+	}
+		
+	var maxXminY: CGPoint {
+		get { return CGPoint(x: maxX, y: minY) }
+		set { maxXEdge = newValue.x; minYEdge = newValue.y }
+	}
+
+	var maxXmaxY: CGPoint {
+		get { return CGPoint(x: maxX, y: maxY) }
+		set { maxXEdge = newValue.x; maxYEdge = newValue.y }
+	}
+
 	func scale(x: CGFloat, y: CGFloat) -> CGRect {
 		return CGRect(origin: origin.scale(x: x, y: y), size: size.scale(x: x, y: y))
 	}
@@ -60,10 +108,9 @@ public extension CGPoint {
 	func scale(_ s: CGFloat) -> CGPoint {
 		return scale(x: s, y: s)
 	}
-
 }
 
-extension CGContext {
+public extension CGContext {
 
 	func pushGState(block: ()->Void) {
 		saveGState()
@@ -80,11 +127,3 @@ extension CGContext {
 		}
 	}
 }
-
-extension CGRect {
-	var minXminY: CGPoint { return CGPoint(x: minX, y: minY) }
-	var minXmaxY: CGPoint { return CGPoint(x: minX, y: maxY) }
-	var maxXminY: CGPoint { return CGPoint(x: maxX, y: minY) }
-	var maxXmaxY: CGPoint { return CGPoint(x: maxX, y: maxY) }
-}
-
