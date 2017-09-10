@@ -281,6 +281,15 @@ public extension UITextField {
 			imageView?.bounds.size = newValue?.size ?? .zero
 		}
 	}
+
+	class func useContentInsets() {
+		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
+		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
+	}
+
+    open func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
+		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+	}
 }
 
 public extension UILabel {
@@ -325,5 +334,20 @@ public extension UIView {
 	@IBOutlet weak var containerView: UIView? {
 		get { return weakAssociatedValue() ?? self }
 		set { set(weakAssociatedValue: newValue) }
+	}
+}
+
+
+public extension UIEdgeInsets {
+
+	init(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) {
+		self.top = top ?? 0; self.left = left ?? 0; self.bottom = bottom ?? 0; self.right = right ?? 0;
+	}
+}
+
+public extension CGRect {
+
+	func inset(by insets: UIEdgeInsets) -> CGRect {
+		return UIEdgeInsetsInsetRect(self, insets)
 	}
 }
