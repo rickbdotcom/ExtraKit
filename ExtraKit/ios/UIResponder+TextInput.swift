@@ -58,10 +58,15 @@ public extension UIResponder {
 		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
 		let segmentControl = UISegmentedControl(items: ["⌃","⌄"])
+#if swift(>=4.0)
 		segmentControl.setTitleTextAttributes([
 			NSAttributedStringKey.font: UIFont.systemFont(ofSize: 40)
 		], for: .normal)
-
+#else
+		segmentControl.setTitleTextAttributes([
+			NSFontAttributeName: UIFont.systemFont(ofSize: 40)
+		], for: .normal)
+#endif
 		segmentControl.setContentOffset(CGSize(width:0, height: 9), forSegmentAt: 0)
 		segmentControl.setContentOffset(CGSize(width:0, height: -9), forSegmentAt: 1)
 
