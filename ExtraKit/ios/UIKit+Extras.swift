@@ -287,7 +287,7 @@ public extension UITextField {
 		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
 	}
 
-    open func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
+    @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 }
