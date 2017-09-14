@@ -285,10 +285,15 @@ public extension UITextField {
 	class func useContentInsets() {
 		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
 		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
+		swizzle(#selector(editingRect(forBounds:)), newSelector: #selector(editingRectWithContentInsets(forBounds:)))
 	}
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+	}
+
+    @objc func editingRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
+		return editingRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 }
 
@@ -296,12 +301,17 @@ public extension UILabel {
 	
 	class func useContentInsets() {
 		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
+		swizzle(#selector(textRect(forBounds:limitedToNumberOfLines:)), newSelector: #selector(textRectWithContentInsets(forBounds:limitedToNumberOfLines:)))
 		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
         drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
     }
+
+    @objc func textRectWithContentInsets(forBounds bounds: CGRect, limitedToNumberOfLines: Int) -> CGRect {
+		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets), limitedToNumberOfLines: limitedToNumberOfLines)
+	}
 }
 
 public extension UIView {
