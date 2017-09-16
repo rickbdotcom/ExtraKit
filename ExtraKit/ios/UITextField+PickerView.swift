@@ -59,8 +59,8 @@ public extension UITextField
 		return inputView as? PickerInputView
 	}
 	
-	@discardableResult func setPicker(components: [[String]], custom: PickerInputView? = nil) -> PickerInputView {
-		let pickerView = custom ?? PickerInputView()
+	@discardableResult func setPicker(_ picker: PickerInputView? = nil, components: [[String]]) -> PickerInputView {
+		let pickerView = picker ?? PickerInputView()
 		pickerView.components = components
 		pickerView.textField = self
 		pickerView.dataSource = pickerView
@@ -84,5 +84,30 @@ public extension UITextField
 			pickerView?.selectRow(index, inComponent: component, animated: animated)
 		}
 		text = pickerView?.text()
+	}
+}
+
+extension PickerInputView: AllValuesPicker {
+
+	public var allowsUnselected: Bool {
+		get { return associatedValue() ?? false }
+		set { set(associatedValue: newValue) }
+	}
+	
+	public func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool = false) {
+		components = [(allowsUnselected ? [""] : []) + T.all.map { $0.displayName }] 
+	}
+	
+	public func selectedValue<T: AllValues>() -> T? {
+		let index = selectedRow(inComponent: 0) - (allowsUnselected ? 1 : 0)
+		return (0..<T.all.count).contains(index) ? T.all[index] : nil
+	}
+	
+	public func select<T: AllValues & Equatable>(value: T?) {
+		if let index = value.flatMap({ T.all.index(of: $0) }) {
+			selectRow(index + (allowsUnselected ? 1 : 0), inComponent: 0, animated: false)			
+		} else if allowsUnselected {
+			selectRow(0, inComponent: 0, animated: false)
+		}
 	}
 }

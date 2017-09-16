@@ -285,15 +285,10 @@ public extension UITextField {
 	class func useContentInsets() {
 		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
 		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
-		swizzle(#selector(editingRect(forBounds:)), newSelector: #selector(editingRectWithContentInsets(forBounds:)))
 	}
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
-	}
-
-    @objc func editingRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return editingRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 }
 
@@ -301,17 +296,12 @@ public extension UILabel {
 	
 	class func useContentInsets() {
 		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
-		swizzle(#selector(textRect(forBounds:limitedToNumberOfLines:)), newSelector: #selector(textRectWithContentInsets(forBounds:limitedToNumberOfLines:)))
 		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
         drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
     }
-
-    @objc func textRectWithContentInsets(forBounds bounds: CGRect, limitedToNumberOfLines: Int) -> CGRect {
-		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets), limitedToNumberOfLines: limitedToNumberOfLines)
-	}
 }
 
 public extension UIView {
@@ -359,5 +349,62 @@ public extension CGRect {
 
 	func inset(by insets: UIEdgeInsets) -> CGRect {
 		return UIEdgeInsetsInsetRect(self, insets)
+	}
+}
+
+public extension UIView {
+
+	func pinEdgesToSuperview() -> Self {
+		superview?.topAnchor.constraint(equalTo: topAnchor).isActive = true
+		superview?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		superview?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+		superview?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+		return self
+	}
+}
+
+public extension UINib {
+	static func instantiate<T>(_ nibName: String, _ type: T.Type, bundle: Bundle? = nil) -> T? {
+		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
+	}
+}
+
+public protocol AllValues {
+	static var all: [Self] { get }
+}
+
+public protocol DisplayName {
+	var displayName: String { get }
+}
+
+public protocol AllValuesPicker {
+
+	func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool)
+	func selectedValue<T: AllValues>() -> T?
+	func select<T: AllValues & Equatable>(value: T?)
+}
+
+public extension RawRepresentable where Self: DisplayName, RawValue == String {
+
+	var displayName: String {
+		return rawValue.capitalized
+	}
+}
+
+extension UISegmentedControl: AllValuesPicker {
+
+	public func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool = false) {
+		removeAllSegments()
+		type.all.reversed().forEach {
+			insertSegment(withTitle: $0.displayName, at: 0, animated: false)
+		}
+	}
+	
+	public func selectedValue<T: AllValues>() -> T? {
+		return (0..<T.all.count).contains(selectedSegmentIndex) ? T.all[selectedSegmentIndex] : nil
+	}
+	
+	public func select<T: AllValues & Equatable>(value: T?) {
+		selectedSegmentIndex = value.flatMap { T.all.index(of: $0) } ?? UISegmentedControlNoSegment
 	}
 }
