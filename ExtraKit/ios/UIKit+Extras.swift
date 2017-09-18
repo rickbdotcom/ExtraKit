@@ -364,7 +364,7 @@ public extension UIView {
 }
 
 public extension UINib {
-	static func instantiate<T>(_ nibName: String, _ type: T.Type, bundle: Bundle? = nil) -> T? {
+	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil) -> T? {
 		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
 	}
 }
