@@ -14,7 +14,7 @@ var tabs = 0
 extension String {
 	mutating func addLine(_ line: String = "") {
 		
-		if line.characters.last == "}" {
+		if line.suffix(1) == "}" {
 			tabs -= 1
 		}
 		if tabs > 0 {
@@ -23,7 +23,7 @@ extension String {
 
 		self += "\(line)\n"
 
-		if line.characters.last == "{" {
+		if line.suffix(1) == "{" {
 			tabs += 1
 		}
 	}
