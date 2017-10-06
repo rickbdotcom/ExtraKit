@@ -28,9 +28,9 @@ func generateStringsSourceFile(_ stringsPath: String) {
 	} else {
 		outputString += " {\n\n"
 	}
-	stringsDict.allKeys.forEach {
-		if let s = $0 as? String, validSwiftString(s) {
-			outputString += "\tcase \(s)\n"
+	(stringsDict.allKeys as? [String])?.sorted{$0 < $1}.forEach {
+		if validSwiftString($0) {
+			outputString += "\tcase \($0)\n"
 		}
 	}
 	if tableName != "nil" {
@@ -69,8 +69,8 @@ func generateFormatStringsSourceFile(_ stringsDictPath: String) {
 	
 	outputString += "\nenum Format\(enumName): String, Localizable {\n\n"
 
-	stringsDict.allKeys.forEach {
-		if let s = $0 as? String, validSwiftString(s) {
+	(stringsDict.allKeys as? [String])?.sorted{$0 < $1}.forEach {
+		if validSwiftString($0) {
 			outputString += "\tcase \($0)\n"
 		}
 	}

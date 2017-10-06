@@ -56,6 +56,11 @@
 		0D7F45821F44FCA10035553B /* UIScrollView+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Keyboard.swift"; sourceTree = "<group>"; };
 		0D7F45831F44FCA10035553B /* UITextField+DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+DatePicker.swift"; sourceTree = "<group>"; };
 		0D7F45841F44FCA10035553B /* UITextField+PickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+PickerView.swift"; sourceTree = "<group>"; };
+		0DBF59D81F870D8F00E19564 /* genswiftfonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftfonts.swift; sourceTree = "<group>"; };
+		0DBF59D91F870D8F00E19564 /* genswiftstrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftstrings.swift; sourceTree = "<group>"; };
+		0DBF59DA1F870D8F00E19564 /* buildnumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = buildnumber.sh; sourceTree = "<group>"; };
+		0DBF59DB1F870D8F00E19564 /* genswiftstoryboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genswiftstoryboards.swift; sourceTree = "<group>"; };
+		0DBF59DC1F870D8F00E19564 /* genswift.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = genswift.sh; sourceTree = "<group>"; };
 		0F18CF9EC4378E915CEA1AAD2BDADF87 /* ExtraKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ExtraKit.modulemap; sourceTree = "<group>"; };
 		1AEDAADF9106E025D26587E805F00276 /* Pods-ExtraKit_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ExtraKit_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		52E3332C8ECF09F6859C114218FD8CB6 /* Pods-ExtraKit_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ExtraKit_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -139,9 +144,23 @@
 			path = ios;
 			sourceTree = "<group>";
 		};
+		0DBF59D71F870D8F00E19564 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0DBF59D81F870D8F00E19564 /* genswiftfonts.swift */,
+				0DBF59D91F870D8F00E19564 /* genswiftstrings.swift */,
+				0DBF59DA1F870D8F00E19564 /* buildnumber.sh */,
+				0DBF59DB1F870D8F00E19564 /* genswiftstoryboards.swift */,
+				0DBF59DC1F870D8F00E19564 /* genswift.sh */,
+			);
+			name = scripts;
+			path = ../../scripts;
+			sourceTree = "<group>";
+		};
 		3577115F3344F544AD9E267D53A942AB /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
+				0DBF59D71F870D8F00E19564 /* scripts */,
 				B47B846E42A504E914FE20F73ECB8559 /* ExtraKit */,
 			);
 			name = "Development Pods";

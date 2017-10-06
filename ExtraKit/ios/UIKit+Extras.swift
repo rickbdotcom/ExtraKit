@@ -6,17 +6,17 @@ public extension UIAlertController {
 		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
 	}
 	
-	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: (()->Void)? = nil) -> Self {
+	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: ((UIAlertController)->Void)? = nil) -> Self {
 		return action(title: "OK".localized(), style: style, action: inAction)
-	}
+	} 
 
-	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: (()->Void)? = nil) -> Self {
+	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: ((UIAlertController)->Void)? = nil) -> Self {
 		return action(title: "Cancel".localized(), style: style, action: inAction)
 	}
 	
-	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: (()->Void)? = nil) -> Self {
+	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
 		addAction(UIAlertAction(title: title, style: style) { _ in
-			action?()
+			action?(self)
 		})
 		return self
 	}

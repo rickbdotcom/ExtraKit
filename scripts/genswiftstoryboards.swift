@@ -149,7 +149,7 @@ outputString += "\tUsage: \(structName).<StoryboardName>.<StoryboardId>().instan
 outputString += "*/\n"
 outputString.addLine("struct \(structName) {")
 outputString.addLine("")
-CommandLine.arguments[3..<CommandLine.arguments.count].forEach {
+CommandLine.arguments[3..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
 	generateStoryboardIdentifierSourceFile($0)
 }
 outputString.addLine("}")
