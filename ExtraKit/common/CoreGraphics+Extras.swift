@@ -90,6 +90,11 @@ public extension CGRect {
 		set { maxXEdge = newValue.x; maxYEdge = newValue.y }
 	}
 
+	var center: CGPoint {
+		get { return CGPoint(x: midX, y: midY) }
+		set { origin = CGPoint(x: newValue.x - size.width / 2, y: newValue.y - size.height / 2) }
+	}
+	
 	func scale(x: CGFloat, y: CGFloat) -> CGRect {
 		return CGRect(origin: origin.scale(x: x, y: y), size: size.scale(x: x, y: y))
 	}
