@@ -301,13 +301,11 @@ public extension UITextField {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 
-// wtf
-	@objc func _useShortcutIntrinsicContentSize() -> Bool {
-		return false
-	}
-// wtf	
-	@objc func numberOfLines() -> Int {
-		return 1
+	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
+		var size = intrinsicContentSizeWithContentInsets()
+        size.height += contentInsets.top + contentInsets.bottom 
+        size.width += contentInsets.left + contentInsets.right
+		return size
 	}
 }
 
@@ -321,6 +319,13 @@ public extension UILabel {
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
         drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
     }
+
+	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
+		var size = intrinsicContentSizeWithContentInsets()
+        size.height += contentInsets.top + contentInsets.bottom 
+        size.width += contentInsets.left + contentInsets.right
+		return size
+	}
 }
 
 public extension UIView {
@@ -338,13 +343,6 @@ public extension UIView {
 			set(associatedValue: newValue) 
 			invalidateIntrinsicContentSize()
 		}
-	}
-
-	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
-		var size = intrinsicContentSizeWithContentInsets()
-        size.height += contentInsets.top + contentInsets.bottom 
-        size.width += contentInsets.left + contentInsets.right
-		return size
 	}
 }
 
@@ -427,3 +425,4 @@ extension UISegmentedControl: AllValuesPicker {
 		selectedSegmentIndex = value.flatMap { T.all.index(of: $0) } ?? UISegmentedControlNoSegment
 	}
 }
+
