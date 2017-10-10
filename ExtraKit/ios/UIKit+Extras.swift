@@ -300,6 +300,15 @@ public extension UITextField {
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
+
+// wtf
+	@objc func _useShortcutIntrinsicContentSize() -> Bool {
+		return false
+	}
+// wtf	
+	@objc func numberOfLines() -> Int {
+		return 1
+	}
 }
 
 public extension UILabel {
