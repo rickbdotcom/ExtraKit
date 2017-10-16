@@ -124,3 +124,12 @@ public extension UIResponder {
 		previousNextSegmentControl?.setEnabled(nextTextInputResponder != nil && nextTextInputResponder!.canBecomeFirstResponder, forSegmentAt: 1)
 	}
 }
+
+public extension UITextField {
+
+	@discardableResult func becomeNextInputResponderOnReturn() -> Any? {
+		return on(.editingDidEndOnExit) { (textField: UITextField) in
+			textField.becomeNextInputResponder()
+		} 
+	}
+}
