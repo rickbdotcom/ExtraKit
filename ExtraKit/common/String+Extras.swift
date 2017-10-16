@@ -99,7 +99,7 @@ public extension String {
 public extension String {
 
 	var isOnlySpaces: Bool {
-		return trimmingCharacters(in: .whitespacesAndNewlines).characters.count == 0
+		return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
 	}
 
 	var emptyNil: String? {
