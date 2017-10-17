@@ -404,7 +404,7 @@ public protocol AllValuesPicker {
 public extension RawRepresentable where Self: DisplayName, RawValue == String {
 
 	var displayName: String {
-		return rawValue.capitalized
+        return "\(Self.self).\(rawValue)".localized()
 	}
 }
 
