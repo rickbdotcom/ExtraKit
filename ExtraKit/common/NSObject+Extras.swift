@@ -77,15 +77,30 @@ public extension NSObject {
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
 
-public extension NSObject
-{
-	func startObserving(_ name: NSNotification.Name, object: AnyHashable? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
-		set(associatedValue: NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
-		, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
+class NotificationObserver {
+	
+	var observer: Any
+	
+	init(forName name: NSNotification.Name, object: Any? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
+		 observer = NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
 	}
 	
-	func stopObserving(_ name: NSNotification.Name, object: AnyHashable? = nil) {
-		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name).\(object?.hashValue ?? 0)")
+	deinit {
+		NotificationCenter.default.removeObserver(observer)
+	}
+} 
+
+/** This only supports one notification block per notification name at a time */ 
+
+public extension NSObject {
+
+	func startObserving(_ name: NSNotification.Name, object: Any? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
+		set(associatedValue: NotificationObserver(forName: name, object: object, queue: queue, usingBlock: block)
+		, forKey: "\(associatedValueKey).\(name)")
+	}
+	
+	func stopObserving(_ name: NSNotification.Name) {
+		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
 	}
 }
 
