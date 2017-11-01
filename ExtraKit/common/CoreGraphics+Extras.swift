@@ -8,16 +8,16 @@ public extension CGSize {
 		case fill
 	}
 
-	func aspect(_ mode: aspectMode, inRect rect: CGRect) -> CGRect {
-		let size = aspect(mode, inSize: rect.size)
+	func aspect(_ mode: aspectMode, in rect: CGRect) -> CGRect {
+		let size = aspect(mode, in: rect.size)
 		return rect.insetBy(dx: (rect.size.width - size.width) / 2.0, dy: (rect.size.height - size.height) / 2.0)
 	}
 	
-	func aspect(_ mode: aspectMode, inSize size: CGSize) -> CGSize {
-		return scale(aspectScale(mode, inSize: size))
+	func aspect(_ mode: aspectMode, in size: CGSize) -> CGSize {
+		return scale(aspectScale(mode, in: size))
 	}
 	
-	func aspectScale(_ mode: aspectMode, inSize size: CGSize) -> CGFloat {
+	func aspectScale(_ mode: aspectMode, in size: CGSize) -> CGFloat {
 		let test = size.width * height > size.height * width
 		switch mode {
 			case .fill:
