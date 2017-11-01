@@ -360,6 +360,10 @@ public extension UIEdgeInsets {
 	init(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) {
 		self.top = top ?? 0; self.left = left ?? 0; self.bottom = bottom ?? 0; self.right = right ?? 0;
 	}
+	
+	init(_ inset: CGFloat) {
+		self.top = inset; self.left = inset; self.bottom = inset; self.right = inset;	
+	}
 }
 
 public extension CGRect {
@@ -371,11 +375,11 @@ public extension CGRect {
 
 public extension UIView {
 
-	func pinEdgesToSuperview() -> Self {
-		superview?.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		superview?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-		superview?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-		superview?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+	func pinEdgesToSuperview(_ insets: UIEdgeInsets = .zero) -> Self {
+		superview?.topAnchor.constraint(equalTo: topAnchor, constant: insets.top).isActive = true
+		superview?.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.top).isActive = true
+		superview?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: insets.top).isActive = true
+		superview?.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.top).isActive = true
 		return self
 	}
 }
