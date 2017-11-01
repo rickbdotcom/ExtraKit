@@ -376,10 +376,10 @@ public extension CGRect {
 public extension UIView {
 
 	func pinEdgesToSuperview(_ insets: UIEdgeInsets = .zero) -> Self {
-		superview?.topAnchor.constraint(equalTo: topAnchor, constant: insets.top).isActive = true
-		superview?.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.top).isActive = true
-		superview?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: insets.top).isActive = true
-		superview?.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.top).isActive = true
+		superview?.topAnchor.constraint(equalTo: topAnchor, constant: -insets.top).isActive = true
+		superview?.leftAnchor.constraint(equalTo: leftAnchor, constant: -insets.left).isActive = true
+		superview?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: insets.bottom).isActive = true
+		superview?.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right).isActive = true
 		return self
 	}
 }
