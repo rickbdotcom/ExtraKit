@@ -59,7 +59,7 @@ public extension UITextField
 		return inputView as? PickerInputView
 	}
 	
-	@discardableResult func setPicker(_ picker: PickerInputView? = nil, components: [[String]]) -> PickerInputView {
+	@discardableResult func setPicker(_ picker: PickerInputView? = nil, components: [[String]] = [[]]) -> PickerInputView {
 		let pickerView = picker ?? PickerInputView()
 		pickerView.components = components
 		pickerView.textField = self
