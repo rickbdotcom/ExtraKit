@@ -87,6 +87,20 @@ public extension UITextField
 	}
 }
 
+public extension UITextField {
+
+	@discardableResult func setPicker<T: AllValues & DisplayName>(_ picker: PickerInputView? = nil, with type: T.Type, allowsUnselected: Bool = false) -> PickerInputView {
+		let pickerView = setPicker(picker)
+		pickerView.populateValues(type.self, allowsUnselected: allowsUnselected)
+		return pickerView
+	}
+	
+	func pickerViewSelect<T: AllValues & Equatable>(value: T?) {
+		pickerView?.select(value: value)
+		text = pickerView?.text()
+	}
+}
+
 extension PickerInputView: AllValuesPicker {
 
 	public var allowsUnselected: Bool {
