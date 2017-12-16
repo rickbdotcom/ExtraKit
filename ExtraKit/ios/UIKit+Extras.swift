@@ -283,7 +283,6 @@ public extension UITextField {
 	}
 
 	class func useContentInsets() {
-		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
 		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
 		swizzle(#selector(editingRect(forBounds:)), newSelector: #selector(editingRectWithContentInsets(forBounds:)))
 		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
@@ -299,13 +298,6 @@ public extension UITextField {
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
-	}
-
-	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
-		var size = intrinsicContentSizeWithContentInsets()
-        size.height += contentInsets.top + contentInsets.bottom 
-        size.width += contentInsets.left + contentInsets.right
-		return size
 	}
 }
 
