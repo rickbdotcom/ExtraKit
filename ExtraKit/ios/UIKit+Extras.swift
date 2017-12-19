@@ -286,6 +286,8 @@ public extension UITextField {
 		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
 		swizzle(#selector(editingRect(forBounds:)), newSelector: #selector(editingRectWithContentInsets(forBounds:)))
 		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
+		swizzle(#selector(leftViewRect(forBounds:)), newSelector: #selector(leftViewRectWithContentInsets(forBounds:)))
+		swizzle(#selector(rightViewRect(forBounds:)), newSelector: #selector(rightViewRectWithContentInsets(forBounds:)))
 	}	
 
     @objc func drawTextWithContentInsets(in rect: CGRect) {
@@ -298,6 +300,14 @@ public extension UITextField {
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+	}
+	
+	@objc func leftViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
+		return leftViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+	}
+
+    @objc func rightViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
+		return rightViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 }
 
