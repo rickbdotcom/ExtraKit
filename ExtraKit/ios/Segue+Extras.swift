@@ -22,7 +22,7 @@ open class SegueAction {
 public extension UIViewController {
 	
 	class func swizzlePrepareForSegueAction() {
-		swizzle(#selector(prepare(for:sender:)), newSelector: #selector(prepareForSegueAction(_:sender:)))
+		swizzle(instanceMethod: #selector(prepare(for:sender:)), with: #selector(prepareForSegueAction(_:sender:)))
 	}
 	
 	@objc func prepareForSegueAction(_ segue: UIStoryboardSegue, sender: AnyObject?) {

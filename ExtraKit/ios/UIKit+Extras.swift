@@ -283,11 +283,11 @@ public extension UITextField {
 	}
 
 	class func useContentInsets() {
-		swizzle(#selector(textRect(forBounds:)), newSelector: #selector(textRectWithContentInsets(forBounds:)))
-		swizzle(#selector(editingRect(forBounds:)), newSelector: #selector(editingRectWithContentInsets(forBounds:)))
-		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
-		swizzle(#selector(leftViewRect(forBounds:)), newSelector: #selector(leftViewRectWithContentInsets(forBounds:)))
-		swizzle(#selector(rightViewRect(forBounds:)), newSelector: #selector(rightViewRectWithContentInsets(forBounds:)))
+		swizzle(instanceMethod: #selector(textRect(forBounds:)), with: #selector(textRectWithContentInsets(forBounds:)))
+		swizzle(instanceMethod: #selector(editingRect(forBounds:)), with: #selector(editingRectWithContentInsets(forBounds:)))
+		swizzle(instanceMethod: #selector(drawText(in:)), with: #selector(drawTextWithContentInsets(in:)))
+		swizzle(instanceMethod: #selector(leftViewRect(forBounds:)), with: #selector(leftViewRectWithContentInsets(forBounds:)))
+		swizzle(instanceMethod: #selector(rightViewRect(forBounds:)), with: #selector(rightViewRectWithContentInsets(forBounds:)))
 	}	
 
     @objc func drawTextWithContentInsets(in rect: CGRect) {
@@ -314,8 +314,8 @@ public extension UITextField {
 public extension UILabel {
 	
 	class func useContentInsets() {
-		swizzle(#selector(getter: intrinsicContentSize), newSelector: #selector(intrinsicContentSizeWithContentInsets))
-		swizzle(#selector(drawText(in:)), newSelector: #selector(drawTextWithContentInsets(in:)))
+		swizzle(instanceMethod:#selector(getter: intrinsicContentSize), with: #selector(intrinsicContentSizeWithContentInsets))
+		swizzle(instanceMethod:#selector(drawText(in:)), with: #selector(drawTextWithContentInsets(in:)))
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
