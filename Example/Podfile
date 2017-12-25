@@ -1,4 +1,7 @@
 use_frameworks!
+
+platform :ios, '11.0'
+
 target 'ExtraKit_Tests' do
   pod 'ExtraKit', :path => '../'  
 end

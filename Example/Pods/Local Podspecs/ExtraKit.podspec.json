@@ -1,6 +1,6 @@
 {
   "name": "ExtraKit",
-  "version": "0.1.1",
+  "version": "0.2.4",
   "summary": "A collection of useful Swift extensions.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/rickbdotcom/ExtraKit",
@@ -13,14 +13,15 @@
   },
   "source": {
     "git": "https://github.com/rickbdotcom/ExtraKit.git",
-    "tag": "0.1.1"
+    "tag": "0.2.4"
   },
   "platforms": {
-    "ios": "9.0",
+    "ios": "10.0",
     "osx": "10.12"
   },
   "source_files": "ExtraKit/common/*.swift",
   "ios": {
     "source_files": "ExtraKit/ios/*.swift"
-  }
+  },
+  "preserve_paths": "scripts/*"
 }

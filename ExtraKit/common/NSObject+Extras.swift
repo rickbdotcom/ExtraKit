@@ -114,7 +114,7 @@ public extension NSObject {
 	}
 		
 	class func swizzle(classMethod originalSelector: Selector, with newSelector: Selector) {
-		let c = object_getClass(self)!
+		let c: AnyClass = object_getClass(self)!
 		swizzle(c
 		,	(originalSelector, class_getClassMethod(c, originalSelector))
 		,	(newSelector, class_getClassMethod(c, newSelector))
