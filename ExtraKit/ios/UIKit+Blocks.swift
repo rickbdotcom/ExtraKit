@@ -1,17 +1,8 @@
 import UIKit
 
-public extension NSObject {
-	
-	var targetBlocks: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
-	
-	func remove(targetBlock: Any?) {
-		if let targetBlock = targetBlock {
-			targetBlocks.remove(targetBlock)
-		}
-	}
-}
-
 public extension UIControl {
+
+	private var targetBlocks: NSMutableDictionary { return getAssociatedValue(NSMutableDictionary()) }
 
 	@discardableResult func on<T:UIControl>(_ event: UIControlEvents, block: @escaping (T)->Void) -> Any? {
 		guard self is T else {
@@ -19,43 +10,51 @@ public extension UIControl {
 		}
 		return TargetBlock(block).configure {
 			addTarget($0, action: #selector(TargetBlock.execute(_:)), for: event)
-			self.targetBlocks.add($0)
+			targetBlocks[event] = $0
 		}
 	}
 }
 
 public extension UIGestureRecognizer {
 
-	convenience init(target: @escaping (UIGestureRecognizer)->Void) {
-		self.init()
-		add(target: target)
+	private var targetBlock: NSObject? { 
+		get { return associatedValue() }
+		set { set(associatedValue: newValue) }
 	}
 	
-	@discardableResult func add(target: @escaping (UIGestureRecognizer)->Void) -> Any {
-		return TargetBlock(target).configure {
+	convenience init(action: @escaping (UIGestureRecognizer)->Void) {
+		self.init()
+		set(action: action)
+	}
+	
+	@discardableResult func set(action: @escaping (UIGestureRecognizer)->Void) -> Any {
+		return TargetBlock(action).configure {
 			addTarget($0, action: #selector(TargetBlock.execute(_:)))
-			self.targetBlocks.add($0)
+			targetBlock = $0
 		}
 	}
 }
 
 public extension UIBarButtonItem {
 
-	convenience init(block: @escaping (UIBarButtonItem)->Void) {
+	private var targetBlock: NSObject? { 
+		get { return associatedValue() }
+		set { set(associatedValue: newValue) }
+	}
+
+	convenience init(action: @escaping (UIBarButtonItem)->Void) {
 		self.init()
-		setBlock(block)
+		set(action: action)
 	}
 	
-	@discardableResult func setBlock(_ block: @escaping (UIBarButtonItem)->Void) -> Any {
-		return TargetBlock(block).configure {
+	@discardableResult func set(action: @escaping (UIBarButtonItem)->Void) -> Any {
+		return TargetBlock(action).configure {
 			target = $0
-			action = #selector(TargetBlock.execute(_:))
-			self.targetBlocks.removeAllObjects()
-			self.targetBlocks.add($0)
+			self.action = #selector(TargetBlock.execute(_:))
+			targetBlock = $0
 		}
 	}
 }
-
 
 public extension UITextView {
 
@@ -92,7 +91,6 @@ public class TextViewDelegate: NSObject, UITextViewDelegate {
 		return shouldChangeText?(textView, range, text) ?? true
 	}
 }
-
 
 class TargetBlock<T:NSObject>: NSObject {
 	
