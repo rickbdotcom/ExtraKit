@@ -284,19 +284,9 @@ public extension UITextField {
 
 	class func useContentInsets() {
 		swizzle(instanceMethod: #selector(textRect(forBounds:)), with: #selector(textRectWithContentInsets(forBounds:)))
-		swizzle(instanceMethod: #selector(editingRect(forBounds:)), with: #selector(editingRectWithContentInsets(forBounds:)))
-		swizzle(instanceMethod: #selector(drawText(in:)), with: #selector(drawTextWithContentInsets(in:)))
 		swizzle(instanceMethod: #selector(leftViewRect(forBounds:)), with: #selector(leftViewRectWithContentInsets(forBounds:)))
 		swizzle(instanceMethod: #selector(rightViewRect(forBounds:)), with: #selector(rightViewRectWithContentInsets(forBounds:)))
 	}	
-
-    @objc func drawTextWithContentInsets(in rect: CGRect) {
-		return drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
-    }
-
-    @objc func editingRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return editingRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))    
-	}
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
 		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
