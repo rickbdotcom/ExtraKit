@@ -1,12 +1,6 @@
 import Foundation
 import ObjectiveC
 
-private var associatedDictionaryKey = 0
-
-public protocol NoArgInitable {
-	init()
-}
-
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
@@ -75,64 +69,6 @@ public extension NSObject {
 	}
 }
 
-private let associatedValueKey = "com.rickb.extrakit.Observing"
-
-class NotificationObserver {
-	
-	var observer: Any
-	
-	init(forName name: NSNotification.Name, object: Any? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
-		 observer = NotificationCenter.default.addObserver(forName: name, object: object, queue: queue, using: block)
-	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(observer)
-	}
-} 
-
-/** This only supports one notification block per notification name at a time */ 
-
-public extension NSObject {
-
-	func startObserving(_ name: NSNotification.Name, object: Any? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
-		set(associatedValue: NotificationObserver(forName: name, object: object, queue: queue, usingBlock: block)
-		, forKey: "\(associatedValueKey).\(name)")
-	}
-	
-	func stopObserving(_ name: NSNotification.Name) {
-		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
-	}
-}
-
-public extension NSObject {
-
-	class func swizzle(instanceMethod originalSelector: Selector, with newSelector: Selector) {
-		swizzle(self
-		, 	(originalSelector, class_getInstanceMethod(self, originalSelector))
-		,	(newSelector, class_getInstanceMethod(self, newSelector))
-		)
-	}
-		
-	class func swizzle(classMethod originalSelector: Selector, with newSelector: Selector) {
-		let c: AnyClass = object_getClass(self)!
-		swizzle(c
-		,	(originalSelector, class_getClassMethod(c, originalSelector))
-		,	(newSelector, class_getClassMethod(c, newSelector))
-		)
-	}
-
-	class func swizzle(_ c: AnyClass, _ original: (Selector, Method?), _ new: (Selector, Method?)) {
-		guard let originalMethod = original.1, let newMethod = new.1 else {
-			return
-		}
-		if class_addMethod(c, original.0, method_getImplementation(newMethod), method_getTypeEncoding(newMethod)) {
-			class_replaceMethod(c, new.0, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
-		} else {
-			method_exchangeImplementations(originalMethod, newMethod)
-		}
-	}
-}
-
 class WeakObjectRef: NSObject {
 	weak var object: AnyObject?
 	
@@ -143,3 +79,5 @@ class WeakObjectRef: NSObject {
 		self.object = object
 	}
 }
+
+private var associatedDictionaryKey = 0

@@ -1,43 +1,5 @@
 import UIKit
 
-public extension UIAlertController {
-
-	class func alert(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .alert) -> UIAlertController {
-		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
-	}
-	
-	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: ((UIAlertController)->Void)? = nil) -> Self {
-		return action(title: "OK".localized(), style: style, action: inAction)
-	} 
-
-	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: ((UIAlertController)->Void)? = nil) -> Self {
-		return action(title: "Cancel".localized(), style: style, action: inAction)
-	}
-	
-	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
-		addAction(UIAlertAction(title: title, style: style) { _ in
-			action?(self)
-		})
-		return self
-	}
-
-	@discardableResult func textField(configurationHandler: ((UITextField) -> Void)? = nil) -> Self {
-		addTextField(configurationHandler: configurationHandler)
-		return self
-	}
-
-	@discardableResult func show(_ viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
-		(viewController ?? rootWindow?.visibleViewController)?.present(self, animated: animated, completion: completion)
-			return self
-	}
-
-	class func set(rootWindow window: UIWindow?) {
-		rootWindow = window
-	}
-}
-
-fileprivate weak var rootWindow: UIWindow?
-
 public extension UIWindow {
 
     var visibleViewController: UIViewController? {
@@ -57,22 +19,6 @@ public extension UIWindow {
             }
         }
     }
-}
-
-public extension UIView {
-
-	func findFirstResponder() -> UIView? {
-
-		if isFirstResponder {
-			return self
-		}
-		for subview in subviews {
-			if let responder = subview.findFirstResponder() {
-				return responder
-			}
-		}
-		return nil
-	}
 }
 
 public extension UIView {
@@ -108,29 +54,6 @@ public extension UIView {
 	}
 }
 
-public extension UIFont {
-
-	class func printFontNames() {
-		familyNames.forEach {
-			fontNames(forFamilyName: $0).forEach {
-				print($0)
-			}
-		}
-	}
-}
-
-public protocol FontRepresentable {
-	func font(size: CGFloat) -> UIFont?
-}
-
-
-public extension FontRepresentable where Self: RawRepresentable, Self.RawValue == String {
-
-	func font(size: CGFloat) -> UIFont? {
-		return UIFont(name: rawValue, size: size)
-	}
-}
-
 public extension UIViewController {
 
 	func dismissPresentedViewControllers(_ completion: (()->Void)? = nil) {
@@ -141,22 +64,6 @@ public extension UIViewController {
 		} else {
 			completion?()
 		}
-	}
-}
-
-
-public extension UIView {
-
-	func textFieldBecomeFirstResponder() -> Bool {
-		if let tf = self as? UITextField {
-			return tf.becomeFirstResponder()
-		}
-		for sv in subviews {
-			if sv.textFieldBecomeFirstResponder() {
-				return true
-			}
-		}
-		return false
 	}
 }
 
@@ -196,16 +103,6 @@ public extension UIView {
         return nil
     }
 }
-
-public extension UIViewController {
-	
-	func withNavigationController(_ navbarHidden: Bool = false) -> UINavigationController {
-		return UINavigationController(rootViewController: self).configure {
-			$0.isNavigationBarHidden = navbarHidden
-		}
-	}
-}
-
 
 public extension UIView {
 	
@@ -346,7 +243,6 @@ public extension UIView {
 	}
 }
 
-
 public extension UIEdgeInsets {
 
 	init(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) {
@@ -379,46 +275,6 @@ public extension UIView {
 public extension UINib {
 	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil) -> T? {
 		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
-	}
-}
-
-public protocol AllValues {
-	static var all: [Self] { get }
-}
-
-public protocol DisplayName {
-	var displayName: String { get }
-}
-
-public protocol AllValuesPicker {
-
-	func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool)
-	func selectedValue<T: AllValues>() -> T?
-	func select<T: AllValues & Equatable>(value: T?)
-}
-
-public extension RawRepresentable where Self: DisplayName, RawValue == String {
-
-	var displayName: String {
-        return "\(Self.self).\(rawValue)".localized()
-	}
-}
-
-extension UISegmentedControl: AllValuesPicker {
-
-	public func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool = false) {
-		removeAllSegments()
-		type.all.reversed().forEach {
-			insertSegment(withTitle: $0.displayName, at: 0, animated: false)
-		}
-	}
-	
-	public func selectedValue<T: AllValues>() -> T? {
-		return (0..<T.all.count).contains(selectedSegmentIndex) ? T.all[selectedSegmentIndex] : nil
-	}
-	
-	public func select<T: AllValues & Equatable>(value: T?) {
-		selectedSegmentIndex = value.flatMap { T.all.index(of: $0) } ?? UISegmentedControlNoSegment
 	}
 }
 

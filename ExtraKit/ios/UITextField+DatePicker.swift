@@ -1,7 +1,7 @@
 import UIKit
 
-open class DatePickerInputView: UIDatePicker
-{
+open class DatePickerInputView: UIDatePicker {
+
 	weak var textField: UITextField?
 	var dateFormatter: DateFormatter!
 	var dateString: String {
@@ -22,8 +22,8 @@ open class DatePickerInputView: UIDatePicker
 	}
 }
 
-public extension UITextField
-{
+public extension UITextField {
+
 	var datePickerView: DatePickerInputView? {
 		return inputView as? DatePickerInputView
 	}

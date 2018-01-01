@@ -16,9 +16,3 @@ public extension StoryboardScene {
 	}
 }
 
-extension UIViewController {
-
-	public func performSegue(withIdentifier identifier: String, action: @escaping (UIStoryboardSegue)->Void) {
-		self.performSegue(withIdentifier: identifier, sender: SegueAction(action))
-	}
-}

@@ -11,7 +11,7 @@ public extension UIResponder {
 // don't know why I have to do this to avoid crashes when more than 2 textfields are hooked up
 // started doing this when transitioned code to Swift
 // just moved this line of code from the set function to here
-//			set(weakAssociatedValue: newValue, forKey: nextAssociatedValueKey)
+//			set(weakAssociatedValue: newValue)
 			associatedDictionary[associatedKey()] = WeakObjectRef(newValue)
 
 			if newValue?.previousTextInputResponder != self {
@@ -27,7 +27,7 @@ public extension UIResponder {
 			return weakAssociatedValue()
 		}
 		set {
-//			set(weakAssociatedValue: newValue, forKey: prevAssociatedValueKey)
+//			set(weakAssociatedValue: newValue)
 			associatedDictionary[associatedKey()] = WeakObjectRef(newValue)
 
 			if newValue?.nextTextInputResponder != self {
@@ -58,15 +58,9 @@ public extension UIResponder {
 		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
 		let segmentControl = UISegmentedControl(items: ["⌃","⌄"])
-#if swift(>=4.0)
 		segmentControl.setTitleTextAttributes([
 			NSAttributedStringKey.font: UIFont.systemFont(ofSize: 40)
 		], for: .normal)
-#else
-		segmentControl.setTitleTextAttributes([
-			NSFontAttributeName: UIFont.systemFont(ofSize: 40)
-		], for: .normal)
-#endif
 		segmentControl.setContentOffset(CGSize(width:0, height: 9), forSegmentAt: 0)
 		segmentControl.setContentOffset(CGSize(width:0, height: -9), forSegmentAt: 1)
 
@@ -131,5 +125,33 @@ public extension UITextField {
 		return on(.editingDidEndOnExit) { (textField: UITextField) in
 			textField.becomeNextInputResponder()
 		} 
+	}
+}
+
+public extension UIView {
+
+	func findFirstResponder() -> UIView? {
+
+		if isFirstResponder {
+			return self
+		}
+		for subview in subviews {
+			if let responder = subview.findFirstResponder() {
+				return responder
+			}
+		}
+		return nil
+	}
+
+	func textFieldBecomeFirstResponder() -> Bool {
+		if let tf = self as? UITextField {
+			return tf.becomeFirstResponder()
+		}
+		for sv in subviews {
+			if sv.textFieldBecomeFirstResponder() {
+				return true
+			}
+		}
+		return false
 	}
 }

@@ -1,12 +1,14 @@
 import UIKit
 
 public extension UIScrollView {
+
 	func adjustContentInsetForKeyboardFrame() {
 		set(associatedValue: KeyboardNotificationObserver(scrollView: self))
 	}
 }
 
 class KeyboardNotificationObserver: NSObject {
+
 	weak var scrollView: UIScrollView?
 	var contentInset: UIEdgeInsets?
 	var scrollIndicatorInsets: UIEdgeInsets?
