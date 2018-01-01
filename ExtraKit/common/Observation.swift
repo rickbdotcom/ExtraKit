@@ -15,11 +15,11 @@ public extension NSObject {
 
 	private var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
 	
-	func add(_ observation: NSKeyValueObservation) {
+	func add(observation: NSKeyValueObservation) {
 		kvoObservations.add(observation)
 	}
 	
-	func remove(_ observation: NSKeyValueObservation) {
+	func remove(observation: NSKeyValueObservation) {
 		kvoObservations.remove(observation)
 	}
 }
