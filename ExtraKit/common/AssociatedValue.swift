@@ -21,17 +21,7 @@ public extension NSObject {
 		set(associatedValue: value, forKey: key)
 		return value
 	}
-
-	func getAssociatedValue<T: NoArgInitable>(module: String? = nil, functionName: String? = #function) -> T {
-		let key = associatedKey(module: module, functionName: functionName)
-		if let value: T = associatedValue(forKey: key) {
-			return value
-		}
-		let value = T()
-		set(associatedValue: value, forKey: key)
-		return value
-	}
-
+	
 	func associatedKey(module: String? = nil, functionName: String? = #function) -> String {
 		return [module ?? Bundle(for: self.classForCoder).bundleIdentifier, functionName].flatMap{$0}.joined(separator: ".")
 	}
