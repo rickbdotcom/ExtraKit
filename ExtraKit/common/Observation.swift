@@ -12,6 +12,16 @@ public extension NSObject {
 	func stopObserving(_ name: Notification.Name) {
 		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
 	}
+
+	private var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
+	
+	func add(_ observation: NSKeyValueObservation) {
+		kvoObservations.add(observation)
+	}
+	
+	func remove(_ observation: NSKeyValueObservation) {
+		kvoObservations.remove(observation)
+	}
 }
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
