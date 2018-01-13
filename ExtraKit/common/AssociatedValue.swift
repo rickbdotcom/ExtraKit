@@ -1,6 +1,8 @@
 import Foundation
 import ObjectiveC
 
+private let identifier = "com.rickb.extrakit"
+
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
@@ -11,8 +13,8 @@ public extension NSObject {
 		}()
 	}
 
-	func getAssociatedValue<T>(module: String? = nil, functionName: String? = #function, _ initialValue: @autoclosure () -> T) -> T {
-		let key = associatedKey(module: module, functionName: functionName)
+	func getAssociatedValue<T>(functionName: String? = #function, _ initialValue: @autoclosure () -> T) -> T {
+		let key = associatedKey(functionName: functionName)
 		if let value: T = associatedValue(forKey: key) {
 			return value
 		}
@@ -21,24 +23,24 @@ public extension NSObject {
 		return value
 	}
 	
-	func associatedKey(module: String? = nil, functionName: String? = #function) -> String {
-		return [module ?? Bundle(for: self.classForCoder).bundleIdentifier, functionName].flatMap { $0 }.joined(separator: ".")
+	func associatedKey(functionName: String? = #function) -> String {
+		return [identifier, functionName].flatMap { $0 }.joined(separator: ".")
 	}
 	
-	func associatedValue<T>(module: String? = nil, functionName: String? = #function) -> T? {
-		return associatedValue(forKey: associatedKey(module: module, functionName: functionName))
+	func associatedValue<T>(functionName: String? = #function) -> T? {
+		return associatedValue(forKey: associatedKey(functionName: functionName))
 	}
 
-	func set(associatedValue value: Any?, module: String? = nil, functionName: String? = #function) {
-		return set(associatedValue: value, forKey: associatedKey(module: module, functionName: functionName))
+	func set(associatedValue value: Any?, functionName: String? = #function) {
+		return set(associatedValue: value, forKey: associatedKey(functionName: functionName))
 	}
 	
-	func weakAssociatedValue<T>(module: String? = nil, functionName: String? = #function) -> T? {
-		return weakAssociatedValue(forKey: associatedKey(module: module, functionName: functionName))
+	func weakAssociatedValue<T>(functionName: String? = #function) -> T? {
+		return weakAssociatedValue(forKey: associatedKey(functionName: functionName))
 	}
 	
-	func set(weakAssociatedValue value: AnyObject?, module: String? = nil, functionName: String? = #function) {
-		set(weakAssociatedValue: value, forKey: associatedKey(module: module, functionName: functionName))
+	func set(weakAssociatedValue value: AnyObject?, functionName: String? = #function) {
+		set(weakAssociatedValue: value, forKey: associatedKey(functionName: functionName))
 	}
 
 	func associatedValue<T>(forKey key: String) -> T? {
