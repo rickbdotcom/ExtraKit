@@ -4,15 +4,14 @@ import ObjectiveC
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
-		get {
-			return objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary
-			?? NSMutableDictionary().configure {
-				objc_setAssociatedObject(self, &associatedDictionaryKey, $0, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-			}
-		}
+		return objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary ?? {
+			let dict = NSMutableDictionary()
+			objc_setAssociatedObject(self, &associatedDictionaryKey, dict, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			return dict
+		}()
 	}
 
-	func getAssociatedValue<T>(module: String? = nil, functionName: String? = #function, _ initialValue: @autoclosure ()-> T) -> T {
+	func getAssociatedValue<T>(module: String? = nil, functionName: String? = #function, _ initialValue: @autoclosure () -> T) -> T {
 		let key = associatedKey(module: module, functionName: functionName)
 		if let value: T = associatedValue(forKey: key) {
 			return value
@@ -23,7 +22,7 @@ public extension NSObject {
 	}
 	
 	func associatedKey(module: String? = nil, functionName: String? = #function) -> String {
-		return [module ?? Bundle(for: self.classForCoder).bundleIdentifier, functionName].flatMap{$0}.joined(separator: ".")
+		return [module ?? Bundle(for: self.classForCoder).bundleIdentifier, functionName].flatMap { $0 }.joined(separator: ".")
 	}
 	
 	func associatedValue<T>(module: String? = nil, functionName: String? = #function) -> T? {
