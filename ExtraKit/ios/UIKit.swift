@@ -263,13 +263,26 @@ public extension CGRect {
 
 public extension UIView {
 
-	@discardableResult func pinEdgesToSuperview(_ insets: UIEdgeInsets = .zero) -> Self {
+	@discardableResult func pin(edges: UIRectEdge = .all, to view: UIView? = nil, with insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
-		superview?.topAnchor.constraint(equalTo: topAnchor, constant: -insets.top).isActive = true
-		superview?.leftAnchor.constraint(equalTo: leftAnchor, constant: -insets.left).isActive = true
-		superview?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: insets.bottom).isActive = true
-		superview?.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right).isActive = true
-		return self
+		guard let pinToView = view ?? superview else {
+			return []
+		}
+		var constraints = [NSLayoutConstraint]()
+		if edges.contains(.top) {
+ 			constraints.append(pinToView.topAnchor.constraint(equalTo: topAnchor, constant: -insets.top))
+		}
+		if edges.contains(.left) {
+			constraints.append(pinToView.leftAnchor.constraint(equalTo: leftAnchor, constant: -insets.left))
+		}
+		if edges.contains(.bottom) {
+			constraints.append(pinToView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: insets.bottom))
+		}
+		if edges.contains(.right) {
+			constraints.append(pinToView.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right))
+		}
+		constraints.forEach { $0.isActive = true }
+		return constraints
 	}
 }
 
