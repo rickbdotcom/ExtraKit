@@ -4,14 +4,14 @@ public extension UIControl {
 
 	private var targetBlocks: NSMutableDictionary { return getAssociatedValue(NSMutableDictionary()) }
 
-	@discardableResult func on<T:UIControl>(_ event: UIControlEvents, block: @escaping (T)->Void) -> Any? {
+	@discardableResult func on<T: UIControl>(_ event: UIControlEvents, block: @escaping (T) -> Void) -> Any? {
 		guard self is T else {
 			return nil
 		}
-		return TargetBlock(block).configure {
-			addTarget($0, action: #selector(TargetBlock.execute(_:)), for: event)
-			targetBlocks[event] = $0
-		}
+		let targetBlock = TargetBlock(block)
+		addTarget(targetBlock, action: #selector(TargetBlock.execute(_:)), for: event)
+		targetBlocks[event] = targetBlock
+		return targetBlock
 	}
 }
 
@@ -22,16 +22,15 @@ public extension UIGestureRecognizer {
 		set { set(associatedValue: newValue) }
 	}
 	
-	convenience init(action: @escaping (UIGestureRecognizer)->Void) {
+	convenience init(action: @escaping (UIGestureRecognizer) -> Void) {
 		self.init()
 		set(action: action)
 	}
 	
-	@discardableResult func set(action: @escaping (UIGestureRecognizer)->Void) -> Any {
-		return TargetBlock(action).configure {
-			addTarget($0, action: #selector(TargetBlock.execute(_:)))
-			targetBlock = $0
-		}
+	@discardableResult func set(action: @escaping (UIGestureRecognizer) -> Void) -> Any {
+		targetBlock = TargetBlock(action)
+		addTarget(targetBlock!, action: #selector(TargetBlock.execute(_:)))
+		return targetBlock!
 	}
 }
 
@@ -42,32 +41,31 @@ public extension UIBarButtonItem {
 		set { set(associatedValue: newValue) }
 	}
 
-	convenience init(action: @escaping (UIBarButtonItem)->Void) {
+	convenience init(action: @escaping (UIBarButtonItem) -> Void) {
 		self.init()
 		set(action: action)
 	}
 	
-	@discardableResult func set(action: @escaping (UIBarButtonItem)->Void) -> Any {
-		return TargetBlock(action).configure {
-			target = $0
-			self.action = #selector(TargetBlock.execute(_:))
-			targetBlock = $0
-		}
+	@discardableResult func set(action: @escaping (UIBarButtonItem) -> Void) -> Any {
+		targetBlock = TargetBlock(action)
+		target = self
+		self.action = #selector(TargetBlock.execute(_:))
+		return targetBlock!
 	}
 }
 
 public extension UITextView {
 
 	var textViewDelegate: TextViewDelegate {
-		get { return getAssociatedValue(TextViewDelegate(textView: self)) }
+		return getAssociatedValue(TextViewDelegate(textView: self))
 	}
 }
 
 public class TextViewDelegate: NSObject, UITextViewDelegate {
 	
-	public var editingDidBegin: ((UITextView)->Void)?
-	public var editingChanged: ((UITextView)->Void)?
-	public var editingDidEnd: ((UITextView)->Void)?
+	public var editingDidBegin: ((UITextView) -> Void)?
+	public var editingChanged: ((UITextView) -> Void)?
+	public var editingDidEnd: ((UITextView) -> Void)?
 	public var shouldChangeText: ((UITextView, NSRange, String) -> Bool)?
 	
 	init(textView: UITextView) {
@@ -92,11 +90,11 @@ public class TextViewDelegate: NSObject, UITextViewDelegate {
 	}
 }
 
-class TargetBlock<T:NSObject>: NSObject {
+class TargetBlock<T: NSObject>: NSObject {
 	
-	var block: (T)->Void
+	var block: (T) -> Void
 	
-	init(_ block: @escaping (T)->Void) {
+	init(_ block: @escaping (T) -> Void) {
 		self.block = block
 	}
 	
