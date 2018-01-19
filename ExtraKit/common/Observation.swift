@@ -13,15 +13,7 @@ public extension NSObject {
 		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
 	}
 
-	private var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
-	
-	func add(observation: NSKeyValueObservation) {
-		kvoObservations.add(observation)
-	}
-	
-	func remove(observation: NSKeyValueObservation) {
-		kvoObservations.remove(observation)
-	}
+	var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
 }
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
