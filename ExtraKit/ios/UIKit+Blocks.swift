@@ -10,7 +10,7 @@ public extension UIControl {
 		}
 		let targetBlock = TargetBlock(block)
 		addTarget(targetBlock, action: #selector(TargetBlock.execute(_:)), for: event)
-		targetBlocks[event] = targetBlock
+		targetBlocks[event.rawValue] = targetBlock
 		return targetBlock
 	}
 }
