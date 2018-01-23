@@ -224,7 +224,7 @@ public extension UIView {
 		set { contentInsets = UIEdgeInsetsFromString(newValue ?? "") }
 	}
 	
-	var contentInsets: UIEdgeInsets {
+	@objc var contentInsets: UIEdgeInsets {
 		get { 
 			return associatedValue() ?? .zero 
 		}
