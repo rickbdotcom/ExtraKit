@@ -1,3 +1,11 @@
+//
+//  Swizzle.swift
+//  ExtraKit
+//
+//  Created by rickb on 4/18/16.
+//  Copyright © 2018 rickbdotcom LLC. All rights reserved.
+//
+
 import UIKit
 
 public extension UIStoryboardSegue {
@@ -12,9 +20,9 @@ public extension UIStoryboardSegue {
 }
 
 open class SegueAction {
-	var block: (UIStoryboardSegue)->Void
+	var block: (UIStoryboardSegue) -> Void
 
-	public init(_ block: @escaping (UIStoryboardSegue)->Void) {
+	public init(_ block: @escaping (UIStoryboardSegue) -> Void) {
 		self.block = block
 	}
 }
@@ -33,7 +41,7 @@ public extension UIViewController {
 
 extension UIViewController {
 
-	public func performSegue(withIdentifier identifier: String, action: @escaping (UIStoryboardSegue)->Void) {
+	public func performSegue(withIdentifier identifier: String, action: @escaping (UIStoryboardSegue) -> Void) {
 		self.performSegue(withIdentifier: identifier, sender: SegueAction(action))
 	}
 }
