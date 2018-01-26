@@ -1,3 +1,11 @@
+//
+//  UTI.swift
+//  ExtraKit
+//
+//  Created by rickb on 4/18/16.
+//  Copyright © 2018 rickbdotcom LLC. All rights reserved.
+//
+
 import Foundation
 #if os(OSX)
 import CoreServices

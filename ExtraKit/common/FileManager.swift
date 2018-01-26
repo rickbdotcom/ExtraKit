@@ -1,3 +1,11 @@
+//
+//  FileManager.swift
+//  ExtraKit
+//
+//  Created by rickb on 4/18/16.
+//  Copyright © 2018 rickbdotcom LLC. All rights reserved.
+//
+
 import Foundation
 
 public extension FileManager {
