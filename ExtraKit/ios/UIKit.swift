@@ -1,11 +1,3 @@
-//
-//  UIKit.swift
-//  ExtraKit
-//
-//  Created by rickb on 4/18/16.
-//  Copyright © 2018 rickbdotcom LLC. All rights reserved.
-//
-
 import UIKit
 
 public extension UIWindow {
@@ -292,6 +284,28 @@ public extension UIView {
 		constraints.forEach { $0.isActive = true }
 		return constraints
 	}
+
+	@discardableResult func center(to view: UIView? = nil, offset: CGPoint = .zero) -> [NSLayoutConstraint] {
+		translatesAutoresizingMaskIntoConstraints = false
+		guard let centerToView = view ?? superview else {
+			return []
+		}
+		var constraints = [NSLayoutConstraint]()
+		constraints.append(centerToView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x))
+		constraints.append(centerToView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offset.y))
+
+		constraints.forEach { $0.isActive = true }
+		return constraints
+	}
+		
+	@discardableResult func size(to size: CGSize) -> [NSLayoutConstraint] {
+		var constraints = [NSLayoutConstraint]()
+		constraints.append(widthAnchor.constraint(equalToConstant: size.width))
+		constraints.append(heightAnchor.constraint(equalToConstant: size.height))
+		constraints.forEach { $0.isActive = true } 		
+		return constraints
+	}
+
 }
 
 public extension UINib {
