@@ -8,24 +8,37 @@
 
 import UIKit
 
+private let targetBlockAction = #selector(TargetBlock.execute(_:))
+
 public extension UIControl {
 
 	private var targetBlocks: NSMutableDictionary { return getAssociatedValue(NSMutableDictionary()) }
 
-	@discardableResult func on<T: UIControl>(_ event: UIControlEvents, block: @escaping (T) -> Void) -> Any? {
+	@discardableResult func on<T: UIControl>(_ event: UIControlEvents, block: ((T) -> Void)?) -> Any? {
+		if let block = block {
+			let targetBlock = add(event, block: block)
+			targetBlocks[event.rawValue] = targetBlock
+			return targetBlock
+		} else if let targetBlock = targetBlocks[event.rawValue] {
+			removeTarget(targetBlock, action: nil, for: event)
+			targetBlocks[event.rawValue] = nil
+		}
+		return nil
+	}
+	
+	func add<T: UIControl>(_ event: UIControlEvents, block: @escaping (T) -> Void) -> Any? {
 		guard self is T else {
 			return nil
 		}
 		let targetBlock = TargetBlock(block)
-		addTarget(targetBlock, action: #selector(TargetBlock.execute(_:)), for: event)
-		targetBlocks[event.rawValue] = targetBlock
-		return targetBlock
+		addTarget(targetBlock, action: targetBlockAction, for: event)
+		return targetBlock	
 	}
 }
 
 public extension UIGestureRecognizer {
 
-	private var targetBlock: NSObject? { 
+	private var targetBlock: Any? { 
 		get { return associatedValue() }
 		set { set(associatedValue: newValue) }
 	}
@@ -35,10 +48,21 @@ public extension UIGestureRecognizer {
 		set(action: action)
 	}
 	
-	@discardableResult func set(action: @escaping (UIGestureRecognizer) -> Void) -> Any {
-		targetBlock = TargetBlock(action)
-		addTarget(targetBlock!, action: #selector(TargetBlock.execute(_:)))
-		return targetBlock!
+	@discardableResult func set(action: ((UIGestureRecognizer) -> Void)?) -> Any? {
+		if let action = action {
+			self.targetBlock = add(action: action)
+			return self.targetBlock
+		} else if let targetBlock = targetBlock {
+			removeTarget(targetBlock, action: nil)
+			self.targetBlock = nil
+		}
+		return nil
+	}
+
+	func add(action: @escaping (UIGestureRecognizer) -> Void) -> Any? {
+		let targetBlock = TargetBlock(action)
+		addTarget(targetBlock, action: targetBlockAction)
+		return targetBlock
 	}
 }
 
@@ -54,11 +78,16 @@ public extension UIBarButtonItem {
 		set(action: action)
 	}
 	
-	@discardableResult func set(action: @escaping (UIBarButtonItem) -> Void) -> Any {
-		targetBlock = TargetBlock(action)
-		target = self
-		self.action = #selector(TargetBlock.execute(_:))
-		return targetBlock!
+	@discardableResult func set(action: ((UIBarButtonItem) -> Void)?) -> Any? {
+		if let action = action { 
+			targetBlock = TargetBlock(action)
+			target = self
+			self.action = targetBlockAction
+			return targetBlock
+		} else {
+			targetBlock = nil
+			return nil
+		}
 	}
 }
 
@@ -106,7 +135,7 @@ class TargetBlock<T: NSObject>: NSObject {
 		self.block = block
 	}
 	
-	@objc func execute(_ control: UIControl) {
+	@objc func execute(_ control: Any?) {
 		if let control = control as? T {
 			block(control)
 		}
