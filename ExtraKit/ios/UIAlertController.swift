@@ -23,8 +23,10 @@ public extension UIAlertController {
 	}
 	
 	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
-		addAction(UIAlertAction(title: title, style: style) { _ in
-			action?(self)
+		addAction(UIAlertAction(title: title, style: style) { [weak self] _ in
+			if let alert = self {
+				action?(alert)
+			}
 		})
 		return self
 	}
