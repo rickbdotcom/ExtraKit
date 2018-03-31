@@ -32,7 +32,7 @@ public extension NSObject {
 	}
 	
 	func associatedKey(functionName: String? = #function) -> String {
-		return [identifier, functionName].flatMap { $0 }.joined(separator: ".")
+		return [identifier, functionName].compactMap { $0 }.joined(separator: ".")
 	}
 	
 	func associatedValue<T>(functionName: String? = #function) -> T? {

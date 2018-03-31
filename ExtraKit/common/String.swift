@@ -37,6 +37,6 @@ public extension String {
 public extension Sequence where Iterator.Element == String {
 
     public func joinedEmptyNilSpace(separator: String = "") -> String {
-		return flatMap { $0.emptyNilSpace }.joined(separator: separator)
+		return compactMap { $0.emptyNilSpace }.joined(separator: separator)
 	}
 }

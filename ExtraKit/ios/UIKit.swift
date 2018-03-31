@@ -246,11 +246,11 @@ public extension UIView {
 public extension UIEdgeInsets {
 
 	init(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) {
-		self.top = top ?? 0; self.left = left ?? 0; self.bottom = bottom ?? 0; self.right = right ?? 0;
+		self.init(top: top ?? 0, left: left ?? 0, bottom: bottom ?? 0, right: right ?? 0)
 	}
 	
 	init(_ inset: CGFloat) {
-		self.top = inset; self.left = inset; self.bottom = inset; self.right = inset;	
+		self.init(top: inset, left: inset, bottom: inset, right: inset)
 	}
 }
 

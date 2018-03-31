@@ -56,7 +56,7 @@ open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDe
 		if let getText = getText {
 			return getText(self)
 		} else {
-			return selectedValues.flatMap{$0}.joined(separator: " ")
+			return selectedValues.compactMap{$0}.joined(separator: " ")
 		}
 	}
 }

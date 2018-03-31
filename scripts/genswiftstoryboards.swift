@@ -92,7 +92,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 			return
 		}
 		
-		let ids: [(storyboardIdentifier: String, id: String, segues: [String])]! = vcs.flatMap { svc in
+		let ids: [(storyboardIdentifier: String, id: String, segues: [String])]! = vcs.compactMap { svc in
 			if let storyboardIdentifier = svc.attribute(forName:"storyboardIdentifier")?.stringValue,
 				let id = svc.attribute(forName:"id")?.stringValue {
 				var segues = [String]()
