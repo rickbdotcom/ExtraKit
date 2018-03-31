@@ -6,7 +6,7 @@
 //  Copyright © 2018 rickbdotcom LLC. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 protocol ContainableObject: class {
 	associatedtype Container
