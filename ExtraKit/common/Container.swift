@@ -8,15 +8,16 @@
 
 import Foundation
 
-protocol ContainableObject: class {
+public protocol ContainableObject {
 	associatedtype Container
-	associatedtype Value
-	static var containerKeyPath: ReferenceWritableKeyPath<Container, Value?> { get }
+
+	static var containerKeyPath: ReferenceWritableKeyPath<Container, Self?> { get }
 }
 
-extension NSObject {
+public extension NSObject {
+
 	@discardableResult func inject<T: ContainableObject>(containable: T?) -> Self {
-		(self as? T.Container)?[keyPath: T.containerKeyPath] = containable as? T.Value
+		(self as? T.Container)?[keyPath: T.containerKeyPath] = containable as? T
 		return self
 	}
 }
