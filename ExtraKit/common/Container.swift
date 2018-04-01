@@ -17,7 +17,12 @@ public protocol ContainableObject {
 public extension NSObject {
 
 	@discardableResult func inject<T: ContainableObject>(containable: T?) -> Self {
-		(self as? T.Container)?[keyPath: T.containerKeyPath] = containable as? T
+		(self as? T.Container)?[keyPath: T.containerKeyPath] = containable
+		return self
+	}
+
+	@discardableResult func inject<T, U>(object: T?, keyPath: ReferenceWritableKeyPath<U, T?>) -> Self {
+		(self as? U)?[keyPath: keyPath] = object
 		return self
 	}
 }
