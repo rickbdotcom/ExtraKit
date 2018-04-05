@@ -92,9 +92,10 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 			return
 		}
 		
-		let ids: [(storyboardIdentifier: String, id: String, segues: [String])]! = vcs.compactMap { svc in
-			if let storyboardIdentifier = svc.attribute(forName:"storyboardIdentifier")?.stringValue,
-				let id = svc.attribute(forName:"id")?.stringValue {
+		let ids: [(storyboardIdentifier: String, id: String, customClass: String, segues: [String])]! = vcs.compactMap { svc in
+			if let storyboardIdentifier = svc.attribute(forName:"storyboardIdentifier")?.stringValue
+			, let id = svc.attribute(forName:"id")?.stringValue {
+				let customClass = svc.attribute(forName: "customClass")?.stringValue ?? "UIViewController"
 				var segues = [String]()
 				if let segueNodes = try? svc.nodes(forXPath:"..//segue") {
 					segueNodes.forEach {
@@ -105,7 +106,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 						}
 					}
 				}
-				return (storyboardIdentifier, id, segues)
+				return (storyboardIdentifier, id, customClass, segues)
 			}
 			return nil
 		}
@@ -119,6 +120,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 			ids.forEach {
 				if validSwiftString($0.storyboardIdentifier) {
 					outputString.addLine("struct \($0.storyboardIdentifier): StoryboardScene {")
+					outputString.addLine("typealias StoryboardClass = \($0.customClass)")
 
 					if !$0.segues.isEmpty {
 						outputString.addLine("struct Segues {")
