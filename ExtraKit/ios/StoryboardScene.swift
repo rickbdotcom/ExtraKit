@@ -17,12 +17,11 @@ public protocol StoryboardScene {
 
 public extension StoryboardScene {
 	
-	public func storyboard(in bundle: Bundle? = nil) -> UIStoryboard {
+	public func storyboard(bundle: Bundle? = nil) -> UIStoryboard {
 		return UIStoryboard(name: identifier.1, bundle: bundle)
 	}
 		
-	public func instantiate(in bundle: Bundle? = nil) -> StoryboardClass {
-		return storyboard(in: bundle).instantiateViewController(withIdentifier: identifier.0) as! StoryboardClass
+	public func instantiate(bundle: Bundle? = nil) -> StoryboardClass {
+		return storyboard(bundle: bundle).instantiateViewController(withIdentifier: identifier.0) as! StoryboardClass
 	}
 }
-
