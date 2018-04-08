@@ -11,7 +11,7 @@ let regex = try? NSRegularExpression(pattern: "[-\\s]")
 
 extension String {
 	func enumName() -> String {
-		return regex?.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: characters.count), withTemplate: "").uncapitalized() ?? ""
+		return regex?.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: count), withTemplate: "").uncapitalized() ?? ""
 	}
 	func uncapitalized() -> String {
 		return replacingCharacters(in: startIndex..<index(startIndex, offsetBy:1), with: self[startIndex...startIndex].lowercased())
@@ -20,11 +20,7 @@ extension String {
 
 func generateFontEnum(_ path: String) {
 	if let dataProvider = CGDataProvider(filename: UnsafePointer((path as NSString).utf8String!)) {
-#if swift(>=4.0)
 		let cgFont = CGFont(dataProvider)!
-#else
-		let cgFont = CGFont(dataProvider)
-#endif
 		let font = CTFontCreateWithGraphicsFont(cgFont, 10, nil, nil) as NSFont
 		let fontName = font.fontName
 		let enumName = fontName.enumName()
