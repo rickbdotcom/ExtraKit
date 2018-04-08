@@ -52,6 +52,16 @@ public extension UIView {
 		view.insertSubview(self, at: index)
 		return self
 	}
+
+	@discardableResult func bringToFront() -> Self {
+		superview?.bringSubview(toFront: self)
+		return self
+	}
+
+	@discardableResult func sendToBack() -> Self {
+		superview?.sendSubview(toBack: self)
+		return self
+	}
 }
 
 public extension UIViewController {
