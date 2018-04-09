@@ -17,6 +17,14 @@ while true; do
     --fonts-enum) FONTS_ENUM=$2; shift; shift ;;
 
 	--info-plist) INFO_PLIST=$2; shift; shift ;;
+
+    --nibs-dir) NIBS_DIR=$2; shift; shift ;;
+    --nibs-src) NIBS_SRC=$2; shift; shift ;;
+    --nibs-enum) NIBS_ENUM=$2; shift; shift ;;
+
+    --xcassets) XCASSETS=$2; shift; shift ;;
+    --colors-src) COLORS_SRC=$2; shift; shift ;;
+    --colors-enum) COLORS_ENUM=$2; shift; shift ;;
     * ) break ;;
   esac
 done
@@ -24,13 +32,21 @@ done
 DIR=`dirname "$0"`
 
 if [ -n "$STRINGS_SRC" ]; then
-	"$DIR/genswiftstrings.swift" "$STRINGS" "$STRINGS_SRC" "$STRINGS_DICT" $STRINGS_ENUM $STRINGS_TABLE
+	"$DIR/genswiftstrings.swift" "$STRINGS" "$STRINGS_SRC" "$STRINGS_DICT" "$STRINGS_ENUM" "$STRINGS_TABLE"
 fi
 
 if [ -n "$STORYBOARDS_SRC" ]; then
-	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" $STORYBOARDS_STRUCT
+	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" "$STORYBOARDS_STRUCT"
 fi
 
 if [ -n "$FONTS_SRC" ]; then
-	"$DIR/genswiftfonts.swift" "$FONTS_SRC" $FONTS_ENUM "$FONTS_DIR" "$INFO_PLIST"
+	"$DIR/genswiftfonts.swift" "$FONTS_SRC" "$FONTS_ENUM" "$FONTS_DIR" "$INFO_PLIST"
+fi
+
+if [ -n "$NIBS_SRC" ]; then
+	"$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_ENUM" "$NIBS_DIR"
+fi
+
+if [ -n "$COLORS_SRC" ]; then
+	"$DIR/genswiftcolors.swift" "$COLORS_SRC" "$COLORS_ENUM" "$XCASSETS" 
 fi

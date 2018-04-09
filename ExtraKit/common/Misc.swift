@@ -1,5 +1,5 @@
 //
-//  EnumCollection.swift
+//  Misc.swift
 //  ExtraKit
 //
 //  Created by rickb on 4/18/16.
@@ -31,4 +31,11 @@ public extension EnumCollection {
     public static var all: [Self] {
         return Array(self.cases())
     }
+}
+
+extension Array {
+
+	func randomElement() -> Element {
+		return self[Int(arc4random_uniform(UInt32(count)))]
+	}
 }
