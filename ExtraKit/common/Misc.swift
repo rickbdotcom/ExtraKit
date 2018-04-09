@@ -33,7 +33,7 @@ public extension EnumCollection {
     }
 }
 
-extension Array {
+public extension Array {
 
 	func randomElement() -> Element {
 		return self[Int(arc4random_uniform(UInt32(count)))]
