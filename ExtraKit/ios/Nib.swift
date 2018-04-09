@@ -61,7 +61,7 @@ public extension UIView {
 		}
 	}
 	
-	class func swizzleLoadFromNib() {
+	class func useLoadFromNib() {
 		swizzle(instanceMethod: #selector(awakeFromNib), with: #selector(awakeFromNib_loadFromNib))
 	}
 		
@@ -70,5 +70,11 @@ public extension UIView {
 		if let nibName = nibName {
 			nibContentView = UINib(nibName: nibName, bundle: Bundle(for: type(of: self))).instantiate(withOwner: self, options: nil).first as? UIView
 		}
+	}
+}
+
+public extension UINib {
+	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil) -> T? {
+		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
 	}
 }

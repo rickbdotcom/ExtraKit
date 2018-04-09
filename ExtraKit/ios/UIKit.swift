@@ -315,12 +315,69 @@ public extension UIView {
 		constraints.forEach { $0.isActive = true } 		
 		return constraints
 	}
-
 }
 
-public extension UINib {
-	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil) -> T? {
-		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
+public extension UIView {
+
+	@IBInspectable var capsuleCorners: Bool {
+		get { return associatedValue() ?? false }
+		set {
+			set(associatedValue: newValue)
+			setNeedsLayout()
+			if newValue == false {
+				cornerRadius = 0
+			}
+		}
+	}
+
+	class func useCapsuleCorners() {
+		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(capsuleCorners_layoutSubviews))
+		UIButton.useCapsuleCornersForButton()
+	}
+		
+	@objc func capsuleCorners_layoutSubviews() {
+		capsuleCorners_layoutSubviews()
+		if capsuleCorners {
+			cornerRadius = bounds.size.height / 2.0
+		}
 	}
 }
 
+public extension UIButton {
+
+// this shouldn't be necessary but probably something to do with either UIButton being implemented as a class cluster or it not calling super layout method
+	class func useCapsuleCornersForButton() {
+		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(buttonCapsuleCorners_layoutSubviews))
+	}
+
+	@objc func buttonCapsuleCorners_layoutSubviews() {
+		buttonCapsuleCorners_layoutSubviews()
+		if capsuleCorners {
+			cornerRadius = bounds.size.height / 2.0
+		}
+	}
+}
+
+public extension UIView {
+
+	@IBOutlet var passthroughViews: [UIView]? {
+		get { return associatedValue() }
+		set { set(associatedValue: newValue) }
+	}
+
+	class func usePassthroughViews() {
+		swizzle(instanceMethod: #selector(passthrough_hitTest(_:with:)), with: #selector(hitTest(_:with:)))	
+	}
+	
+	@objc func passthrough_hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+		if let passthroughViews = passthroughViews {
+			for view in passthroughViews {
+				if let viewHit = view.hitTest(view.convert(point, from: self), with: event) {
+					return viewHit
+				}
+			}
+			return nil
+		}
+		return passthrough_hitTest(point, with: event)
+	}
+}

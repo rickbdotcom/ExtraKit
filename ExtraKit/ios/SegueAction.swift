@@ -29,7 +29,7 @@ open class SegueAction {
 
 public extension UIViewController {
 	
-	class func swizzlePrepareForSegueAction() {
+	class func usePrepareForSegueAction() {
 		swizzle(instanceMethod: #selector(prepare(for:sender:)), with: #selector(prepareForSegueAction(_:sender:)))
 	}
 	
