@@ -381,3 +381,22 @@ public extension UIView {
 		return passthrough_hitTest(point, with: event)
 	}
 }
+
+public extension UIView {
+
+	@IBInspectable var clearBackground: Bool {
+		get { return associatedValue() ?? false }
+		set { set(associatedValue: newValue) }
+	}
+	
+	class func useClearBackground() {
+		swizzle(instanceMethod: #selector(awakeFromNib), with: #selector(clearBackground_awakeFromNib))
+	}
+	
+	@objc func clearBackground_awakeFromNib() {
+		clearBackground_awakeFromNib()
+		if clearBackground {
+			backgroundColor = .clear
+		}
+	}
+}

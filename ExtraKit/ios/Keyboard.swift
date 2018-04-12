@@ -93,3 +93,20 @@ public extension Notification {
         }
     }
 }
+
+open class KeyboardHeightConstraint: NSLayoutConstraint {
+	
+	@IBInspectable var hideWithKeyboard: Bool = false
+	
+	open override func awakeFromNib() {
+		super.awakeFromNib()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+	}
+	
+	@objc func keyboardWillChangeFrame(_ notification: Notification) {
+		if let keyboardFrame = notification.keyboardFrameEnd, keyboardFrame.size.height > 0 || hideWithKeyboard {
+			constant = keyboardFrame.size.height
+		}	
+	}
+}
