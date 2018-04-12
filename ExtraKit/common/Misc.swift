@@ -39,3 +39,24 @@ public extension Array {
 		return self[Int(arc4random_uniform(UInt32(count)))]
 	}
 }
+
+public extension RandomAccessCollection where Self: RangeReplaceableCollection, Self.Index == Int {
+	
+	func shiftedLeft(by rawOffset: Int = 1) -> SubSequence {
+		let clampedAmount = rawOffset % count
+		let offset = clampedAmount < 0 ? count + clampedAmount : clampedAmount
+		return self[offset ..< count] + self[0 ..< offset]
+	}
+
+	func shiftedRight(by rawOffset: Int = 1) -> SubSequence {
+		return self.shiftedLeft(by: -rawOffset)
+	}
+
+	public  mutating func shiftLeft(by rawOffset: Int = 1) {
+		self = Self.init(self.shiftedLeft(by: rawOffset))
+	}
+
+	public  mutating func shiftRight(by rawOffset: Int = 1) {
+		self = Self.init(self.shiftedRight(by: rawOffset))
+	}
+}
