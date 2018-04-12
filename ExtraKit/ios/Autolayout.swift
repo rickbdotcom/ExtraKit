@@ -33,14 +33,14 @@ public extension AnchorableObject {
 public extension UIView {
 
 	@discardableResult func pin(edges: UIRectEdge = .all, to guide: UILayoutGuide? = nil, with insets: UIEdgeInsets = .zero, useSafeArea: Bool = false, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
-		return pin(edges: edges, to: guide, with: insets)
+		return pin(edges: edges, toAnchor: guide, with: insets)
 	}
 	
 	@discardableResult func pin(edges: UIRectEdge = .all, to view: UIView? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
-		return pin(edges: edges, to: view, with: insets)
+		return pin(edges: edges, toAnchor: view, with: insets)
 	}
 
-	@discardableResult func pin(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
+	@discardableResult func pin(edges: UIRectEdge = .all, toAnchor view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let pinToView = view ?? superview else {
 			return []
