@@ -11,7 +11,8 @@ while true; do
     --storyboards-dir) STORYBOARDS_DIR=$2; shift; shift ;;
     --storyboards-src) STORYBOARDS_SRC=$2; shift; shift ;;
     --storyboards-struct) STORYBOARDS_STRUCT=$2; shift; shift ;;
-
+	--storyboards-import) STORYBOARDS_IMPORT=$2; shift; shift ;;
+	
     --fonts-dir) FONTS_DIR=$2; shift; shift ;;
     --fonts-src) FONTS_SRC=$2; shift; shift ;;
     --fonts-enum) FONTS_ENUM=$2; shift; shift ;;
@@ -36,7 +37,7 @@ if [ -n "$STRINGS_SRC" ]; then
 fi
 
 if [ -n "$STORYBOARDS_SRC" ]; then
-	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" "$STORYBOARDS_STRUCT"
+	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" "$STORYBOARDS_STRUCT" "$STORYBOARDS_IMPORT"
 fi
 
 if [ -n "$FONTS_SRC" ]; then

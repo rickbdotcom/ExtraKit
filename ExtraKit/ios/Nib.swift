@@ -45,7 +45,7 @@ public extension UIView {
 		set { set(associatedValue: newValue) }
 	}
 
-	@IBInspectable var nibContentView: UIView? {
+	var nibContentView: UIView? {
 		get { return associatedValue() }
 		set { 
 			nibContentView?.removeFromSuperview()
