@@ -33,7 +33,7 @@ done
 DIR=`dirname "$0"`
 
 if [ -n "$STRINGS_SRC" ]; then
-	"$DIR/genswiftstrings.swift" "$STRINGS" "$STRINGS_SRC" "$STRINGS_DICT" "$STRINGS_ENUM" "$STRINGS_TABLE"
+	"$DIR/genswiftstrings.swift" "$STRINGS" "$STRINGS_SRC" "$STRINGS_DICT" "$STRINGS_ENUM" $STRINGS_TABLE
 fi
 
 if [ -n "$STORYBOARDS_SRC" ]; then
