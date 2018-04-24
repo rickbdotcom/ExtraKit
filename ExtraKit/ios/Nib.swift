@@ -68,13 +68,13 @@ public extension UIView {
 	@objc func awakeFromNib_loadFromNib() {
 		awakeFromNib_loadFromNib()
 		if let nibName = nibName {
-			nibContentView = UINib(nibName: nibName, bundle: Bundle(for: type(of: self))).instantiate(withOwner: self, options: nil).first as? UIView
+			nibContentView = UINib.instantiate(nibName, bundle: nil, withOwner: self)
 		}
 	}
 }
 
 public extension UINib {
-	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil) -> T? {
-		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: nil, options: nil).first as? T
+	static func instantiate<T>(_ nibName: String, bundle: Bundle? = nil, withOwner owner: Any? = nil) -> T? {
+		return UINib(nibName: nibName, bundle: bundle).instantiate(withOwner: owner, options: nil).first as? T
 	}
 }
