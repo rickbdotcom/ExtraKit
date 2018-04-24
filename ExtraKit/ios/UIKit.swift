@@ -354,3 +354,20 @@ public extension UIView {
 		}
 	}
 }
+
+public extension UIStackView {
+
+	class func useMultiLineLabelFix() {
+		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(multiLineLabelFix_layoutSubviews))
+	}
+	
+	@objc func multiLineLabelFix_layoutSubviews() {
+		multiLineLabelFix_layoutSubviews()
+		arrangedSubviews.compactMap { $0 as? UILabel }.filter { 
+			$0.numberOfLines == 0 && $0.preferredMaxLayoutWidth != $0.bounds.size.width 
+		}.forEach { 
+			$0.preferredMaxLayoutWidth = $0.bounds.size.width
+			setNeedsLayout()
+		}
+	}
+}

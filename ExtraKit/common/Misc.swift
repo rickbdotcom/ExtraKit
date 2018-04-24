@@ -60,3 +60,10 @@ public extension RandomAccessCollection where Self: RangeReplaceableCollection, 
 		self = Self.init(self.shiftedRight(by: rawOffset))
 	}
 }
+
+// Swift 4.3
+public extension Bool {
+	mutating func toggle() {
+    	self = !self
+  	}
+}
