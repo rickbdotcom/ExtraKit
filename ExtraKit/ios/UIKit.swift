@@ -363,11 +363,17 @@ public extension UIStackView {
 	
 	@objc func multiLineLabelFix_layoutSubviews() {
 		multiLineLabelFix_layoutSubviews()
-		arrangedSubviews.compactMap { $0 as? UILabel }.filter { 
-			$0.numberOfLines == 0 && $0.preferredMaxLayoutWidth != $0.bounds.size.width 
-		}.forEach { 
-			$0.preferredMaxLayoutWidth = $0.bounds.size.width
-			setNeedsLayout()
+		if axis == .vertical {
+			var width = bounds.size.width
+			if isLayoutMarginsRelativeArrangement {
+				width -= layoutMargins.left + layoutMargins.right
+			}
+			arrangedSubviews.compactMap { $0 as? UILabel }.filter { 
+				$0.numberOfLines == 0 && $0.preferredMaxLayoutWidth != width 
+			}.forEach { 
+				$0.preferredMaxLayoutWidth = width
+				setNeedsLayout()
+			}
 		}
 	}
 }
