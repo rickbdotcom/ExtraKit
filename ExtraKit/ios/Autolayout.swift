@@ -32,15 +32,22 @@ public extension AnchorableObject {
 }
 public extension UIView {
 
-	@discardableResult func pin(edges: UIRectEdge = .all, to guide: UILayoutGuide? = nil, with insets: UIEdgeInsets = .zero, useSafeArea: Bool = false, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
-		return pin(edges: edges, toAnchor: guide, with: insets)
-	}
-	
-	@discardableResult func pin(edges: UIRectEdge = .all, to view: UIView? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
-		return pin(edges: edges, toAnchor: view, with: insets)
+	@discardableResult func pin(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> Self {
+		pinConstraints(edges: edges, to: view, with: insets, alignWithLanguageDirection: alignWithLanguageDirection)
+		return self
 	}
 
-	@discardableResult func pin(edges: UIRectEdge = .all, toAnchor view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
+	@discardableResult func center(to view: UIView? = nil, offset: CGPoint = .zero) -> Self {
+		centerConstraints(to: view, offset: offset)
+		return self
+	}
+	
+	@discardableResult func size(to size: CGSize) -> Self {
+		sizeConstraints(to: size)
+		return self
+	}
+	
+	@discardableResult func pinConstraints(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let pinToView = view ?? superview else {
 			return []
@@ -63,7 +70,7 @@ public extension UIView {
 		return constraints
 	}
 
-	@discardableResult func center(to view: UIView? = nil, offset: CGPoint = .zero) -> [NSLayoutConstraint] {
+	@discardableResult func centerConstraints(to view: UIView? = nil, offset: CGPoint = .zero) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let centerToView = view ?? superview else {
 			return []
@@ -76,7 +83,7 @@ public extension UIView {
 		return constraints
 	}
 		
-	@discardableResult func size(to size: CGSize) -> [NSLayoutConstraint] {
+	@discardableResult func sizeConstraints(to size: CGSize) -> [NSLayoutConstraint] {
 		var constraints = [NSLayoutConstraint]()
 		constraints.append(widthAnchor.constraint(equalToConstant: size.width))
 		constraints.append(heightAnchor.constraint(equalToConstant: size.height))
