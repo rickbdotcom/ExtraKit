@@ -28,3 +28,23 @@ public extension NSObject {
 	}
 }
 
+public protocol NonNilContainable {
+	associatedtype NonNilContainer
+	typealias NonNilContainerKeyPath = ReferenceWritableKeyPath<NonNilContainer, Self> 
+
+	static var nonNilContainerKeyPath: NonNilContainerKeyPath { get }
+}
+
+public extension NSObject {
+
+	@discardableResult func inject<T: NonNilContainable>(value: T) -> Self {
+		(self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath] = value
+		return self
+	}
+
+	@discardableResult func inject<T, U>(value: T, keyPath: ReferenceWritableKeyPath<U, T>) -> Self {
+		(self as? U)?[keyPath: keyPath] = value
+		return self
+	}
+}
+
