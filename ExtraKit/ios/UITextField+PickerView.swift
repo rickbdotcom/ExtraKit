@@ -117,6 +117,7 @@ extension PickerInputView: AllValuesPicker {
 	}
 	
 	public func populateValues<T: AllValues & DisplayName>(_ type: T.Type, allowsUnselected: Bool = false) {
+		self.allowsUnselected = allowsUnselected
 		components = [(allowsUnselected ? [""] : []) + T.all.map { $0.displayName }] 
 	}
 	
