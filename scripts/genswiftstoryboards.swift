@@ -1,6 +1,6 @@
 #!/usr/bin/env xcrun --sdk macosx swift
 
-// genswift.sh --storyboards-dir ./ --storyboards-src Storyboards.swift --storyboards-struct Storyboards --storyboards-import MMDrawerController
+// genswift.sh --storyboards-dir ./ --storyboards-src Storyboards.swift --storyboards-enum Storyboards --storyboards-import MMDrawerController
 
 // swiftlint:disable cyclomatic_complexity
 
@@ -116,7 +116,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 		
 		let fileName = url.deletingPathExtension().lastPathComponent
 		if validSwiftString(fileName) {
-			outputString.addLine("struct \(fileName) {")
+			outputString.addLine("enum \(fileName) {")
 			outputString.addLine()
 			
 			ids.forEach {
@@ -151,7 +151,7 @@ outputString += "\tGenerated from the storyboards used by the app.\n"
 outputString += "\tUsage: \(structName).<StoryboardName>.<StoryboardId>.Segues().<SegueIdentifier>\n"
 outputString += "\tUsage: \(structName).<StoryboardName>.<StoryboardId>().instantiateViewController()\n"
 outputString += "*/\n"
-outputString.addLine("struct \(structName) {")
+outputString.addLine("enum \(structName) {")
 outputString.addLine("")
 CommandLine.arguments[4..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
 	generateStoryboardIdentifierSourceFile($0)
