@@ -90,6 +90,9 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 		if let cs = try doc.nodes(forXPath:"//pageViewController") as? [XMLElement] {
 			vcs.append(contentsOf: cs)
 		}
+		if let cs = try doc.nodes(forXPath:"//embed") as? [XMLElement] {
+			vcs.append(contentsOf: cs)
+		}
 		guard vcs.count > 0 else {
 			return
 		}
