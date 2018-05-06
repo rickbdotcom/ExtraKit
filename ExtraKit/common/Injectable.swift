@@ -1,5 +1,5 @@
 //
-//  Container.swift
+//  Injectable.swift
 //  ExtraKit
 //
 //  Created by rickb on 1/24/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Containable {
+public protocol Injectable {
 	associatedtype Container
 	typealias ContainerKeyPath = ReferenceWritableKeyPath<Container, Self?> 
 
@@ -17,7 +17,7 @@ public protocol Containable {
 
 public extension NSObject {
 
-	@discardableResult func inject<T: Containable>(value: T?) -> Self {
+	@discardableResult func inject<T: Injectable>(value: T?) -> Self {
 		(self as? T.Container)?[keyPath: T.containerKeyPath] = value
 		return self
 	}
@@ -28,7 +28,7 @@ public extension NSObject {
 	}
 }
 
-public protocol NonNilContainable {
+public protocol NonNilInjectable {
 	associatedtype NonNilContainer
 	typealias NonNilContainerKeyPath = ReferenceWritableKeyPath<NonNilContainer, Self> 
 
@@ -37,7 +37,7 @@ public protocol NonNilContainable {
 
 public extension NSObject {
 
-	@discardableResult func inject<T: NonNilContainable>(value: T) -> Self {
+	@discardableResult func inject<T: NonNilInjectable>(value: T) -> Self {
 		(self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath] = value
 		return self
 	}
