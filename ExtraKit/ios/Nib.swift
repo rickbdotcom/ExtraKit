@@ -42,9 +42,22 @@ public extension UIView {
 	
 	@IBInspectable var nibName: String? {
 		get { return associatedValue() }
-		set { set(associatedValue: newValue) }
+		set { 
+			set(associatedValue: newValue) 
+			if let nibName = nibName {
+				nibContentView = UINib.instantiate(nibName, bundle: nil, withOwner: self)
+			} else {
+				nibContentView = nil
+			}
+		}
 	}
 
+	convenience init(nibName: String) {
+		self.init(frame: .zero)
+		self.nibName = nibName
+		translatesAutoresizingMaskIntoConstraints = false
+	}
+	
 	var nibContentView: UIView? {
 		get { return associatedValue() }
 		set { 
@@ -58,17 +71,6 @@ public extension UIView {
 				nibContentView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
 				nibContentView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
 			} 
-		}
-	}
-	
-	class func useLoadFromNib() {
-		swizzle(instanceMethod: #selector(awakeFromNib), with: #selector(awakeFromNib_loadFromNib))
-	}
-		
-	@objc func awakeFromNib_loadFromNib() {
-		awakeFromNib_loadFromNib()
-		if let nibName = nibName {
-			nibContentView = UINib.instantiate(nibName, bundle: nil, withOwner: self)
 		}
 	}
 }
