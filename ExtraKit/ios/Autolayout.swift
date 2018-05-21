@@ -47,6 +47,17 @@ public extension UIView {
 		return self
 	}
 	
+	@discardableResult func aspectRatio(_ ratio: CGFloat) -> Self {
+		aspectRatioConstraint(ratio)
+		return self
+	}
+
+	@discardableResult func aspectRatioConstraint(_ ratio: CGFloat) -> NSLayoutConstraint {
+		let constraint = widthAnchor.constraint(equalTo: heightAnchor, multiplier: ratio)
+		constraint.isActive = true
+		return constraint
+	}
+	
 	@discardableResult func pinConstraints(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let pinToView = view ?? superview else {
@@ -66,7 +77,7 @@ public extension UIView {
 		if edges.contains(.right) {
 			constraints.append(pinToView.xAxisEndAnchor(alignWithLanguageDirection: alignWithLanguageDirection).constraint(equalTo: xAxisEndAnchor(alignWithLanguageDirection: alignWithLanguageDirection), constant: insets.right))
 		}
-		constraints.forEach { $0.isActive = true }
+		NSLayoutConstraint.activate(constraints)
 		return constraints
 	}
 
@@ -79,7 +90,7 @@ public extension UIView {
 		constraints.append(centerToView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: offset.x))
 		constraints.append(centerToView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offset.y))
 
-		constraints.forEach { $0.isActive = true }
+		NSLayoutConstraint.activate(constraints)
 		return constraints
 	}
 		
@@ -87,7 +98,7 @@ public extension UIView {
 		var constraints = [NSLayoutConstraint]()
 		constraints.append(widthAnchor.constraint(equalToConstant: size.width))
 		constraints.append(heightAnchor.constraint(equalToConstant: size.height))
-		constraints.forEach { $0.isActive = true } 		
+		NSLayoutConstraint.activate(constraints)
 		return constraints
 	}
 }
