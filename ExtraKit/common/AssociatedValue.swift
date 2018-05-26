@@ -9,7 +9,15 @@
 import Foundation
 import ObjectiveC
 
-private let identifier = "com.rickb.extrakit"
+/***
+// Example usage:
+extension UILabel {
+	@IBInspectable var lineHeight: Float {
+		get { return associatedValue() ?? 0 }
+		set { set(associatedValue: newValue) }
+	}
+}
+**/
 
 public extension NSObject {
 
@@ -80,3 +88,4 @@ class WeakObjectRef: NSObject {
 }
 
 private var associatedDictionaryKey = 0
+private let identifier = "com.rickb.extrakit"
