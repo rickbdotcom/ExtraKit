@@ -24,17 +24,6 @@ public extension NSObject {
 	var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
 }
 
-public func kvoBind<T: NSObject, U: NSObject, V>(_ element: T?, to object: U?, keyPath: KeyPath<U, V>, changeHandler: @escaping (T, U) -> Void) {
-	element?.kvoObservations.removeAllObjects()
-	if let object = object {
-		element?.kvoObservations.add(object.observe(keyPath, options: [.initial, .new]) { [weak element] object, _ in
-			if let element = element {
-				changeHandler(element, object)
-			}
-		})
-	}
-}
-
 private let associatedValueKey = "com.rickb.extrakit.Observing"
 
 class NotificationObserver {
