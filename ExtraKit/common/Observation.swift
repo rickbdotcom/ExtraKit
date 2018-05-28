@@ -21,16 +21,18 @@ public extension NSObject {
 		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
 	}
 	
-	func kvoBind<T: AnyObject, U: NSObject, V>(_ element: T?, to object: U, keyPath: KeyPath<U, V>, options: NSKeyValueObservingOptions = [.initial, .new], changeHandler: @escaping (T, U, NSKeyValueObservedChange<V>) -> Void) {
-		weak var e = element
-		kvoObservations.add(object.observe(keyPath, options: options) { object, value in
-			if let e = e {
-				changeHandler(e, object, value)
+	var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
+}
+
+public func kvoBind<T: NSObject, U: NSObject, V>(_ element: T?, to object: U?, keyPath: KeyPath<U, V>, changeHandler: @escaping (T, U) -> Void) {
+	element?.kvoObservations.removeAllObjects()
+	if let object = object {
+		element?.kvoObservations.add(object.observe(keyPath, options: [.initial, .new]) { [weak element] object, _ in
+			if let element = element {
+				changeHandler(element, object)
 			}
 		})
 	}
-
-	var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
 }
 
 private let associatedValueKey = "com.rickb.extrakit.Observing"
