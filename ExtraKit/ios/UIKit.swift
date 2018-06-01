@@ -355,25 +355,19 @@ public extension UIView {
 	}
 }
 
-public extension UIStackView {
+public extension UILabel {
 
-	class func useMultiLineLabelFix() {
-		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(multiLineLabelFix_layoutSubviews))
+	class func setPreferredMaxLayoutWidthToBounds() {
+		swizzle(instanceMethod: #selector(setter: bounds), with: #selector(preferredMaxLayoutWidth_setBounds(_:)))
 	}
 	
-	@objc func multiLineLabelFix_layoutSubviews() {
-		multiLineLabelFix_layoutSubviews()
-		if axis == .vertical {
-			var width = bounds.size.width
-			if isLayoutMarginsRelativeArrangement {
-				width -= layoutMargins.left + layoutMargins.right
-			}
-			arrangedSubviews.compactMap { $0 as? UILabel }.filter { 
-				$0.numberOfLines == 0 && $0.preferredMaxLayoutWidth != width 
-			}.forEach { 
-				$0.preferredMaxLayoutWidth = width
-				setNeedsLayout()
-			}
+	@objc func preferredMaxLayoutWidth_setBounds(_ bounds: CGRect) {
+		preferredMaxLayoutWidth_setBounds(bounds)
+		if preferredMaxLayoutWidth != bounds.size.width {
+			preferredMaxLayoutWidth = bounds.size.width
+			invalidateIntrinsicContentSize()
+			setNeedsLayout()
+			setNeedsUpdateConstraints()
 		}
 	}
 }
