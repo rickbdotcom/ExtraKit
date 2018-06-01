@@ -357,13 +357,18 @@ public extension UIView {
 
 public extension UILabel {
 
-	class func setPreferredMaxLayoutWidthToBounds() {
+	@IBInspectable var preferredMaxLayoutWidthToBounds: Bool {
+		get { return associatedValue() ?? false }
+		set { set(associatedValue: newValue) }
+	}
+
+	class func usePreferredMaxLayoutWidthToBounds() {
 		swizzle(instanceMethod: #selector(setter: bounds), with: #selector(preferredMaxLayoutWidth_setBounds(_:)))
 	}
 	
 	@objc func preferredMaxLayoutWidth_setBounds(_ bounds: CGRect) {
 		preferredMaxLayoutWidth_setBounds(bounds)
-		if preferredMaxLayoutWidth != bounds.size.width {
+		if preferredMaxLayoutWidthToBounds && preferredMaxLayoutWidth != bounds.size.width {
 			preferredMaxLayoutWidth = bounds.size.width
 			invalidateIntrinsicContentSize()
 			setNeedsLayout()
