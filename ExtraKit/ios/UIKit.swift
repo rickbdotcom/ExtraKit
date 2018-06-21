@@ -79,6 +79,14 @@ public extension UIViewController {
 
 public extension UIViewController {
 
+	func parentViewController<T>(ofType: T.Type) -> T? {
+		return typedParentViewController()
+	}
+	
+	func childViewController<T>(ofType: T.Type) -> T? {
+		return typedChildViewController()
+	}
+
 	func typedParentViewController<T>() -> T? {
 		return self as? T ?? parent?.typedParentViewController()
 	}
@@ -90,6 +98,18 @@ public extension UIViewController {
 
 public extension UIView {
 
+	func superview<T>(ofType: T.Type) -> T? {
+		return typedSuperview()
+	}
+
+	func parentViewController<T>(ofType: T.Type) -> T? {
+		return typedParentViewController()
+	}
+	
+	func subview<T>(ofType: T.Type) -> T? {
+		return typedSubview()
+	}
+	
 	func typedSuperview<T>() -> T? {
 		return self as? T ?? superview?.typedSuperview()
 	}
@@ -373,6 +393,34 @@ public extension UILabel {
 			invalidateIntrinsicContentSize()
 			setNeedsLayout()
 			setNeedsUpdateConstraints()
+		}
+	}
+}
+
+public extension UIView {
+	
+	@IBInspectable var stackViewCustomSpacing: Double {
+		get { return associatedValue() ?? -Double.greatestFiniteMagnitude }
+		set { set(associatedValue: newValue); setCustomSpacing() }
+	}
+	
+	class func useStackViewCustomSpacing() {
+		if #available(iOS 11.0, *) {
+			swizzle(instanceMethod: #selector(didMoveToSuperview), with: #selector(stackViewCustomSpacing_didMoveToSuperview))
+		}	
+	}
+	
+	@objc func stackViewCustomSpacing_didMoveToSuperview() {
+		stackViewCustomSpacing_didMoveToSuperview()
+		setCustomSpacing()
+	}
+	
+	func setCustomSpacing() {
+		if #available(iOS 11.0, *)
+		, stackViewCustomSpacing != -Double.greatestFiniteMagnitude
+		, let parentStackView = superview as? UIStackView
+		, parentStackView.arrangedSubviews.contains(self) {
+			parentStackView.setCustomSpacing(CGFloat(stackViewCustomSpacing), after: self)
 		}
 	}
 }
