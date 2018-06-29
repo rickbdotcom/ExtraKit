@@ -16,6 +16,10 @@ public protocol Injectable {
 }
 
 public extension NSObject {
+	
+	func injectableValue<T: Injectable>() -> T? {
+		return (self as? T.Container)?[keyPath: T.containerKeyPath]
+	}
 
 	@discardableResult func inject<T: Injectable>(value: T?) -> Self {
 		(self as? T.Container)?[keyPath: T.containerKeyPath] = value
@@ -36,6 +40,10 @@ public protocol NonNilInjectable {
 }
 
 public extension NSObject {
+
+	func injectableValue<T: NonNilInjectable>() -> T? {
+		return (self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath]
+	}
 
 	@discardableResult func inject<T: NonNilInjectable>(value: T) -> Self {
 		(self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath] = value
