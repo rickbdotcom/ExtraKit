@@ -1,5 +1,5 @@
 PODS:
-  - ExtraKit (0.4.1)
+  - ExtraKit (0.4.2)
 
 DEPENDENCIES:
   - ExtraKit (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ExtraKit: 865c1d67df58dcfb13fcb25181aeb4dfe4929bfe
+  ExtraKit: 84eb6f83e5bae03f23ffaaff1039a7ac47a57102
 
 PODFILE CHECKSUM: ea04b867752983615557bf55d2ca6a120f1cabf4
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
