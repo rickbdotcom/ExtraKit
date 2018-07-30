@@ -150,7 +150,6 @@ public extension UIView {
 			return layer.cornerRadius
 		}
 		set {
-			layer.masksToBounds = true
 			layer.cornerRadius = newValue
 		}
 	}
