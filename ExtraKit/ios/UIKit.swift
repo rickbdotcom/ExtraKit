@@ -267,7 +267,7 @@ public extension UIView {
 
 public extension UIView {
 
-	@IBOutlet weak var containerView: UIView? {
+	@IBOutlet weak var containerView: UIView! {
 		get { return weakAssociatedValue() ?? self }
 		set { set(weakAssociatedValue: newValue) }
 	}
