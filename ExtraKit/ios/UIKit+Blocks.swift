@@ -81,7 +81,7 @@ public extension UIBarButtonItem {
 	@discardableResult func set(action: ((UIBarButtonItem) -> Void)?) -> Any? {
 		if let action = action { 
 			targetBlock = TargetBlock(action)
-			target = self
+			target = targetBlock
 			self.action = targetBlockAction
 			return targetBlock
 		} else {
