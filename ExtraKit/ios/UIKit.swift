@@ -343,6 +343,22 @@ public extension UIView {
 		swizzle(instanceMethod: #selector(passthrough_hitTest(_:with:)), with: #selector(hitTest(_:with:)))	
 	}
 	
+    func addPassthroughView(_ view: UIView) {
+        if passthroughViews == nil {
+            passthroughViews = []
+        }
+        passthroughViews?.append(view)
+    }
+
+    func removePassthroughView(_ view: UIView) {
+        if let index = passthroughViews?.index(of: view) {
+            passthroughViews?.remove(at: index)
+            if passthroughViews?.isEmpty ?? false {
+                passthroughViews = nil
+            }
+        }
+    }
+
 	@objc func passthrough_hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		if let passthroughViews = passthroughViews {
 			for view in passthroughViews {
@@ -350,7 +366,7 @@ public extension UIView {
 					return viewHit
 				}
 			}
-			return nil
+			return passthrough_hitTest(point, with: event)
 		}
 		return passthrough_hitTest(point, with: event)
 	}
