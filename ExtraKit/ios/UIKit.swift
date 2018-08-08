@@ -338,6 +338,11 @@ public extension UIView {
 		get { return associatedValue() }
 		set { set(associatedValue: newValue) }
 	}
+	
+	@IBInspectable var onlyTestPassthroughViews: Bool {
+		get { return associatedValue() ?? true }
+		set { set(associatedValue: newValue) }	
+	}
 
 	class func usePassthroughViews() {
 		swizzle(instanceMethod: #selector(passthrough_hitTest(_:with:)), with: #selector(hitTest(_:with:)))	
@@ -366,7 +371,7 @@ public extension UIView {
 					return viewHit
 				}
 			}
-			return passthrough_hitTest(point, with: event)
+			return onlyTestPassthroughViews ? nil : passthrough_hitTest(point, with: event)
 		}
 		return passthrough_hitTest(point, with: event)
 	}
