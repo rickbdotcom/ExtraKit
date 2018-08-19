@@ -236,13 +236,18 @@ public extension UILabel {
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
-        drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
+		drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
     }
 
 	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
+		let preferredMaxLayoutWidth = self.preferredMaxLayoutWidth
+		if preferredMaxLayoutWidth > 0 {
+			self.preferredMaxLayoutWidth = preferredMaxLayoutWidth - (contentInsets.left + contentInsets.right)
+		}
 		var size = intrinsicContentSizeWithContentInsets()
-        size.height += contentInsets.top + contentInsets.bottom 
-        size.width += contentInsets.left + contentInsets.right
+		size.height += contentInsets.top + contentInsets.bottom
+		size.width += contentInsets.left + contentInsets.right
+		self.preferredMaxLayoutWidth = preferredMaxLayoutWidth
 		return size
 	}
 }
@@ -392,28 +397,6 @@ public extension UIView {
 		clearBackground_awakeFromNib()
 		if clearBackground {
 			backgroundColor = .clear
-		}
-	}
-}
-
-public extension UILabel {
-
-	@IBInspectable var preferredMaxLayoutWidthToBounds: Bool {
-		get { return associatedValue() ?? false }
-		set { set(associatedValue: newValue) }
-	}
-
-	class func usePreferredMaxLayoutWidthToBounds() {
-		swizzle(instanceMethod: #selector(setter: bounds), with: #selector(preferredMaxLayoutWidth_setBounds(_:)))
-	}
-	
-	@objc func preferredMaxLayoutWidth_setBounds(_ bounds: CGRect) {
-		preferredMaxLayoutWidth_setBounds(bounds)
-		if preferredMaxLayoutWidthToBounds && preferredMaxLayoutWidth != bounds.size.width {
-			preferredMaxLayoutWidth = bounds.size.width
-			invalidateIntrinsicContentSize()
-			setNeedsLayout()
-			setNeedsUpdateConstraints()
 		}
 	}
 }
