@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# since Swift doesn't have any easy way to parse getopt long arguments or import dependencies in scripts we just leverage the shell here
+# when/if this changes, remove this script and put functionality in individual scripts
+
 while true; do
   case "$1" in
     --strings ) STRINGS=$2; shift; shift ;;
@@ -22,6 +25,7 @@ while true; do
     --nibs-dir) NIBS_DIR=$2; shift; shift ;;
     --nibs-src) NIBS_SRC=$2; shift; shift ;;
     --nibs-enum) NIBS_ENUM=$2; shift; shift ;;
+    --nibs-import) NIBS_IMPORT=$2; shift; shift ;;
 
     --xcassets) XCASSETS=$2; shift; shift ;;
     --colors-src) COLORS_SRC=$2; shift; shift ;;
@@ -45,9 +49,9 @@ if [ -n "$FONTS_SRC" ]; then
 fi
 
 if [ -n "$NIBS_SRC" ]; then
-	"$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_ENUM" "$NIBS_DIR"
+	find "$NIBS_DIR" -type f -iname "*.xib" -print0 | xargs -0 "$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_ENUM" "$NIBS_IMPORT"
 fi
 
 if [ -n "$COLORS_SRC" ]; then
-	"$DIR/genswiftcolors.swift" "$COLORS_SRC" "$COLORS_ENUM" "$XCASSETS" 
+	find "$XCASSETS" -type d -iname "*.colorset" -print0 | xargs -0 "$DIR/genswiftcolors.swift" "$COLORS_SRC" "$COLORS_ENUM"
 fi
