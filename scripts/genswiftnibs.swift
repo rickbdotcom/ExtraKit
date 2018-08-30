@@ -62,7 +62,12 @@ func generateNibItem(_ path: String) {
 				ownerClass = customClass
 			}
 		}
-		if let elem = (try doc.nodes(forXPath:"//tableViewCell") as? [XMLElement])?.first {
+		if let elem = (try doc.nodes(forXPath:"//collectionViewCell") as? [XMLElement])?.first {
+			topClass = "UICollectionViewCell"
+			if let customClass = elem.attribute(forName:"customClass")?.stringValue {
+				topClass = customClass
+			}
+		} else if let elem = (try doc.nodes(forXPath:"//tableViewCell") as? [XMLElement])?.first {
 			topClass = "UITableViewCell"
 			if let customClass = elem.attribute(forName:"customClass")?.stringValue {
 				topClass = customClass
