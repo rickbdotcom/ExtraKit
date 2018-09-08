@@ -61,9 +61,11 @@ public extension RandomAccessCollection where Self: RangeReplaceableCollection, 
 	}
 }
 
-// Swift 4.3
+#if swift(>=4.3)
+#else
 public extension Bool {
 	mutating func toggle() {
     	self = !self
   	}
 }
+#endif
