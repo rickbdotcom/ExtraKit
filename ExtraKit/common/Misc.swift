@@ -61,7 +61,7 @@ public extension RandomAccessCollection where Self: RangeReplaceableCollection, 
 	}
 }
 
-#if swift(>=4.3)
+#if swift(>=4.2)
 #else
 public extension Bool {
 	mutating func toggle() {
