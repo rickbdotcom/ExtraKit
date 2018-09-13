@@ -65,12 +65,12 @@ public extension UIResponder {
 	func createPreviousNextDoneInputAccessory() {
 		guard let tf = self as? UITextInputTraits , previousNextDoneInputAccessory == nil else { return }
 
-		let segmentControl = UISegmentedControl(items: ["⌃","⌄"])
+		let segmentControl = UISegmentedControl(items: ["▲","▼"])
 		segmentControl.setTitleTextAttributes([
-			NSAttributedStringKey.font: UIFont.systemFont(ofSize: 40)
+			NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)
 		], for: .normal)
-		segmentControl.setContentOffset(CGSize(width:0, height: 9), forSegmentAt: 0)
-		segmentControl.setContentOffset(CGSize(width:0, height: -9), forSegmentAt: 1)
+		segmentControl.setContentOffset(CGSize(width:0, height: 0), forSegmentAt: 0)
+		segmentControl.setContentOffset(CGSize(width:0, height: 0), forSegmentAt: 1)
 
 		segmentControl.setWidth(50, forSegmentAt: 0)
 		segmentControl.setWidth(50, forSegmentAt: 1)
