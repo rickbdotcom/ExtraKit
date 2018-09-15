@@ -14,7 +14,7 @@ public extension UIControl {
 
 	private var targetBlocks: NSMutableDictionary { return getAssociatedValue(NSMutableDictionary()) }
 
-	@discardableResult func on<T: UIControl>(_ event: UIControlEvents, block: ((T) -> Void)?) -> Any? {
+	@discardableResult func on<T: UIControl>(_ event: UIControl.Event, block: ((T) -> Void)?) -> Any? {
 		if let block = block {
 			let targetBlock = add(event, block: block)
 			targetBlocks[event.rawValue] = targetBlock
@@ -26,7 +26,7 @@ public extension UIControl {
 		return nil
 	}
 	
-	func add<T: UIControl>(_ event: UIControlEvents, block: @escaping (T) -> Void) -> Any? {
+	func add<T: UIControl>(_ event: UIControl.Event, block: @escaping (T) -> Void) -> Any? {
 		guard self is T else {
 			return nil
 		}

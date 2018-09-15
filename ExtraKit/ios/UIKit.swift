@@ -54,12 +54,12 @@ public extension UIView {
 	}
 
 	@discardableResult func bringToFront() -> Self {
-		superview?.bringSubview(toFront: self)
+		superview?.bringSubviewToFront(self)
 		return self
 	}
 
 	@discardableResult func sendToBack() -> Self {
-		superview?.sendSubview(toBack: self)
+		superview?.sendSubviewToBack(self)
 		return self
 	}
 }
@@ -92,7 +92,7 @@ public extension UIViewController {
 	}
 	
 	func typedChildViewController<T>() -> T? {
-		return childViewControllers.first(where: { $0 is T }) as? T
+		return children.first(where: { $0 is T }) as? T
 	}
 }
 
@@ -216,15 +216,15 @@ public extension UITextField {
 	}	
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+		return textRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
 	}
 	
 	@objc func leftViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return leftViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+		return leftViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
 	}
 
     @objc func rightViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return rightViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
+		return rightViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
 	}
 }
 
@@ -236,7 +236,7 @@ public extension UILabel {
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
-		drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
+		drawTextWithContentInsets(in: rect.inset(by: contentInsets))
     }
 
 	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
@@ -255,8 +255,8 @@ public extension UILabel {
 public extension UIView {
 
 	@IBInspectable var contentInsetsString: String? {
-		get { return NSStringFromUIEdgeInsets(contentInsets) }
-		set { contentInsets = UIEdgeInsetsFromString(newValue ?? "") }
+		get { return NSCoder.string(for: contentInsets) }
+		set { contentInsets = NSCoder.uiEdgeInsets(for: newValue ?? "") }
 	}
 	
 	@objc var contentInsets: UIEdgeInsets {
@@ -286,13 +286,6 @@ public extension UIEdgeInsets {
 	
 	init(_ inset: CGFloat) {
 		self.init(top: inset, left: inset, bottom: inset, right: inset)
-	}
-}
-
-public extension CGRect {
-
-	func inset(by insets: UIEdgeInsets) -> CGRect {
-		return UIEdgeInsetsInsetRect(self, insets)
 	}
 }
 

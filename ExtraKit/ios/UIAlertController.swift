@@ -10,19 +10,19 @@ import UIKit
 
 public extension UIAlertController {
 
-	class func alert(title: String? = nil, message: String? = nil, preferredStyle: UIAlertControllerStyle = .alert) -> UIAlertController {
+	class func alert(title: String? = nil, message: String? = nil, preferredStyle: UIAlertController.Style = .alert) -> UIAlertController {
 		return UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
 	}
 	
-	@discardableResult func ok(_ style: UIAlertActionStyle = .default, action inAction: ((UIAlertController)->Void)? = nil) -> Self {
+	@discardableResult func ok(_ style: UIAlertAction.Style = .default, action inAction: ((UIAlertController)->Void)? = nil) -> Self {
 		return action(title: "OK".localized(), style: style, action: inAction)
 	} 
 
-	@discardableResult func cancel(_ style: UIAlertActionStyle = .cancel, inAction: ((UIAlertController)->Void)? = nil) -> Self {
+	@discardableResult func cancel(_ style: UIAlertAction.Style = .cancel, inAction: ((UIAlertController)->Void)? = nil) -> Self {
 		return action(title: "Cancel".localized(), style: style, action: inAction)
 	}
 	
-	@discardableResult func action(title: String?, style: UIAlertActionStyle = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
+	@discardableResult func action(title: String?, style: UIAlertAction.Style = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
 		addAction(UIAlertAction(title: title, style: style) { [weak self] _ in
 			if let alert = self {
 				action?(alert)

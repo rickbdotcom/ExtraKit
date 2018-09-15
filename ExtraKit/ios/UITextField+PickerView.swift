@@ -46,7 +46,7 @@ open class PickerInputView: UIPickerView, UIPickerViewDataSource, UIPickerViewDe
 	
 	open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		textField?.text = text()
-		NotificationCenter.default.post(name: NSNotification.Name.UITextFieldTextDidChange, object: textField)
+		NotificationCenter.default.post(name: UITextField.textDidChangeNotification, object: textField)
 		textField?.sendActions(for: .editingChanged)
 	}
 	

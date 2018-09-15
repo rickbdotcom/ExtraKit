@@ -18,7 +18,7 @@ open class DatePickerInputView: UIDatePicker {
 	
 	@objc func dateChanged() {
 		textField?.text = dateString
-		NotificationCenter.default.post(name: NSNotification.Name.UITextFieldTextDidChange, object: textField)
+		NotificationCenter.default.post(name: UITextField.textDidChangeNotification, object: textField)
 		textField?.sendActions(for: .editingChanged)
 	}
 	
@@ -36,7 +36,7 @@ public extension UITextField {
 		return inputView as? DatePickerInputView
 	}
 	
-	@discardableResult func set(datePickerMode mode:UIDatePickerMode, dateFormatter: DateFormatter) -> DatePickerInputView {
+	@discardableResult func set(datePickerMode mode: UIDatePicker.Mode, dateFormatter: DateFormatter) -> DatePickerInputView {
 
 		let picker = DatePickerInputView()
 		picker.dateFormatter = dateFormatter

@@ -67,7 +67,7 @@ public extension UIResponder {
 
 		let segmentControl = UISegmentedControl(items: ["⌃","⌄"])
 		segmentControl.setTitleTextAttributes([
-			NSAttributedStringKey.font: UIFont.systemFont(ofSize: 40)
+			NSAttributedString.Key.font: UIFont.systemFont(ofSize: 40)
 		], for: .normal)
 		segmentControl.setContentOffset(CGSize(width:0, height: 9), forSegmentAt: 0)
 		segmentControl.setContentOffset(CGSize(width:0, height: -9), forSegmentAt: 1)

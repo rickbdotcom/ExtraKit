@@ -26,8 +26,8 @@ class KeyboardNotificationObserver: NSObject {
 
 		self.scrollView = scrollView
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
 	
 	@objc func keyboardWillChangeFrame(_ notification: Notification) {
@@ -86,7 +86,7 @@ public extension UIResponder {
 public extension Notification {
 
 	var keyboardFrameEnd: CGRect? {
-        if let info = (self as Notification).userInfo, let value = info[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+		if let info = (self as Notification).userInfo, let value = info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             return value.cgRectValue
         } else {
             return nil
@@ -107,8 +107,8 @@ open class KeyboardHeightConstraint: NSLayoutConstraint {
 	}
 
 	private func setupNotifications() {
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
 
 	@objc func keyboardWillChangeFrame(_ notification: Notification) {
