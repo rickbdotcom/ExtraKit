@@ -54,12 +54,12 @@ public extension UIView {
 	}
 
 	@discardableResult func bringToFront() -> Self {
-		superview?.bringSubviewToFront(self)
+		superview?.bringSubview(toFront: self)
 		return self
 	}
 
 	@discardableResult func sendToBack() -> Self {
-		superview?.sendSubviewToBack(self)
+		superview?.sendSubview(toBack: self)
 		return self
 	}
 }
@@ -92,7 +92,7 @@ public extension UIViewController {
 	}
 	
 	func typedChildViewController<T>() -> T? {
-		return children.first(where: { $0 is T }) as? T
+		return childViewControllers.first(where: { $0 is T }) as? T
 	}
 }
 
@@ -216,15 +216,15 @@ public extension UITextField {
 	}	
 
     @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return textRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
+		return textRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 	
 	@objc func leftViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return leftViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
+		return leftViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 
     @objc func rightViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return rightViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
+		return rightViewRectWithContentInsets(forBounds: UIEdgeInsetsInsetRect(bounds, contentInsets))
 	}
 }
 
@@ -236,18 +236,13 @@ public extension UILabel {
 	}
 
 	@objc func drawTextWithContentInsets(in rect: CGRect) {
-		drawTextWithContentInsets(in: rect.inset(by: contentInsets))
+        drawTextWithContentInsets(in: UIEdgeInsetsInsetRect(rect, contentInsets))
     }
 
 	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
-		let preferredMaxLayoutWidth = self.preferredMaxLayoutWidth
-		if preferredMaxLayoutWidth > 0 {
-			self.preferredMaxLayoutWidth = preferredMaxLayoutWidth - (contentInsets.left + contentInsets.right)
-		}
 		var size = intrinsicContentSizeWithContentInsets()
-		size.height += contentInsets.top + contentInsets.bottom
-		size.width += contentInsets.left + contentInsets.right
-		self.preferredMaxLayoutWidth = preferredMaxLayoutWidth
+        size.height += contentInsets.top + contentInsets.bottom 
+        size.width += contentInsets.left + contentInsets.right
 		return size
 	}
 }
@@ -255,8 +250,8 @@ public extension UILabel {
 public extension UIView {
 
 	@IBInspectable var contentInsetsString: String? {
-		get { return NSCoder.string(for: contentInsets) }
-		set { contentInsets = NSCoder.uiEdgeInsets(for: newValue ?? "") }
+		get { return NSStringFromUIEdgeInsets(contentInsets) }
+		set { contentInsets = UIEdgeInsetsFromString(newValue ?? "") }
 	}
 	
 	@objc var contentInsets: UIEdgeInsets {
@@ -272,7 +267,7 @@ public extension UIView {
 
 public extension UIView {
 
-	@IBOutlet weak var containerView: UIView! {
+	@IBOutlet weak var containerView: UIView? {
 		get { return weakAssociatedValue() ?? self }
 		set { set(weakAssociatedValue: newValue) }
 	}
@@ -286,6 +281,13 @@ public extension UIEdgeInsets {
 	
 	init(_ inset: CGFloat) {
 		self.init(top: inset, left: inset, bottom: inset, right: inset)
+	}
+}
+
+public extension CGRect {
+
+	func inset(by insets: UIEdgeInsets) -> CGRect {
+		return UIEdgeInsetsInsetRect(self, insets)
 	}
 }
 
@@ -336,32 +338,11 @@ public extension UIView {
 		get { return associatedValue() }
 		set { set(associatedValue: newValue) }
 	}
-	
-	@IBInspectable var onlyTestPassthroughViews: Bool {
-		get { return associatedValue() ?? true }
-		set { set(associatedValue: newValue) }	
-	}
 
 	class func usePassthroughViews() {
 		swizzle(instanceMethod: #selector(passthrough_hitTest(_:with:)), with: #selector(hitTest(_:with:)))	
 	}
 	
-    func addPassthroughView(_ view: UIView) {
-        if passthroughViews == nil {
-            passthroughViews = []
-        }
-        passthroughViews?.append(view)
-    }
-
-    func removePassthroughView(_ view: UIView) {
-        if let index = passthroughViews?.index(of: view) {
-            passthroughViews?.remove(at: index)
-            if passthroughViews?.isEmpty ?? false {
-                passthroughViews = nil
-            }
-        }
-    }
-
 	@objc func passthrough_hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		if let passthroughViews = passthroughViews {
 			for view in passthroughViews {
@@ -369,7 +350,7 @@ public extension UIView {
 					return viewHit
 				}
 			}
-			return onlyTestPassthroughViews ? nil : passthrough_hitTest(point, with: event)
+			return nil
 		}
 		return passthrough_hitTest(point, with: event)
 	}
@@ -390,6 +371,28 @@ public extension UIView {
 		clearBackground_awakeFromNib()
 		if clearBackground {
 			backgroundColor = .clear
+		}
+	}
+}
+
+public extension UILabel {
+
+	@IBInspectable var preferredMaxLayoutWidthToBounds: Bool {
+		get { return associatedValue() ?? false }
+		set { set(associatedValue: newValue) }
+	}
+
+	class func usePreferredMaxLayoutWidthToBounds() {
+		swizzle(instanceMethod: #selector(setter: bounds), with: #selector(preferredMaxLayoutWidth_setBounds(_:)))
+	}
+	
+	@objc func preferredMaxLayoutWidth_setBounds(_ bounds: CGRect) {
+		preferredMaxLayoutWidth_setBounds(bounds)
+		if preferredMaxLayoutWidthToBounds && preferredMaxLayoutWidth != bounds.size.width {
+			preferredMaxLayoutWidth = bounds.size.width
+			invalidateIntrinsicContentSize()
+			setNeedsLayout()
+			setNeedsUpdateConstraints()
 		}
 	}
 }
