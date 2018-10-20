@@ -62,15 +62,8 @@ public extension UIView {
 		get { return associatedValue() }
 		set { 
 			nibContentView?.removeFromSuperview()
-			set(associatedValue: newValue) 
-			if let nibContentView = newValue {
-				addSubview(nibContentView)
-				nibContentView.translatesAutoresizingMaskIntoConstraints = false
-				nibContentView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-				nibContentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-				nibContentView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-				nibContentView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-			} 
+			set(associatedValue: newValue)
+			nibContentView?.add(to: self).pin()
 		}
 	}
 }
