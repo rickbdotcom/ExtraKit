@@ -10,7 +10,12 @@ import ObjectiveC
 import UIKit
 
 public extension UIResponder {
-
+	
+	@IBInspectable var showPreviousNextDoneInputAccessory: Bool {
+		get { return associatedValue() ?? true }
+		set { set(associatedValue: newValue) }
+	}
+	
 	@IBOutlet weak var nextTextInputResponder: UIResponder? {
 		get {
 			return weakAssociatedValue()
@@ -25,8 +30,10 @@ public extension UIResponder {
 			if newValue?.previousTextInputResponder != self {
 				newValue?.previousTextInputResponder = self
 			}
-			createPreviousNextDoneInputAccessory()
-			updatePreviousNextSegmentControlState()
+			if showPreviousNextDoneInputAccessory {
+				createPreviousNextDoneInputAccessory()
+				updatePreviousNextSegmentControlState()
+			}
 		}
 	}
 	
@@ -41,8 +48,10 @@ public extension UIResponder {
 			if newValue?.nextTextInputResponder != self {
 				newValue?.nextTextInputResponder = self
 			}
-			createPreviousNextDoneInputAccessory()
-			updatePreviousNextSegmentControlState()
+			if showPreviousNextDoneInputAccessory {
+				createPreviousNextDoneInputAccessory()
+				updatePreviousNextSegmentControlState()
+			}
 		}
 	}
 
