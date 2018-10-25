@@ -163,7 +163,28 @@ public extension UIView {
 			layer.borderWidth = newValue
 		}
 	}
+	
+	@IBInspectable var maskedCornersString: String? {
+		get {
+			return maskedCornerArray.map {
+				layer.maskedCorners.contains($0) ? "true" : "false"
+			}.joined(separator: " ")
+		}
+		set {
+			if let boolArray = newValue?.components(separatedBy: " ").map({ $0 == "true" })
+			, boolArray.count == 4 {
+				layer.masksToBounds = true
+				layer.maskedCorners = zip(maskedCornerArray, boolArray).reduce([]) {
+					return $1.1 ? $0.union($1.0) : $0
+				}
+			} else {
+				layer.maskedCorners = []
+			}
+		}
+	}
 }
+
+private let maskedCornerArray: [CACornerMask] = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 
 public extension UITextField {
 
