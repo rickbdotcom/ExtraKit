@@ -23,6 +23,10 @@ public protocol AllValuesPicker {
 	func select<T: AllValues & Equatable>(value: T?)
 }
 
+public extension AllValues where Self: CaseIterable {
+	static var all: [Self] { return Array(allCases) }
+}
+
 public extension RawRepresentable where Self: DisplayName, RawValue == String {
 
 	var displayName: String {
