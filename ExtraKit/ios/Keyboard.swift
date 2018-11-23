@@ -13,6 +13,11 @@ public extension UIScrollView {
 	func adjustContentInsetForKeyboardFrame() {
 		set(associatedValue: KeyboardNotificationObserver(scrollView: self))
 	}
+
+	var keyboardFrame: CGRect {
+		get { return associatedValue() ?? .zero }
+		set { set(associatedValue: newValue) }
+	}
 }
 
 class KeyboardNotificationObserver: NSObject {
@@ -42,6 +47,7 @@ class KeyboardNotificationObserver: NSObject {
 		}
 		scrollView.contentInset.bottom = adjustedKeyboardFrameHeight(notification)
 		scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
+		scrollView.keyboardFrame = notification.keyboardFrameEnd ?? .zero
 	}
 	
 	@objc func keyboardWillHide(_ note: Notification) {
@@ -56,6 +62,7 @@ class KeyboardNotificationObserver: NSObject {
 			scrollView.scrollIndicatorInsets = scrollIndicatorInsets
 			self.scrollIndicatorInsets = nil
 		}
+		scrollView.keyboardFrame = .zero
 	}
 
 	func adjustedKeyboardFrameHeight(_ note: Notification) -> CGFloat {
