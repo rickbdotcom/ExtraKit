@@ -166,19 +166,25 @@ public extension UIView {
 	
 	@IBInspectable var maskedCornersString: String? {
 		get {
-			return maskedCornerArray.map {
-				layer.maskedCorners.contains($0) ? "true" : "false"
-			}.joined(separator: " ")
+			if #available(iOS 11.0, *) {
+				return maskedCornerArray.map {
+					layer.maskedCorners.contains($0) ? "true" : "false"
+				}.joined(separator: " ")
+			} else {
+				return nil
+			}
 		}
 		set {
-			if let boolArray = newValue?.components(separatedBy: " ").map({ $0 == "true" })
-			, boolArray.count == 4 {
-				layer.masksToBounds = true
-				layer.maskedCorners = zip(maskedCornerArray, boolArray).reduce([]) {
-					return $1.1 ? $0.union($1.0) : $0
+			if #available(iOS 11.0, *) {
+				if let boolArray = newValue?.components(separatedBy: " ").map({ $0 == "true" })
+				, boolArray.count == 4 {
+					layer.masksToBounds = true
+					layer.maskedCorners = zip(maskedCornerArray, boolArray).reduce([]) {
+						return $1.1 ? $0.union($1.0) : $0
+					}
+				} else {
+					layer.maskedCorners = []
 				}
-			} else {
-				layer.maskedCorners = []
 			}
 		}
 	}
