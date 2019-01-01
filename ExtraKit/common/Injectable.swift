@@ -16,14 +16,17 @@ public protocol Injectable {
 }
 
 public extension NSObject {
-	
+
 	func injectableValue<T: Injectable>() -> T? {
-		return (self as? T.Container)?[keyPath: T.containerKeyPath]
+		return injectableValue(for: T.containerKeyPath)
+	}
+
+	func injectableValue<T, U>(for keyPath: ReferenceWritableKeyPath<U, T?>) -> T? {
+		return (self as? U)?[keyPath: keyPath]
 	}
 
 	@discardableResult func inject<T: Injectable>(value: T?) -> Self {
-		(self as? T.Container)?[keyPath: T.containerKeyPath] = value
-		return self
+		return inject(value: value, keyPath: T.containerKeyPath)
 	}
 
 	@discardableResult func inject<T, U>(value: T?, keyPath: ReferenceWritableKeyPath<U, T?>) -> Self {
@@ -42,12 +45,15 @@ public protocol NonNilInjectable {
 public extension NSObject {
 
 	func injectableValue<T: NonNilInjectable>() -> T? {
-		return (self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath]
+		return injectableValue(for: T.nonNilContainerKeyPath)
+	}
+
+	func injectableValue<T, U>(for keyPath: ReferenceWritableKeyPath<U, T>) -> T? {
+		return (self as? U)?[keyPath: keyPath]
 	}
 
 	@discardableResult func inject<T: NonNilInjectable>(value: T) -> Self {
-		(self as? T.NonNilContainer)?[keyPath: T.nonNilContainerKeyPath] = value
-		return self
+		return inject(value: value, keyPath: T.nonNilContainerKeyPath)
 	}
 
 	@discardableResult func inject<T, U>(value: T, keyPath: ReferenceWritableKeyPath<U, T>) -> Self {
