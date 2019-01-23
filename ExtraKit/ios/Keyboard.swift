@@ -10,13 +10,18 @@ import UIKit
 
 public extension UIScrollView {
 
-	func adjustContentInsetForKeyboardFrame() {
-		set(associatedValue: KeyboardNotificationObserver(scrollView: self))
-	}
-
-	var keyboardFrame: CGRect {
-		get { return associatedValue() ?? .zero }
-		set { set(associatedValue: newValue) }
+	@IBInspectable var adjustContentInsetForKeyboardFrame: Bool {
+		set {
+			if newValue {
+				set(associatedValue: KeyboardNotificationObserver(scrollView: self))
+			} else {
+				set(associatedValue: nil)
+			}
+		}
+		get {
+			let value: KeyboardNotificationObserver? = associatedValue()
+			return value != nil
+		}
 	}
 }
 
@@ -47,7 +52,8 @@ class KeyboardNotificationObserver: NSObject {
 		}
 		scrollView.contentInset.bottom = adjustedKeyboardFrameHeight(notification)
 		scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
-		scrollView.keyboardFrame = notification.keyboardFrameEnd ?? .zero
+
+		scrollToVisibleResponder(notification)
 	}
 	
 	@objc func keyboardWillHide(_ note: Notification) {
@@ -62,7 +68,16 @@ class KeyboardNotificationObserver: NSObject {
 			scrollView.scrollIndicatorInsets = scrollIndicatorInsets
 			self.scrollIndicatorInsets = nil
 		}
-		scrollView.keyboardFrame = .zero
+	}
+
+	func scrollToVisibleResponder(_ note: Notification) {
+		if let scrollView = scrollView
+		, let window = scrollView.window
+		, let keyboardFrame = note.keyboardFrameEnd
+		, let revealView = scrollView.findFirstResponder()?.viewForKeyboardReveal
+		, scrollView.convert(window.convert(keyboardFrame, from: nil), from: nil).intersects(revealView.frame) {
+			scrollView.scrollRectToVisible(revealView.frame, animated: true)
+		}
 	}
 
 	func adjustedKeyboardFrameHeight(_ note: Notification) -> CGFloat {
@@ -71,7 +86,7 @@ class KeyboardNotificationObserver: NSObject {
 		}
 		
 		var h = keyboardFrame.size.height
-		let dh = UIScreen.main.bounds.size.height-scrollView.convert(scrollView.bounds, to: UIScreen.main.coordinateSpace).maxY
+		let dh = UIScreen.main.bounds.size.height - scrollView.convert(scrollView.bounds, to: UIScreen.main.coordinateSpace).maxY
 		if dh > 0 {
 			h -= dh
 		}
