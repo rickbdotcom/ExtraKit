@@ -29,7 +29,6 @@ while true; do
 
     --xcassets) XCASSETS=$2; shift; shift ;;
     --colors-src) COLORS_SRC=$2; shift; shift ;;
-    --colors-enum) COLORS_ENUM=$2; shift; shift ;;
     * ) break ;;
   esac
 done
