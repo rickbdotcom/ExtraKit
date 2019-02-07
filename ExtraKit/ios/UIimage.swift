@@ -30,9 +30,9 @@ public extension UIImage {
 		return image
 	}
 
-    class func image(color: UIColor)-> UIImage? {
+    class func image(color: UIColor) -> UIImage? {
 
-		let image = draw(size: CGSize(width: 1,height: 1), scale:1.0) { context, bounds in
+		let image = draw(size: CGSize(width: 1, height: 1), scale: 1.0) { context, bounds in
 			color.set()
 			context.fill(bounds)
 		}
@@ -42,7 +42,7 @@ public extension UIImage {
 	
 	class func filledCircle(radius r: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
 
-		return draw(size: CGSize(width: r,height: r)) { context, bounds in
+		return draw(size: CGSize(width: r, height: r)) { context, bounds in
 			color.set()
 			context.fillEllipse(in: bounds)
 		}
@@ -50,7 +50,7 @@ public extension UIImage {
 
 	class func strokeCircle(radius r: CGFloat, width w: CGFloat, color: UIColor, scale: CGFloat = UIScreen.main.scale) -> UIImage? {
 
-		return draw(size: CGSize(width: r,height: r)) { context, bounds in
+		return draw(size: CGSize(width: r, height: r)) { context, bounds in
 			color.set()
 			context.setLineWidth(w)
 			context.strokeEllipse(in: bounds.insetBy(dx: w/2.0, dy: w/2.0))
@@ -72,5 +72,12 @@ public extension UIImage {
 			context.setLineWidth(w)
 			context.stroke(bounds.insetBy(dx: w/2.0, dy: w/2.0))
 		}	
+	}
+}
+
+public extension UIColor {
+
+	func image() -> UIImage? {
+		return UIImage.image(color: self)
 	}
 }
