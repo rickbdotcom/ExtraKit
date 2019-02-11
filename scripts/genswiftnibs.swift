@@ -1,12 +1,11 @@
 #!/usr/bin/env xcrun --sdk macosx swift
 
-// genswift.sh --nibs-dir ./ --nibs-src Catapult/App/Nibs.swift --nibs-enum Nibs --nibs-import none
+// genswift.sh --nibs-dir ./ --nibs-src Catapult/App/Nibs.swift --nibs-import none
 
 import Foundation
 
 let outputPath = CommandLine.arguments[1]
-let structName = CommandLine.arguments[2]
-let imports = CommandLine.arguments[3]
+let imports = CommandLine.arguments[2]
 
 var tabs = 0
 
@@ -48,15 +47,17 @@ imports.components(separatedBy: " ").filter {
 }
 outputString.addLine("")
 
-func generateNibItem(_ path: String) {
+func generateNibDescription(_ path: String) {
 	do {
 		let url = URL(fileURLWithPath: path)
 		let doc = try XMLDocument(contentsOf: url, options: [])
-		
+
 		let nibName = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
+		let varName = "nib\(nibName)"
+
 		var ownerClass = "NSObject"
 		var topClass = "NSObject"
-		
+
 		if let elem = (try doc.nodes(forXPath:"//placeholder") as? [XMLElement])?.first {
 			if let customClass = elem.attribute(forName:"customClass")?.stringValue {
 				ownerClass = customClass
@@ -79,12 +80,22 @@ func generateNibItem(_ path: String) {
 			}
 		}
 
-		outputString.addLine("struct \(nibName)Nib: Nib {")
-		outputString.addLine("var nibName: String { return \"\(nibName)\" }\n")
-		outputString.addLine("typealias OwnerClass = \(ownerClass)")
-		outputString.addLine("typealias TopLevelObjectClass = \(topClass)")
-		outputString.addLine("}")
-		outputString.addLine("")
+		outputString.addLine("""
+		let \(varName) = NibDescription(nibName: "\(nibName)", ownerClass: \(ownerClass).self, topLevelObjectClass: \(topClass).self)
+		""")
+	} catch {
+
+	}
+}
+
+func generateNibItem(_ path: String) {
+	do {
+		let url = URL(fileURLWithPath: path)
+		let nibName = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
+		let varName = nibName.uncapitalized()
+		outputString.addLine("""
+		static let \(varName) = nib\(nibName).nib()
+		""")
 	} catch {
 	
 	}
@@ -95,11 +106,11 @@ outputString += """
 */
 
 """
-outputString.addLine("enum \(structName) {")
 outputString.addLine("")
-CommandLine.arguments[4..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
-	generateNibItem($0)
+CommandLine.arguments[3..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
+	generateNibDescription($0)
 }
-outputString.addLine("}")
+
+outputString.addLine("")
 
 try? outputString.write(toFile:outputPath, atomically: true, encoding: String.Encoding.utf8)

@@ -8,18 +8,31 @@
 
 import UIKit
 
-public protocol Nib {
+public protocol NibInstantiable {
 	associatedtype OwnerClass
 	associatedtype TopLevelObjectClass
 
 	var nibName: String { get }
 }
 
+public struct NibDescription<OwnerClass, TopLevelObjectClass>: NibInstantiable {
+
+	public let nibName: String
+	public let ownerClass: OwnerClass.Type
+	public let topLevelObjectClass: TopLevelObjectClass.Type
+
+	public init(nibName: String, ownerClass: OwnerClass.Type, topLevelObjectClass: TopLevelObjectClass.Type) {
+		self.nibName = nibName
+		self.ownerClass = ownerClass
+		self.topLevelObjectClass = topLevelObjectClass
+	}
+}
+
 public protocol NibInit {
 	init(nibName: String?, bundle: Bundle?)
 }
 
-public extension Nib {
+public extension NibInstantiable {
 
 	public func nib(bundle: Bundle? = nil) -> UINib {
 		return UINib(nibName: nibName, bundle: nil)

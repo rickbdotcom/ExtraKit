@@ -1,14 +1,13 @@
 #!/usr/bin/env xcrun --sdk macosx swift
 
-// genswift.sh --storyboards-dir ./ --storyboards-src Storyboards.swift --storyboards-enum Storyboards --storyboards-import MMDrawerController
+// genswift.sh --storyboards-dir ./ --storyboards-src Storyboards.swift --storyboards-import MMDrawerController
 
 // swiftlint:disable cyclomatic_complexity
 
 import Foundation
 
 let outputPath = CommandLine.arguments[1]
-let structName = CommandLine.arguments[2]
-let imports = CommandLine.arguments[3]
+let imports = CommandLine.arguments[2]
 
 var tabs = 0
 
@@ -32,6 +31,10 @@ extension String {
 	func uncapitalized() -> String {
 		return replacingCharacters(in: startIndex..<index(startIndex, offsetBy:1), with: self[startIndex...startIndex].lowercased())
 	}
+
+    func capitalizingFirstLetter() -> String {
+      return prefix(1).uppercased() + self.dropFirst()
+    }
 }
 
 func validSwiftString(_ string: String) -> Bool {
@@ -122,7 +125,7 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 		
 		let fileName = url.deletingPathExtension().lastPathComponent
 		if validSwiftString(fileName) {
-			outputString.addLine("enum \(fileName) {")
+			outputString.addLine("struct Storyboard\(fileName) {")
 			outputString.addLine()
 			
 			ids.forEach {
@@ -131,20 +134,21 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 					outputString.addLine("typealias StoryboardClass = \($0.customClass)")
 
 					if !$0.segues.isEmpty {
-						outputString.addLine("struct Segues {")
 						$0.segues.forEach { segue in
 							if validSwiftString(segue) {
-								outputString.addLine("let \(segue.uncapitalized()) = \"\(segue)\"")
+								outputString.addLine("let segue\(segue.capitalizingFirstLetter())  = \"\(segue)\"")
 							}
 						}
-						outputString.addLine("}")
 					}
 					outputString.addLine("let identifier = (\"\($0.storyboardIdentifier)\", \"\(fileName)\")")
 					outputString.addLine("}")
+					outputString.addLine("let \($0.storyboardIdentifier.uncapitalized()) = \($0.storyboardIdentifier)()")
+					outputString.addLine("")
 				}
 			}
 
 			outputString.addLine("}")
+			outputString.addLine("let storyboard\(fileName) = Storyboard\(fileName)()")
 		}
 		outputString.addLine()
 	} catch _ {
@@ -155,16 +159,11 @@ func generateStoryboardIdentifierSourceFile(_ path: String) {
 outputString += """
 /**
 	Generated from the storyboards used by the app.
-	Usage: \(structName).<StoryboardName>.<StoryboardId>.Segues().<SegueIdentifier>
-	Usage: \(structName).<StoryboardName>.<StoryboardId>().instantiateViewController()
 */
 
 """
-outputString.addLine("enum \(structName) {")
-outputString.addLine("")
-CommandLine.arguments[4..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
+CommandLine.arguments[3..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
 	generateStoryboardIdentifierSourceFile($0)
 }
-outputString.addLine("}")
 
 try? outputString.write(toFile:outputPath, atomically: true, encoding: String.Encoding.utf8)

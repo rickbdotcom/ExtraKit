@@ -50,7 +50,7 @@ outputString += """
 """
 outputString.addLine("extension UIColor {")
 outputString.addLine("")
-CommandLine.arguments[3..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
+CommandLine.arguments[2..<CommandLine.arguments.count].sorted { $0 < $1 }.forEach {
 	generateColor($0)
 }
 outputString.addLine("}")

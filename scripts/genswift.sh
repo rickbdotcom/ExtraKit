@@ -13,7 +13,6 @@ while true; do
 
     --storyboards-dir) STORYBOARDS_DIR=$2; shift; shift ;;
     --storyboards-src) STORYBOARDS_SRC=$2; shift; shift ;;
-    --storyboards-enum) STORYBOARDS_ENUM=$2; shift; shift ;;
 	--storyboards-import) STORYBOARDS_IMPORT=$2; shift; shift ;;
 	
     --fonts-dir) FONTS_DIR=$2; shift; shift ;;
@@ -24,7 +23,6 @@ while true; do
 
     --nibs-dir) NIBS_DIR=$2; shift; shift ;;
     --nibs-src) NIBS_SRC=$2; shift; shift ;;
-    --nibs-enum) NIBS_ENUM=$2; shift; shift ;;
     --nibs-import) NIBS_IMPORT=$2; shift; shift ;;
 
     --xcassets) XCASSETS=$2; shift; shift ;;
@@ -40,7 +38,7 @@ if [ -n "$STRINGS_SRC" ]; then
 fi
 
 if [ -n "$STORYBOARDS_SRC" ]; then
-	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" "$STORYBOARDS_ENUM" "$STORYBOARDS_IMPORT"
+	find "$STORYBOARDS_DIR" -type f -iname "*.storyboard" -print0 | xargs -0 "$DIR/genswiftstoryboards.swift"  "$STORYBOARDS_SRC" "$STORYBOARDS_IMPORT"
 fi
 
 if [ -n "$FONTS_SRC" ]; then
@@ -48,9 +46,9 @@ if [ -n "$FONTS_SRC" ]; then
 fi
 
 if [ -n "$NIBS_SRC" ]; then
-	find "$NIBS_DIR" -type f -iname "*.xib" -print0 | xargs -0 "$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_ENUM" "$NIBS_IMPORT"
+	find "$NIBS_DIR" -type f -iname "*.xib" -print0 | xargs -0 "$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_IMPORT"
 fi
 
 if [ -n "$COLORS_SRC" ]; then
-	find "$XCASSETS" -type d -iname "*.colorset" -print0 | xargs -0 "$DIR/genswiftcolors.swift" "$COLORS_SRC" "$COLORS_ENUM"
+	find "$XCASSETS" -type d -iname "*.colorset" -print0 | xargs -0 "$DIR/genswiftcolors.swift" "$COLORS_SRC"
 fi

@@ -7,11 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D2FA2D422111F7B000ABB1A /* genswiftfonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FA2C622111F73000ABB1A /* genswiftfonts.swift */; };
+		0D2FA2D522111F7B000ABB1A /* genswiftcolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FA2C722111F73000ABB1A /* genswiftcolors.swift */; };
+		0D2FA2D622111F7B000ABB1A /* genswiftnibs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FA2C822111F73000ABB1A /* genswiftnibs.swift */; };
+		0D2FA2D722111F7B000ABB1A /* genswiftstrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FA2C922111F73000ABB1A /* genswiftstrings.swift */; };
+		0D2FA2D822111F7B000ABB1A /* buildnumber.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0D2FA2CA22111F73000ABB1A /* buildnumber.sh */; };
+		0D2FA2D922111F7B000ABB1A /* genswiftstoryboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2FA2CB22111F73000ABB1A /* genswiftstoryboards.swift */; };
+		0D2FA2DA22111F7B000ABB1A /* genswift.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0D2FA2CC22111F73000ABB1A /* genswift.sh */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		EC7E5A122945EC38A2FAAB8E /* Pods_ExtraKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46195166C3AD11BF34759223 /* Pods_ExtraKit_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D2FA2C622111F73000ABB1A /* genswiftfonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftfonts.swift; sourceTree = "<group>"; };
+		0D2FA2C722111F73000ABB1A /* genswiftcolors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftcolors.swift; sourceTree = "<group>"; };
+		0D2FA2C822111F73000ABB1A /* genswiftnibs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftnibs.swift; sourceTree = "<group>"; };
+		0D2FA2C922111F73000ABB1A /* genswiftstrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftstrings.swift; sourceTree = "<group>"; };
+		0D2FA2CA22111F73000ABB1A /* buildnumber.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = buildnumber.sh; sourceTree = "<group>"; };
+		0D2FA2CB22111F73000ABB1A /* genswiftstoryboards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genswiftstoryboards.swift; sourceTree = "<group>"; };
+		0D2FA2CC22111F73000ABB1A /* genswift.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = genswift.sh; sourceTree = "<group>"; };
 		1AEE1EC25B48975267783C2D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		43C73E71280B9D3EF13508C0 /* ExtraKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ExtraKit.podspec; path = ../ExtraKit.podspec; sourceTree = "<group>"; };
 		46195166C3AD11BF34759223 /* Pods_ExtraKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExtraKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,9 +66,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		0D2FA2C522111F73000ABB1A /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0D2FA2C622111F73000ABB1A /* genswiftfonts.swift */,
+				0D2FA2C722111F73000ABB1A /* genswiftcolors.swift */,
+				0D2FA2C822111F73000ABB1A /* genswiftnibs.swift */,
+				0D2FA2C922111F73000ABB1A /* genswiftstrings.swift */,
+				0D2FA2CA22111F73000ABB1A /* buildnumber.sh */,
+				0D2FA2CB22111F73000ABB1A /* genswiftstoryboards.swift */,
+				0D2FA2CC22111F73000ABB1A /* genswift.sh */,
+			);
+			name = scripts;
+			path = ../scripts;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				0D2FA2C522111F73000ABB1A /* scripts */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -160,6 +190,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D2FA2D822111F7B000ABB1A /* buildnumber.sh in Resources */,
+				0D2FA2DA22111F7B000ABB1A /* genswift.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +241,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D2FA2D622111F7B000ABB1A /* genswiftnibs.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				0D2FA2D522111F7B000ABB1A /* genswiftcolors.swift in Sources */,
+				0D2FA2D922111F7B000ABB1A /* genswiftstoryboards.swift in Sources */,
+				0D2FA2D722111F7B000ABB1A /* genswiftstrings.swift in Sources */,
+				0D2FA2D422111F7B000ABB1A /* genswiftfonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
