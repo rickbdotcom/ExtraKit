@@ -88,18 +88,6 @@ func generateNibDescription(_ path: String) {
 	}
 }
 
-func generateNibItem(_ path: String) {
-	do {
-		let url = URL(fileURLWithPath: path)
-		let nibName = path.components(separatedBy: "/").last!.components(separatedBy: ".").first!
-		let varName = nibName.uncapitalized()
-		outputString.addLine("""
-		static let \(varName) = nib\(nibName).nib()
-		""")
-	} catch {
-	
-	}
-}
 outputString += """
 /**
 	Generated from the nibs used by the app.
