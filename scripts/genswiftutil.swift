@@ -43,7 +43,13 @@ extension String {
 		}
 		return true
 	}
+
+	func swiftName() -> String {
+		return swiftNameRegex?.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: count), withTemplate: "").uncapitalized() ?? ""
+	}
 }
+
+private let swiftNameRegex = try? NSRegularExpression(pattern: "[-\\s]")
 
 func line(_ line: String = "") {
 	outputString.addLine(line)
@@ -63,23 +69,21 @@ func output(to path: String) {
 	try? outputString.write(toFile:path, atomically: true, encoding: String.Encoding.utf8)
 }
 
-func find<T: FileSystem.Item>(extension ext: String, in sequence: FileSystemSequence<T>?) -> [URL] {
+func find<T: FileSystem.Item>(extension ext: [String], in sequence: FileSystemSequence<T>?) -> [URL] {
 	var items = [URL]()
 	sequence?.forEach { item in
-	print(item.path)
 		let url = URL(fileURLWithPath: item.path)
-		if url.pathExtension == ext {
-		print(url)
+		if ext.contains(url.pathExtension) {
 			items.append(url)
 		}
 	}
 	return items
 }
 
-func findFiles(extension ext: String, in path: String) -> [URL] {
+func findFiles(extension ext: [String], in path: String) -> [URL] {
 	return find(extension: ext, in: try? Folder(path: path).makeFileSequence(recursive: true))
 }
 
-func findFolders(extension ext: String, in path: String) -> [URL] {
+func findFolders(extension ext: [String], in path: String) -> [URL] {
 	return find(extension: ext, in: try? Folder(path: path).makeSubfolderSequence(recursive: true))
 }
