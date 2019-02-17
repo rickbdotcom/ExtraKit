@@ -25,6 +25,24 @@ extension String {
 	func uncapitalized() -> String {
 		return replacingCharacters(in: startIndex..<index(startIndex, offsetBy:1), with: self[startIndex...startIndex].lowercased())
 	}
+
+    func capitalizingFirstLetter() -> String {
+      return prefix(1).uppercased() + self.dropFirst()
+    }
+
+	func validSwiftString() -> Bool {
+		guard !isEmpty else {
+			return false
+		}
+		let invalidSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "_")).inverted
+		if rangeOfCharacter(from: invalidSet) != nil {
+			return false
+		}
+		if let first = unicodeScalars.first, CharacterSet.decimalDigits.contains(first) {
+			return false
+		}
+		return true
+	}
 }
 
 func line(_ line: String = "") {

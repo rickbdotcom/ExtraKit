@@ -10,7 +10,7 @@ func main() {
 
 	let parser = ArgumentParser(
 		usage: "genswiftnibs --nibs <nibs path> --imports <Framework imports> --src <swift output file path>"
-	, 	overview: "This tool generates UIColor's from .xcasset named colors"
+	, 	overview: "This tool generates code from nibs"
 	)
 
 	let nibsOpt = parser.add(option: "--nibs", shortName: nil, kind: String.self, usage: "path to nibs folder", completion: nil)
@@ -34,12 +34,12 @@ func main() {
 	imports?.forEach { line("import \($0)") }
 	line()
 	findFiles(extension: "xib", in: nibsPath).sorted { $0.lastPathComponent < $1.lastPathComponent }.forEach {
-		lineNib($0)
+		nib($0)
 	}
 	output(to: outputPath)
 }
 
-func lineNib(_ url: Foundation.URL) {
+func nib(_ url: Foundation.URL) {
 	do {
 		let doc = try XMLDocument(contentsOf: url, options: [])
 
