@@ -104,15 +104,20 @@ func storyboard(_ url: Foundation.URL) {
 				if $0.storyboardIdentifier.validSwiftString() {
 					line("struct \($0.storyboardIdentifier): StoryboardScene {")
 					line("typealias StoryboardClass = \($0.customClass)")
-					if $0.segues.isEmpty == false {
+
+					if $0.segues.count > 0 {
+						line("enum Segue: String, StoryboardSceneSegue {")
 						$0.segues.forEach { segue in
-							line("enum Segue: String, StoryboardSceneSegue {")
 							if segue.validSwiftString() {
 								line("case \(segue)")
 							}
-							line("}")
 						}
+						line("}")
+					} else {
+						line("struct Segue: StoryboardSceneSegue {")
+						line("}")
 					}
+
 					line("let identifier = (\"\($0.storyboardIdentifier)\", \"\(fileName)\")")
 					line("}")
 				}
