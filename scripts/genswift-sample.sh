@@ -8,14 +8,9 @@ fi
 SCRIPT_ROOT="${PODS_ROOT}/ExtraKit/scripts"
 
 marathon run "${SCRIPT_ROOT}/genswiftcolors" --xcassets "Fleet SmartHub/Assets.xcassets" --src "Fleet SmartHub/Colors.swift"
-
+marathon run "${SCRIPT_ROOT}/genswiftnibs" --nibs "Fleet SmartHub/UI/Base.lproj" --src "Fleet SmartHub/Nibs.swift"
 
 #"${GENSWIFT}" --storyboards-dir "Fleet SmartHub/UI/Base.lproj" --storyboards-src "Fleet SmartHub/Storyboards.swift" --storyboards-import none
-#"${GENSWIFT}" --nibs-dir "Fleet SmartHub/UI/Base.lproj" --nibs-src "Fleet SmartHub/Nibs.swift" --nibs-import none
-
-
-# since Swift doesn't have any easy way to parse getopt long arguments or import dependencies in scripts we just leverage the shell here
-# when/if this changes, remove this script and put functionality in individual scripts
 
 while true; do
   case "$1" in
@@ -34,13 +29,6 @@ while true; do
     --fonts-enum) FONTS_ENUM=$2; shift; shift ;;
 
 	--info-plist) INFO_PLIST=$2; shift; shift ;;
-
-    --nibs-dir) NIBS_DIR=$2; shift; shift ;;
-    --nibs-src) NIBS_SRC=$2; shift; shift ;;
-    --nibs-import) NIBS_IMPORT=$2; shift; shift ;;
-
-    --xcassets) XCASSETS=$2; shift; shift ;;
-    --colors-src) COLORS_SRC=$2; shift; shift ;;
     * ) break ;;
   esac
 done
@@ -57,12 +45,4 @@ fi
 
 if [ -n "$FONTS_SRC" ]; then
 	"$DIR/genswiftfonts.swift" "$FONTS_SRC" "$FONTS_ENUM" "$FONTS_DIR" "$INFO_PLIST"
-fi
-
-if [ -n "$NIBS_SRC" ]; then
-	find "$NIBS_DIR" -type f -iname "*.xib" -print0 | xargs -0 "$DIR/genswiftnibs.swift" "$NIBS_SRC" "$NIBS_IMPORT"
-fi
-
-if [ -n "$COLORS_SRC" ]; then
-	find "$XCASSETS" -type d -iname "*.colorset" -print0 | xargs -0 "$DIR/genswiftcolors.swift" "$COLORS_SRC"
 fi

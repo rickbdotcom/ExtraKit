@@ -2,8 +2,8 @@ import Foundation
 import Utility
 
 func main() {
-	var outputPath: String!
 	var assetsPath: String!
+	var outputPath: String!
 
 	let arguments = Array(CommandLine.arguments.dropFirst())
 
@@ -12,13 +12,13 @@ func main() {
 	, 	overview: "This tool generates UIColor's from .xcasset named colors"
 	)
 
-	let xcassets = parser.add(option: "--xcassets", shortName: nil, kind: String.self, usage: nil, completion: nil)
-	let src = parser.add(option: "--src", shortName: nil, kind: String.self, usage: nil, completion: nil)
+	let xcassetsOpt = parser.add(option: "--xcassets", shortName: nil, kind: String.self, usage: "path to xcassets", completion: nil)
+	let srcOpt = parser.add(option: "--src", shortName: nil, kind: String.self, usage: "path to output swift source file", completion: nil)
 
 	do {
 		let result = try parser.parse(arguments)
-		assetsPath = result.get(xcassets)
-		outputPath = result.get(src)
+		assetsPath = result.get(xcassetsOpt)
+		outputPath = result.get(srcOpt)
 	} catch {
 		print(error)
 	}
@@ -28,18 +28,17 @@ func main() {
 	line()
 	line("extension UIColor {")
 	line()
-	findFolders(extension: "colorset", in: assetsPath).sorted { $0 < $1 }.forEach {
-		colorItem($0)
+	findFolders(extension: "colorset", in: assetsPath).sorted { $0.lastPathComponent < $1.lastPathComponent }.forEach {
+		lineColor($0)
 	}
 	line("}")
 
 	output(to: outputPath)
 }
 
-func colorItem(_ color: String) {
-	if let color = URL(string: color)?.deletingPathExtension().lastPathComponent {
-		outputString.addLine("\tstatic var \(color): UIColor { return UIColor(named: #function)! }")
-	}
+func lineColor(_ url: Foundation.URL) {
+	let color = url.deletingPathExtension().lastPathComponent
+	outputString.addLine("\tstatic var \(color): UIColor { return UIColor(named: #function)! }")
 }
 
 main()
