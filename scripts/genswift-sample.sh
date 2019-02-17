@@ -14,3 +14,5 @@ ${RUN} "${SCRIPT_ROOT}/genswiftcolors" --in "${SRC}/Assets.xcassets" --out "${SR
 ${RUN} "${SCRIPT_ROOT}/genswiftnibs" --in "${SRC}/Base.lproj" --out "${SRC}/Nibs.swift"
 ${RUN} "${SCRIPT_ROOT}/genswiftstoryboards" --in "${SRC}/Base.lproj" --out "${SRC}/Storyboards.swift"
 ${RUN} "${SCRIPT_ROOT}/genswiftfonts" --in "${SRC}/Fonts" --out "${SRC}/Fonts.swift"
+${RUN} "${SCRIPT_ROOT}/genswiftstrings" --in "${SRC}/en.lproj/Localizable.strings" --out "${SRC}/Strings.swift"
+${RUN} "${SCRIPT_ROOT}/genswiftstrings" --in "${SRC}/en.lproj/Localizable.stringsdict" --out "${SRC}/StringsDict.swift"

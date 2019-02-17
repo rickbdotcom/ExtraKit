@@ -3,15 +3,14 @@
 import UIKit
 import ExtraKit
 
-struct StoryboardMain {
+enum StoryboardMain {
 	
 	struct Howdy: StoryboardScene {
 		typealias StoryboardClass = ViewController
-		let segueShowTable  = "showTable"
+		enum Segue: String, StoryboardSceneSegue {
+			case showTable
+		}
 		let identifier = ("Howdy", "Main")
 	}
-	let howdy = Howdy()
-	
 }
-let storyboardMain = StoryboardMain()
 

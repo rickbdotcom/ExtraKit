@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import ExtraKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, StoryboardSceneViewController {
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+	typealias Scene = StoryboardMain.Howdy
+
+	@IBAction func next() {
+		perform(segue: .showTable) { _ in
+		}
 	}
-
-
 }
 

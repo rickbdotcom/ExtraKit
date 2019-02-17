@@ -4,6 +4,6 @@ import UIKit
 
 extension UIFont {
 	
-	static func fontMarathon(of size: CGFloat) { return UIFont(name: "fontName", size: size) }
-	static func fontMarathonII(of size: CGFloat) { return UIFont(name: "fontName", size: size) }
+	static func fontMarathon(ofSize size: CGFloat) -> UIFont { return UIFont(name: "Marathon", size: size)! }
+	static func fontMarathonII(ofSize size: CGFloat) -> UIFont { return UIFont(name: "MarathonII", size: size)! }
 }

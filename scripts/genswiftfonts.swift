@@ -43,7 +43,7 @@ func font(_ url: Foundation.URL) {
 		let font = CTFontCreateWithGraphicsFont(cgFont, 10, nil, nil) as NSFont
 		let fontName = font.fontName
 		let funcName = "font\(fontName.swiftName().capitalizingFirstLetter())"
-		line("\tstatic func \(funcName)(of size: CGFloat) { return UIFont(name: \"fontName\", size: size) }")
+		line("\tstatic func \(funcName)(ofSize size: CGFloat) -> UIFont { return UIFont(name: \"\(fontName)\", size: size)! }")
 	}
 }
 
