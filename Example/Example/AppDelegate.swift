@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		UIFont.printFontNames()
 		print(String.hello)
 		(0..<10).forEach {
 			print(String.things.localizedFormat($0))

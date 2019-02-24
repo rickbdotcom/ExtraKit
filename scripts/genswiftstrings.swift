@@ -47,8 +47,8 @@ func strings(_ url: Foundation.URL) {
 		return
 	}
 	(stringsDict.allKeys as? [String])?.sorted{$0 < $1}.forEach {
-		if $0.validSwiftString() {
-			line("static let \($0) = \"\($0)\".localized()")
+		if $0.isValidSwiftString() {
+			outputString.addLine("\tstatic var \($0): String { return #function.localized() }")
 		}
 	}
 }
@@ -59,8 +59,8 @@ func formatStrings(_ url: Foundation.URL) {
 		return
 	}
 	(stringsDict.allKeys as? [String])?.sorted{$0 < $1}.forEach {
-		if $0.validSwiftString() {
-			line("static let \($0) = \"\($0)\"")
+		if $0.isValidSwiftString() {
+			outputString.addLine("\tstatic var \($0): String { return #function }")
 		}
 	}
 }

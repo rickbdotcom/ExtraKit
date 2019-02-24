@@ -30,26 +30,17 @@ extension String {
       return prefix(1).uppercased() + self.dropFirst()
     }
 
-	func validSwiftString() -> Bool {
-		guard !isEmpty else {
-			return false
-		}
-		let invalidSet = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "_")).inverted
-		if rangeOfCharacter(from: invalidSet) != nil {
-			return false
-		}
-		if let first = unicodeScalars.first, CharacterSet.decimalDigits.contains(first) {
-			return false
-		}
-		return true
+	func isValidSwiftString() -> Bool {
+		return swiftNameRegex.firstMatch(in: self, range: NSRange(location: 0, length: count)) != nil
 	}
 
 	func swiftName() -> String {
-		return swiftNameRegex?.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: count), withTemplate: "").uncapitalized() ?? ""
+		return swiftNameReplaceRegex.stringByReplacingMatches(in: self, range: NSRange(location: 0, length: count), withTemplate: "").uncapitalized() ?? ""
 	}
 }
 
-private let swiftNameRegex = try? NSRegularExpression(pattern: "[-\\s]")
+private let swiftNameRegex = try! NSRegularExpression(pattern: "^[A-Za-z_][A-Za-z_0-9]*$")
+private let swiftNameReplaceRegex = try! NSRegularExpression(pattern: "[-\\s]")
 
 func line(_ line: String = "") {
 	outputString.addLine(line)

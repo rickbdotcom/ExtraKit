@@ -4,5 +4,5 @@ import UIKit
 
 extension String {
 	
-	static let things = "things"
+	static var things: String { return #function }
 }

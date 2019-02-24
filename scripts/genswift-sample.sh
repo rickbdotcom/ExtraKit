@@ -11,6 +11,7 @@ SRC="Example" # set to your path or customize paths below
 RUN="marathon run"
 
 ${RUN} "${SCRIPT_ROOT}/genswiftcolors" --in "${SRC}/Assets.xcassets" --out "${SRC}/Colors.swift"
+${RUN} "${SCRIPT_ROOT}/genswiftimages" --in "${SRC}/Assets.xcassets" --out "${SRC}/Images.swift"
 ${RUN} "${SCRIPT_ROOT}/genswiftnibs" --in "${SRC}/Base.lproj" --out "${SRC}/Nibs.swift"
 ${RUN} "${SCRIPT_ROOT}/genswiftstoryboards" --in "${SRC}/Base.lproj" --out "${SRC}/Storyboards.swift"
 ${RUN} "${SCRIPT_ROOT}/genswiftfonts" --in "${SRC}/Fonts" --out "${SRC}/Fonts.swift"

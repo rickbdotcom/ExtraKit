@@ -25,15 +25,44 @@
                                     <action selector="next" destination="BYZ-38-t0r" eventType="touchUpInside" id="fLc-Ej-wa8"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="240" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="j7v-Vj-o4U">
+                                <rect key="frame" x="67.5" y="189" width="240" height="128"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lq-TK-k1s">
+                                <rect key="frame" x="166.5" y="347.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ife-8W-fSl">
+                                <rect key="frame" x="137.5" y="376.5" width="100" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Dh9-ml-FWk"/>
+                                    <constraint firstAttribute="height" constant="100" id="rQO-Bq-Ztd"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="View"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Utl-MZ-In1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1aC-yH-YEG"/>
+                            <constraint firstItem="Ife-8W-fSl" firstAttribute="firstBaseline" secondItem="3lq-TK-k1s" secondAttribute="baseline" constant="12.5" symbolType="layoutAnchor" id="EcY-r7-x1s"/>
+                            <constraint firstItem="Utl-MZ-In1" firstAttribute="firstBaseline" secondItem="j7v-Vj-o4U" secondAttribute="baseline" constant="22" symbolType="layoutAnchor" id="F1l-Sz-mbK"/>
                             <constraint firstItem="Utl-MZ-In1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YIq-xF-xYR"/>
+                            <constraint firstItem="Ife-8W-fSl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iRK-LV-TQW"/>
+                            <constraint firstItem="j7v-Vj-o4U" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ueb-xn-OHW"/>
+                            <constraint firstItem="3lq-TK-k1s" firstAttribute="firstBaseline" secondItem="Utl-MZ-In1" secondAttribute="baseline" constant="24.5" symbolType="layoutAnchor" id="w18-0C-lef"/>
+                            <constraint firstItem="3lq-TK-k1s" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xla-Of-P2u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="button" destination="Utl-MZ-In1" id="K7G-5W-CES"/>
+                        <outlet property="imageView" destination="j7v-Vj-o4U" id="Br6-Bi-hot"/>
+                        <outlet property="label" destination="3lq-TK-k1s" id="Hdc-ht-NI8"/>
                         <segue destination="aYi-MJ-vF6" kind="show" identifier="showTable" id="9t3-O2-VTx"/>
                     </connections>
                 </viewController>
@@ -66,7 +95,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qD-Lo-1gp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1079" y="21"/>
+            <point key="canvasLocation" x="1494" y="27"/>
         </scene>
     </scenes>
 </document>

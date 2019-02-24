@@ -4,5 +4,5 @@ import UIKit
 
 extension String {
 	
-	static let hello = "hello".localized()
+	static var hello: String { return #function.localized() }
 }

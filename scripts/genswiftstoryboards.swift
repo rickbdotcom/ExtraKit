@@ -96,19 +96,19 @@ func storyboard(_ url: Foundation.URL) {
 		guard ids.isEmpty == false else { return }
 
 		let fileName = url.deletingPathExtension().lastPathComponent
-		if fileName.validSwiftString() {
+		if fileName.isValidSwiftString() {
 			line("enum Storyboard\(fileName) {")
 			line()
 
 			ids.forEach {
-				if $0.storyboardIdentifier.validSwiftString() {
+				if $0.storyboardIdentifier.isValidSwiftString() {
 					line("struct \($0.storyboardIdentifier): StoryboardScene {")
 					line("typealias StoryboardClass = \($0.customClass)")
 
 					if $0.segues.count > 0 {
 						line("enum Segue: String, StoryboardSceneSegue {")
 						$0.segues.forEach { segue in
-							if segue.validSwiftString() {
+							if segue.isValidSwiftString() {
 								line("case \(segue)")
 							}
 						}
