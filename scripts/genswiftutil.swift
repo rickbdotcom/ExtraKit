@@ -1,6 +1,8 @@
 import Foundation
 import Files
 
+let framework = "ExtraKit"
+
 var tabs = 0
 var outputString = ""
 
