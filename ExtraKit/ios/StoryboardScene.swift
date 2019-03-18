@@ -37,8 +37,8 @@ public extension StoryboardScene {
 
 public extension StoryboardSceneViewController where Self: UIViewController, Scene.StoryboardClass == Self {
 
-	public func perform<T: StoryboardSceneSegue>(segue: T, action: @escaping (UIStoryboardSegue) -> Void) where T: RawRepresentable, T.RawValue == String, T == Scene.Segue {
-		performSegue(withIdentifier: segue.rawValue, action: action)
+	public func perform<T: StoryboardSceneSegue>(segue: T, action: ((UIStoryboardSegue) -> Void)? = nil) where T: RawRepresentable, T.RawValue == String, T == Scene.Segue {
+		performSegue(withIdentifier: segue.rawValue, action: { _ in })
 	}
 
 	public static func instantiate(bundle: Bundle? = nil) -> Self {
