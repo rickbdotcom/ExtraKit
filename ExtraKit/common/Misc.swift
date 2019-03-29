@@ -18,11 +18,11 @@ public extension RandomAccessCollection where Self: RangeReplaceableCollection, 
 		return self.shiftedLeft(by: -rawOffset)
 	}
 
-	public  mutating func shiftLeft(by rawOffset: Int = 1) {
+	mutating func shiftLeft(by rawOffset: Int = 1) {
 		self = Self.init(self.shiftedLeft(by: rawOffset))
 	}
 
-	public  mutating func shiftRight(by rawOffset: Int = 1) {
+	mutating func shiftRight(by rawOffset: Int = 1) {
 		self = Self.init(self.shiftedRight(by: rawOffset))
 	}
 }

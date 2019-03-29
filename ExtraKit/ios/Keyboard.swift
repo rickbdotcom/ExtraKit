@@ -35,12 +35,21 @@ class KeyboardNotificationObserver: NSObject {
 		super.init()
 
 		self.scrollView = scrollView
-		
+		if let keyboardFrame = keyboardHeightObserver?.keyboardFrame {
+			keyboardFrameUpdate(keyboardFrame)
+		}
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
 	
 	@objc func keyboardWillChangeFrame(_ notification: Notification) {
+		guard let keyboardFrame = notification.keyboardFrameEnd else {
+			return
+		}
+		keyboardFrameUpdate(keyboardFrame)
+	}
+	
+	func keyboardFrameUpdate(_ keyboardFrame: CGRect) {
 		guard let scrollView = self.scrollView else {
 			return
 		}
@@ -50,10 +59,10 @@ class KeyboardNotificationObserver: NSObject {
 		if scrollIndicatorInsets == nil {
 			scrollIndicatorInsets = scrollView.scrollIndicatorInsets
 		}
-		scrollView.contentInset.bottom = adjustedKeyboardFrameHeight(notification)
+		scrollView.contentInset.bottom = adjustedKeyboardFrameHeight(keyboardFrame)
 		scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
 
-		scrollToVisibleResponder(notification)
+		scrollToVisibleResponder(keyboardFrame)
 	}
 	
 	@objc func keyboardWillHide(_ note: Notification) {
@@ -70,21 +79,19 @@ class KeyboardNotificationObserver: NSObject {
 		}
 	}
 
-	func scrollToVisibleResponder(_ note: Notification) {
+	func scrollToVisibleResponder(_ keyboardFrame: CGRect) {
 		if let scrollView = scrollView
 		, let window = scrollView.window
-		, let keyboardFrame = note.keyboardFrameEnd
 		, let revealView = scrollView.findFirstResponder()?.viewForKeyboardReveal
 		, scrollView.convert(window.convert(keyboardFrame, from: nil), from: nil).intersects(revealView.frame) {
 			scrollView.scrollRectToVisible(revealView.frame, animated: true)
 		}
 	}
 
-	func adjustedKeyboardFrameHeight(_ note: Notification) -> CGFloat {
-		guard let scrollView = scrollView, let keyboardFrame = note.keyboardFrameEnd else {
+	func adjustedKeyboardFrameHeight(_ keyboardFrame: CGRect) -> CGFloat {
+		guard let scrollView = scrollView else {
 			return 0
 		}
-		
 		var h = keyboardFrame.size.height
 		let dh = UIScreen.main.bounds.size.height - scrollView.convert(scrollView.bounds, to: UIScreen.main.coordinateSpace).maxY
 		if dh > 0 {
@@ -99,7 +106,7 @@ class KeyboardNotificationObserver: NSObject {
 
 public extension UIResponder {
 
-	@IBOutlet public weak var viewForKeyboardReveal: UIView? {
+	@IBOutlet weak var viewForKeyboardReveal: UIView? {
 		get { return weakAssociatedValue() }
 		set { set(weakAssociatedValue: newValue) }
 	}
@@ -129,6 +136,7 @@ open class KeyboardHeightConstraint: NSLayoutConstraint {
 	}
 
 	private func setupNotifications() {
+		constant = keyboardHeightObserver?.keyboardFrame?.height ?? 0
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
@@ -141,5 +149,32 @@ open class KeyboardHeightConstraint: NSLayoutConstraint {
 
 	@objc func keyboardWillHide(_ note: Notification) {
 		constant = 0
+	}
+}
+
+var keyboardHeightObserver: KeyboardHeightObserver?
+
+public func observeKeyboardNotifications() {
+	keyboardHeightObserver = KeyboardHeightObserver()
+}
+
+class KeyboardHeightObserver: NSObject {
+	
+	var keyboardFrame: CGRect?
+	
+	override init() {
+		super.init()
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+	}
+
+	@objc func keyboardWillChangeFrame(_ notification: Notification) {
+		if let keyboardFrame = notification.keyboardFrameEnd {
+			self.keyboardFrame = keyboardFrame
+		}
+	}
+	
+	@objc func keyboardWillHide(_ note: Notification) {
+		keyboardFrame = nil
 	}
 }

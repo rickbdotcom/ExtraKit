@@ -16,9 +16,10 @@
     "tag": "0.6.0"
   },
   "platforms": {
-    "ios": "10.0",
-    "osx": "10.12"
+    "ios": "11.0",
+    "osx": "10.14"
   },
+  "swift_version": "5.0",
   "source_files": "ExtraKit/common/*.swift",
   "ios": {
     "source_files": "ExtraKit/ios/*.swift"

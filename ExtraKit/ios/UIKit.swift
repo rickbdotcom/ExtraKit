@@ -383,7 +383,7 @@ public extension UIView {
     }
 
     func removePassthroughView(_ view: UIView) {
-        if let index = passthroughViews?.index(of: view) {
+		if let index = passthroughViews?.firstIndex(of: view) {
             passthroughViews?.remove(at: index)
             if passthroughViews?.isEmpty ?? false {
                 passthroughViews = nil

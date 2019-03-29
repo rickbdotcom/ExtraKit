@@ -26,22 +26,22 @@ public protocol StoryboardSceneViewController {
 
 public extension StoryboardScene {
 	
-	public func storyboard(bundle: Bundle? = nil) -> UIStoryboard {
+	func storyboard(bundle: Bundle? = nil) -> UIStoryboard {
 		return UIStoryboard(name: identifier.1, bundle: bundle)
 	}
 		
-	public func instantiate(bundle: Bundle? = nil) -> StoryboardClass {
+	func instantiate(bundle: Bundle? = nil) -> StoryboardClass {
 		return storyboard(bundle: bundle).instantiateViewController(withIdentifier: identifier.0) as! StoryboardClass
 	}
 }
 
 public extension StoryboardSceneViewController where Self: UIViewController, Scene.StoryboardClass == Self {
 
-	public func perform<T: StoryboardSceneSegue>(segue: T, action: ((UIStoryboardSegue) -> Void)? = nil) where T: RawRepresentable, T.RawValue == String, T == Scene.Segue {
-		performSegue(withIdentifier: segue.rawValue, action: { _ in })
+	func perform<T: StoryboardSceneSegue>(segue: T, action: ((UIStoryboardSegue) -> Void)? = nil) where T: RawRepresentable, T.RawValue == String, T == Scene.Segue {
+		performSegue(withIdentifier: segue.rawValue, action: action ?? { _ in } )
 	}
 
-	public static func instantiate(bundle: Bundle? = nil) -> Self {
+	static func instantiate(bundle: Bundle? = nil) -> Self {
 		return Scene().instantiate(bundle: bundle)
 	}
 }

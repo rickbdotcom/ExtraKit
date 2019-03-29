@@ -13,7 +13,7 @@ public protocol Configurable {
 
 public extension Configurable where Self: AnyObject {
 
-    @discardableResult public func configure(_ block: (Self) -> Void) -> Self {
+    @discardableResult func configure(_ block: (Self) -> Void) -> Self {
         block(self)
         return self
     }

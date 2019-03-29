@@ -48,7 +48,7 @@ extension UISegmentedControl: AllValuesPicker {
 	}
 	
 	public func select<T: AllValues & Equatable>(value: T?) {
-		selectedSegmentIndex = value.flatMap { T.all.index(of: $0) } ?? UISegmentedControl.noSegment
+		selectedSegmentIndex = value.flatMap { T.all.firstIndex(of: $0) } ?? UISegmentedControl.noSegment
 	}
 }
 

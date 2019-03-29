@@ -34,19 +34,19 @@ public protocol NibInit {
 
 public extension NibInstantiable {
 
-	public func nib(bundle: Bundle? = nil) -> UINib {
+	func nib(bundle: Bundle? = nil) -> UINib {
 		return UINib(nibName: nibName, bundle: nil)
 	}
 	
-	public func instantiateOwner<T>(bundle: Bundle? = nil) -> T where T == OwnerClass, T: NibInit {
+	func instantiateOwner<T>(bundle: Bundle? = nil) -> T where T == OwnerClass, T: NibInit {
 		return OwnerClass(nibName: nibName, bundle: bundle)
 	}
 	
-	public func instantiate(bundle: Bundle? = nil, withOwner owner: OwnerClass? = nil) -> TopLevelObjectClass {
+	func instantiate(bundle: Bundle? = nil, withOwner owner: OwnerClass? = nil) -> TopLevelObjectClass {
 		return nib(bundle: bundle).instantiate(withOwner: owner, options: nil)[0] as! TopLevelObjectClass
 	}
 
-	public func instantiateObjects(bundle: Bundle? = nil, withOwner owner: OwnerClass? = nil) -> [Any] {
+	func instantiateObjects(bundle: Bundle? = nil, withOwner owner: OwnerClass? = nil) -> [Any] {
 		return nib(bundle: bundle).instantiate(withOwner: owner, options: nil)
 	}
 }

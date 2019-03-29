@@ -88,7 +88,7 @@ public extension UITextField
 	}
 	
 	func pickerViewSelect(value: String, component: Int = 0, animated: Bool = false) {
-		if let index = pickerView?.components[component].index(of: value) {
+		if let index = pickerView?.components[component].firstIndex(of: value) {
 			pickerView?.selectRow(index, inComponent: component, animated: animated)
 		}
 		text = pickerView?.text()
@@ -127,7 +127,7 @@ extension PickerInputView: AllValuesPicker {
 	}
 	
 	public func select<T: AllValues & Equatable>(value: T?) {
-		if let index = value.flatMap({ T.all.index(of: $0) }) {
+		if let index = value.flatMap({ T.all.firstIndex(of: $0) }) {
 			selectRow(index + (allowsUnselected ? 1 : 0), inComponent: 0, animated: false)			
 		} else if allowsUnselected {
 			selectRow(0, inComponent: 0, animated: false)

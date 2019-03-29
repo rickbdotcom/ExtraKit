@@ -74,11 +74,19 @@ func storyboard(_ url: Foundation.URL) {
 		guard vcs.count > 0 else {
 			return
 		}
-
+		let classNameMap = [
+			"viewController": "UIViewController"
+		,	"tableViewController": "UITableViewController"
+		,	"tabBarController": "UITabBarController"
+		,	"navigationController": "UINavigationController"
+		,	"splitViewController": "UISplitViewController"
+		,	"collectionViewController": "UICollectionViewController"
+		,	"pageViewController": "UIPageViewController"
+		]
 		let ids: [(storyboardIdentifier: String, id: String, customClass: String, segues: [String])]! = vcs.compactMap { svc in
 			if let storyboardIdentifier = svc.attribute(forName:"storyboardIdentifier")?.stringValue
 			, let id = svc.attribute(forName:"id")?.stringValue {
-				let customClass = svc.attribute(forName: "customClass")?.stringValue ?? "UIViewController"
+				let customClass = svc.attribute(forName: "customClass")?.stringValue ?? classNameMap[svc.name ?? ""] ?? "UIViewController"
 				var segues = [String]()
 				if let segueNodes = try? svc.nodes(forXPath:"..//segue") {
 					segueNodes.forEach {
