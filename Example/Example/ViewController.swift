@@ -30,8 +30,13 @@ class ViewController: UIViewController, StoryboardSceneViewController {
 	}
 
 	@IBAction func next() {
-		perform(segue: .showTable) { _ in
+		let aFoobar = Foobar()
+		perform(segue: .showTable) { segue in
+			segue.destination.inject(value: aFoobar)
 		}
 	}
 }
 
+class FoobarTableViewController: UITableViewController, FoobarContainer {
+	var foobar: Foobar?
+}

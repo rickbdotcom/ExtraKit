@@ -15,8 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+		UIViewController.usePrepareForSegueAction()
+		UIView.useCapsuleCorners()
+		UIView.useClearBackground()
+		UILabel.useContentInsets()
+		
 		UIFont.printFontNames()
 		print(String.hello)
+
 		(0..<10).forEach {
 			print(String.things.localizedFormat($0))
 		}
@@ -26,4 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		return true
 	}
+}
+
+protocol FoobarContainer: class  {
+	var foobar: Foobar? { get set }
+}
+
+struct Foobar: Injectable {
+	typealias Container = FoobarContainer
+	static var containerKeyPath: ContainerKeyPath { return \Container.foobar }
 }

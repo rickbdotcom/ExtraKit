@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ExtraKit'
-  s.version          = '0.6.0'
+  s.version          = '0.7.0'
   s.summary          = 'A collection of useful Swift extensions and scripts.'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
