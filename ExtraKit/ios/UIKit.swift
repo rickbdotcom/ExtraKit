@@ -267,6 +267,9 @@ public extension UILabel {
     }
 
 	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
+		guard contentInsets != .zero else {
+			return intrinsicContentSizeWithContentInsets()
+		}
 		let preferredMaxLayoutWidth = self.preferredMaxLayoutWidth
 		if preferredMaxLayoutWidth > 0 && preferredMaxLayoutWidth < 10000 {
 			self.preferredMaxLayoutWidth = preferredMaxLayoutWidth - (contentInsets.left + contentInsets.right)
