@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UIViewController.usePrepareForSegueAction()
 		UIView.useCapsuleCorners()
 		UIView.useClearBackground()
-		UILabel.useContentInsets()
 		
 		UIFont.printFontNames()
 		print(String.hello)

@@ -32,7 +32,6 @@
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="capsuleCorners" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="contentInsetsString" value="{0,8,0,8}"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ife-8W-fSl">
