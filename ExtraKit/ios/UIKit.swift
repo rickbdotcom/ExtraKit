@@ -235,68 +235,6 @@ public extension UITextField {
 			imageView?.bounds.size = newValue?.size ?? .zero
 		}
 	}
-
-	class func useContentInsets() {
-		swizzle(instanceMethod: #selector(textRect(forBounds:)), with: #selector(textRectWithContentInsets(forBounds:)))
-		swizzle(instanceMethod: #selector(leftViewRect(forBounds:)), with: #selector(leftViewRectWithContentInsets(forBounds:)))
-		swizzle(instanceMethod: #selector(rightViewRect(forBounds:)), with: #selector(rightViewRectWithContentInsets(forBounds:)))
-	}	
-
-    @objc func textRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return textRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
-	}
-	
-	@objc func leftViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return leftViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
-	}
-
-    @objc func rightViewRectWithContentInsets(forBounds bounds: CGRect) -> CGRect {
-		return rightViewRectWithContentInsets(forBounds: bounds.inset(by: contentInsets))
-	}
-}
-
-public extension UILabel {
-	
-	class func useContentInsets() {
-		swizzle(instanceMethod:#selector(getter: intrinsicContentSize), with: #selector(intrinsicContentSizeWithContentInsets))
-		swizzle(instanceMethod:#selector(drawText(in:)), with: #selector(drawTextWithContentInsets(in:)))
-	}
-
-	@objc func drawTextWithContentInsets(in rect: CGRect) {
-		drawTextWithContentInsets(in: rect.inset(by: contentInsets))
-    }
-
-	@objc func intrinsicContentSizeWithContentInsets() -> CGSize {
-		let preferredMaxLayoutWidth = self.preferredMaxLayoutWidth
-		if preferredMaxLayoutWidth > 0 && preferredMaxLayoutWidth < 10000 {
-			self.preferredMaxLayoutWidth = preferredMaxLayoutWidth - (contentInsets.left + contentInsets.right)
-		}
-		var size = intrinsicContentSizeWithContentInsets()
-		size.height += contentInsets.top + contentInsets.bottom
-		size.width += contentInsets.left + contentInsets.right
-		if preferredMaxLayoutWidth > 0 && preferredMaxLayoutWidth < 10000 {
-			self.preferredMaxLayoutWidth = preferredMaxLayoutWidth
-		}
-		return size
-	}
-}
-
-public extension UIView {
-
-	@IBInspectable var contentInsetsString: String? {
-		get { return NSCoder.string(for: contentInsets) }
-		set { contentInsets = NSCoder.uiEdgeInsets(for: newValue ?? "") }
-	}
-	
-	@objc var contentInsets: UIEdgeInsets {
-		get { 
-			return associatedValue() ?? .zero 
-		}
-		set { 
-			set(associatedValue: newValue) 
-			invalidateIntrinsicContentSize()
-		}
-	}
 }
 
 public extension UIView {
