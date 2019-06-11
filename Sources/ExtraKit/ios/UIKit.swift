@@ -28,11 +28,13 @@ public extension UIView {
 		return self
 	}
 
+@available(iOS 9.0, *)
 	@discardableResult func addArranged(to view: UIStackView) -> Self {
 		view.addArrangedSubview(self)
 		return self
 	}
 
+@available(iOS 9.0, *)
 	@discardableResult func insertArranged(in view: UIStackView, at index: Int) -> Self {
 		view.insertArrangedSubview(view, at: index)
 		return self

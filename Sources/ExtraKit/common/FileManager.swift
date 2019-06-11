@@ -10,6 +10,7 @@ import Foundation
 
 public extension FileManager {
 
+	@available(iOS 10.0, *)
 	func temporaryFile(withExtension ext: String? = nil) -> URL {
 		return temporaryDirectory.appendingPathComponent(UUID().uuidString + (ext.flatMap{".\($0)"} ?? ""))
 	}

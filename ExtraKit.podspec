@@ -19,8 +19,8 @@ TODO: Add long description of the pod here.
   s.osx.deployment_target = '10.15'
   s.swift_version    = '5.1'  
   
-  s.source_files = 'Sources/common/*.swift'
-  s.ios.source_files = 'Sources/ios/*.swift'
+  s.source_files = 'Sources/ExtraKit/common/*.swift'
+  s.ios.source_files = 'Sources/ExtraKit/ios/*.swift'
   s.preserve_path = 'scripts/*'
   
 end

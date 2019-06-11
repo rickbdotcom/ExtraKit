@@ -1,11 +1,14 @@
 import UIKit
 
+@available(iOS 9.0, *)
 extension UIView: AnchorableObject {
 }
 
+@available(iOS 9.0, *)
 extension UILayoutGuide: AnchorableObject {
 }
 
+@available(iOS 9.0, *)
 public protocol AnchorableObject {
 
     var leadingAnchor: NSLayoutXAxisAnchor { get }
@@ -20,6 +23,7 @@ public protocol AnchorableObject {
     var centerYAnchor: NSLayoutYAxisAnchor { get }
 }
 
+@available(iOS 9.0, *)
 public extension AnchorableObject {
 	
 	func xAxisStartAnchor(alignWithLanguageDirection: Bool) -> NSLayoutXAxisAnchor {
@@ -30,6 +34,8 @@ public extension AnchorableObject {
         return alignWithLanguageDirection ? trailingAnchor : rightAnchor
     }
 }
+
+@available(iOS 9.0, *)
 public extension UIView {
 
 	@discardableResult func pin(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required) -> Self {

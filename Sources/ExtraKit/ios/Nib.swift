@@ -76,7 +76,10 @@ public extension UIView {
 		set { 
 			nibContentView?.removeFromSuperview()
 			set(associatedValue: newValue)
-			nibContentView?.add(to: self).pin()
+			if #available(iOS 9.0, *) {
+				nibContentView?.add(to: self).pin()
+			} else {
+			}
 		}
 	}
 }
