@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ExtraKit'
-  s.version          = '0.7.0'
+  s.version          = '0.8.0'
   s.summary          = 'A collection of useful Swift extensions and scripts.'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
@@ -15,12 +15,12 @@ TODO: Add long description of the pod here.
   s.author           = { 'Richard Burgess' => 'rickb@rickb.com' }
   s.source           = { :git => 'https://github.com/rickbdotcom/ExtraKit.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '11.0'
-  s.osx.deployment_target = '10.14'
-  s.swift_version    = '5.0'  
+  s.ios.deployment_target = '13.0'
+  s.osx.deployment_target = '10.15'
+  s.swift_version    = '5.1'  
   
-  s.source_files = 'ExtraKit/common/*.swift'
-  s.ios.source_files = 'ExtraKit/ios/*.swift'
+  s.source_files = 'Sources/common/*.swift'
+  s.ios.source_files = 'Sources/ios/*.swift'
   s.preserve_path = 'scripts/*'
   
 end
