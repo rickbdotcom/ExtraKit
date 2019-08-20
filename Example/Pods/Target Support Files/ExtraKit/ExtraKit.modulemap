@@ -1,6 +1,0 @@
-framework module ExtraKit {
-  umbrella header "ExtraKit-umbrella.h"
-
-  export *
-  module * { export * }
-}
