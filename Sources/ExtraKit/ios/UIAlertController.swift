@@ -15,11 +15,11 @@ public extension UIAlertController {
 	}
 	
 	@discardableResult func ok(_ style: UIAlertAction.Style = .default, action inAction: ((UIAlertController)->Void)? = nil) -> Self {
-		return action(title: "OK".localized(), style: style, action: inAction)
+		return action(title: NSLocalizedString("OK", comment: ""), style: style, action: inAction)
 	} 
 
 	@discardableResult func cancel(_ style: UIAlertAction.Style = .cancel, inAction: ((UIAlertController)->Void)? = nil) -> Self {
-		return action(title: "Cancel".localized(), style: style, action: inAction)
+		return action(title: NSLocalizedString("Cancel", comment: ""), style: style, action: inAction)
 	}
 	
 	@discardableResult func action(title: String?, style: UIAlertAction.Style = .default, action: ((UIAlertController)->Void)? = nil) -> Self {
@@ -36,13 +36,9 @@ public extension UIAlertController {
 		return self
 	}
 
-	@discardableResult func show(_ viewController: UIViewController? = nil, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
-		(viewController ?? rootWindow?.visibleViewController)?.present(self, animated: animated, completion: completion)
+	@discardableResult func show(_ viewController: UIViewController?, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
+		viewController.present(self, animated: animated, completion: completion)
 			return self
-	}
-
-	class func set(rootWindow window: UIWindow?) {
-		rootWindow = window
 	}
 }
 

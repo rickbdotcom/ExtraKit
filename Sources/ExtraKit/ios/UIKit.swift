@@ -1,26 +1,5 @@
 import UIKit
 
-public extension UIWindow {
-
-    var visibleViewController: UIViewController? {
-        return UIWindow.getVisibleViewControllerFrom(self.rootViewController)
-    }
-
-    class func getVisibleViewControllerFrom(_ vc: UIViewController?) -> UIViewController? {
-        if let nc = vc as? UINavigationController {
-            return UIWindow.getVisibleViewControllerFrom(nc.visibleViewController)
-        } else if let tc = vc as? UITabBarController {
-            return UIWindow.getVisibleViewControllerFrom(tc.selectedViewController)
-        } else {
-            if let pvc = vc?.presentedViewController {
-                return UIWindow.getVisibleViewControllerFrom(pvc)
-            } else {
-                return vc
-            }
-        }
-    }
-}
-
 public extension UIView {
 
 	@discardableResult func add(to view: UIView) -> Self {
@@ -28,13 +7,11 @@ public extension UIView {
 		return self
 	}
 
-@available(iOS 9.0, *)
 	@discardableResult func addArranged(to view: UIStackView) -> Self {
 		view.addArrangedSubview(self)
 		return self
 	}
 
-@available(iOS 9.0, *)
 	@discardableResult func insertArranged(in view: UIStackView, at index: Int) -> Self {
 		view.insertArrangedSubview(view, at: index)
 		return self
@@ -63,19 +40,6 @@ public extension UIView {
 	@discardableResult func sendToBack() -> Self {
 		superview?.sendSubviewToBack(self)
 		return self
-	}
-}
-
-public extension UIViewController {
-
-	func dismissPresentedViewControllers(_ completion: (()->Void)? = nil) {
-		if let presentedViewController = presentedViewController {
-			presentedViewController.dismiss(animated: false){
-				self.dismissPresentedViewControllers(completion)
-			}
-		} else {
-			completion?()
-		}
 	}
 }
 
@@ -194,54 +158,9 @@ public extension UIView {
 
 private let maskedCornerArray: [CACornerMask] = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 
-public extension UITextField {
-
-	@IBOutlet var leftViewOutlet: UIView? {
-		get { return leftView }
-		set { leftView = newValue; leftViewMode = .always }
-	}
-
-	@IBOutlet var rightViewOutlet: UIView? {
-		get { return rightView }
-		set { rightView = newValue; rightViewMode = .always }
-	}
-	
-	@IBInspectable var leftImage: UIImage? {
-		get {
-			return (leftView as? UIImageView)?.image
-		}
-		set {
-			var imageView = rightView as? UIImageView
-			if imageView == nil {
-				imageView = UIImageView()
-				leftViewMode = .always
-				leftView = imageView 
-			}
-			imageView?.image = newValue
-			imageView?.bounds.size = newValue?.size ?? .zero
-		}
-	} 
-	
-	@IBInspectable var rightImage: UIImage? {
-		get {
-			return (rightView as? UIImageView)?.image
-		}
-		set {
-			var imageView = rightView as? UIImageView
-			if imageView == nil {
-				imageView = UIImageView()
-				rightViewMode = .always
-				rightView = imageView
-			}
-			imageView?.image = newValue
-			imageView?.bounds.size = newValue?.size ?? .zero
-		}
-	}
-}
-
 public extension UIView {
 
-	@IBOutlet weak var containerView: UIView! {
+	@IBOutlet weak var containerViewOrSelf: UIView! {
 		get { return weakAssociatedValue() ?? self }
 		set { set(weakAssociatedValue: newValue) }
 	}
