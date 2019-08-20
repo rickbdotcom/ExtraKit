@@ -36,7 +36,7 @@ public extension UIAlertController {
 		return self
 	}
 
-	@discardableResult func show(_ viewController: UIViewController?, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
+	@discardableResult func show(_ viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) -> Self {
 		viewController.present(self, animated: animated, completion: completion)
 			return self
 	}
