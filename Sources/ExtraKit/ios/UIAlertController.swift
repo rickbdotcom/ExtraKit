@@ -41,5 +41,3 @@ public extension UIAlertController {
 			return self
 	}
 }
-
-private weak var rootWindow: UIWindow?
