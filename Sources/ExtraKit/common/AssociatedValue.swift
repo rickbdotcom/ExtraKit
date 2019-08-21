@@ -22,41 +22,37 @@ extension UILabel {
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
-		return objc_getAssociatedObject(self, &associatedDictionaryKey) as? NSMutableDictionary ?? {
+		return objc_getAssociatedObject(self, &NSObject.associatedDictionaryKey) as? NSMutableDictionary ?? {
 			let dict = NSMutableDictionary()
-			objc_setAssociatedObject(self, &associatedDictionaryKey, dict, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+			objc_setAssociatedObject(self, &NSObject.associatedDictionaryKey, dict, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 			return dict
 		}()
 	}
 
-	func getAssociatedValue<T>(functionName: String? = #function, _ initialValue: @autoclosure () -> T) -> T {
-		let key = associatedKey(functionName: functionName)
+	func associatedValue<T>(functionName: String? = #function, `default` defaultValue: @autoclosure () -> T) -> T {
+		let key = associatedKey(for: functionName)
 		if let value: T = associatedValue(forKey: key) {
 			return value
 		}
-		let value = initialValue()
+		let value = defaultValue()
 		set(associatedValue: value, forKey: key)
 		return value
 	}
-	
-	func associatedKey(functionName: String? = #function) -> String {
-		return [identifier, functionName].compactMap { $0 }.joined(separator: ".")
-	}
-	
+		
 	func associatedValue<T>(functionName: String? = #function) -> T? {
-		return associatedValue(forKey: associatedKey(functionName: functionName))
+		return associatedValue(forKey: associatedKey(for: functionName))
 	}
 
 	func set(associatedValue value: Any?, functionName: String? = #function) {
-		return set(associatedValue: value, forKey: associatedKey(functionName: functionName))
+		return set(associatedValue: value, forKey: associatedKey(for: functionName))
 	}
 	
 	func weakAssociatedValue<T>(functionName: String? = #function) -> T? {
-		return weakAssociatedValue(forKey: associatedKey(functionName: functionName))
+		return weakAssociatedValue(forKey: associatedKey(for: functionName))
 	}
 	
 	func set(weakAssociatedValue value: AnyObject?, functionName: String? = #function) {
-		set(weakAssociatedValue: value, forKey: associatedKey(functionName: functionName))
+		set(weakAssociatedValue: value, forKey: associatedKey(for: functionName))
 	}
 
 	func associatedValue<T>(forKey key: String) -> T? {
@@ -74,9 +70,15 @@ public extension NSObject {
 	func set(weakAssociatedValue value: AnyObject?, forKey key: String) {
 		associatedDictionary[key] = WeakObjectRef(value)
 	}
+
+	private func associatedKey(for functionName: String?) -> String {
+		return ["com.extrakit", functionName].compactMap { $0 }.joined(separator: ".")
+	}
+
+	private static var associatedDictionaryKey = 0
 }
 
-class WeakObjectRef: NSObject {
+private class WeakObjectRef: NSObject {
 	weak var object: AnyObject?
 	
 	init?(_ object: AnyObject?) {
@@ -86,6 +88,3 @@ class WeakObjectRef: NSObject {
 		self.object = object
 	}
 }
-
-private var associatedDictionaryKey = 0
-private let identifier = "com.rickb.extrakit"

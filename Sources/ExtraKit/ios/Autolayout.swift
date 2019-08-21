@@ -1,3 +1,10 @@
+//
+//  Autolayout.swift
+//  ExtraKit
+//
+//  Created by rickb on 8/16/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
+//
 import UIKit
 
 @available(iOS 9.0, *)
@@ -38,33 +45,14 @@ public extension AnchorableObject {
 @available(iOS 9.0, *)
 public extension UIView {
 
-	@discardableResult func pin(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required) -> Self {
+	@discardableResult
+	func pin(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required) -> Self {
 		pinConstraints(edges: edges, to: view, with: insets, alignWithLanguageDirection: alignWithLanguageDirection, priority: priority)
 		return self
 	}
 
-	@discardableResult func center(to view: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> Self {
-		centerConstraints(to: view, offset: offset, priority: priority)
-		return self
-	}
-	
-	@discardableResult func size(to size: CGSize, priority: UILayoutPriority = .required) -> Self {
-		sizeConstraints(to: size, priority: priority)
-		return self
-	}
-	
-	@discardableResult func aspectRatio(_ ratio: CGFloat, priority: UILayoutPriority = .required) -> Self {
-		aspectRatioConstraint(ratio, priority: priority)
-		return self
-	}
-
-	@discardableResult func aspectRatioConstraint(_ ratio: CGFloat, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
-		let constraint = widthAnchor.constraint(equalTo: heightAnchor, multiplier: ratio).configure { $0.priority = priority }
-		constraint.isActive = true
-		return constraint
-	}
-	
-	@discardableResult func pinConstraints(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+	@discardableResult
+	func pinConstraints(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let pinToView = view ?? superview else {
 			return []
@@ -87,7 +75,50 @@ public extension UIView {
 		return constraints
 	}
 
-	@discardableResult func centerConstraints(to view: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+	@discardableResult
+	func pinToScrollView(edges: UIRectEdge = .all, to view: AnchorableObject? = nil, with insets: UIEdgeInsets = .zero, alignWithLanguageDirection: Bool = false, priority: UILayoutPriority = .required, anchorWidth: Bool = true, anchorHeight: Bool = true) -> Self {
+
+		pin(edges: edges, to: view, with: insets, alignWithLanguageDirection: alignWithLanguageDirection, priority: priority)
+
+		if anchorWidth, let viewWidthAnchor = (view ?? superview)?.widthAnchor {
+			widthAnchor.constraint(equalTo: viewWidthAnchor).isActive = true
+		}
+		if anchorHeight, let viewHeightAnchor = (view ?? superview)?.heightAnchor {
+			heightAnchor.constraint(equalTo: viewHeightAnchor).isActive = true
+		}
+		return self
+	}
+}
+
+@available(iOS 9.0, *)
+public extension UIView {
+
+	@discardableResult
+	func center(to view: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> Self {
+		centerConstraints(to: view, offset: offset, priority: priority)
+		return self
+	}
+
+	@discardableResult
+	func centerX(to view: UIView? = nil, constant: CGFloat = .zero, priority: UILayoutPriority = .required) -> Self {
+		guard let view = view ?? superview else { return self }
+		let constraint = centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: constant)
+		constraint.priority = priority
+		constraint.isActive = true
+		return self
+	}
+
+	@discardableResult
+	func centerY(to view: UIView? = nil, constant: CGFloat = .zero, priority: UILayoutPriority = .required) -> Self {
+		guard let view = view ?? superview else { return self }
+		let constraint = centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant)
+		constraint.priority = priority
+		constraint.isActive = true
+		return self
+	}
+
+	@discardableResult
+	func centerConstraints(to view: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
 		translatesAutoresizingMaskIntoConstraints = false
 		guard let centerToView = view ?? superview else {
 			return []
@@ -99,8 +130,37 @@ public extension UIView {
 		NSLayoutConstraint.activate(constraints)
 		return constraints
 	}
-		
-	@discardableResult func sizeConstraints(to size: CGSize, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+}
+
+@available(iOS 9.0, *)
+public extension UIView {
+
+	@discardableResult
+	func size(to size: CGSize, priority: UILayoutPriority = .required) -> Self {
+		sizeConstraints(to: size, priority: priority)
+		return self
+	}
+	
+	@discardableResult
+	func height(_ height: CGFloat, priority: UILayoutPriority = .required) -> Self {
+		translatesAutoresizingMaskIntoConstraints = false
+		let constraint = heightAnchor.constraint(equalToConstant: height)
+		constraint.priority = priority
+		constraint.isActive = true
+		return self
+	}
+
+	@discardableResult
+	func width(_ width: CGFloat, priority: UILayoutPriority = .required) -> Self {
+		translatesAutoresizingMaskIntoConstraints = false
+		let constraint = widthAnchor.constraint(equalToConstant: width)
+		constraint.priority = priority
+		constraint.isActive = true
+		return self
+	}
+
+	@discardableResult
+	func sizeConstraints(to size: CGSize, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
 		var constraints = [NSLayoutConstraint]()
 		constraints.append(widthAnchor.constraint(equalToConstant: size.width).configure { $0.priority = priority })
 		constraints.append(heightAnchor.constraint(equalToConstant: size.height).configure { $0.priority = priority })
@@ -109,13 +169,19 @@ public extension UIView {
 	}
 }
 
-class ScreenHeightProportionalConstraint: NSLayoutConstraint {
-	
-	@IBInspectable var screenReferenceHeight: CGFloat = 667
-	
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		constant *= UIScreen.main.bounds.size.height / (screenReferenceHeight > 0 ? screenReferenceHeight : 667) 
+@available(iOS 9.0, *)
+public extension UIView {
+
+	@discardableResult
+	func aspectRatio(_ ratio: CGFloat, priority: UILayoutPriority = .required) -> Self {
+		aspectRatioConstraint(ratio, priority: priority)
+		return self
 	}
-	
+
+	@discardableResult
+	func aspectRatioConstraint(_ ratio: CGFloat, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+		let constraint = widthAnchor.constraint(equalTo: heightAnchor, multiplier: ratio).configure { $0.priority = priority }
+		constraint.isActive = true
+		return constraint
+	}
 }

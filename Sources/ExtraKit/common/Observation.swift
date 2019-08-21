@@ -21,10 +21,10 @@ public extension NSObject {
 		set(associatedValue: nil, forKey: "\(associatedValueKey).\(name)")
 	}
 	
-	var kvoObservations: NSMutableSet { return getAssociatedValue(NSMutableSet()) }
+	var kvoObservations: NSMutableSet { return associatedValue(default: NSMutableSet()) }
 }
 
-private let associatedValueKey = "com.rickb.extrakit.Observing"
+private let associatedValueKey = "com.extrakit.Observing"
 
 class NotificationObserver {
 	

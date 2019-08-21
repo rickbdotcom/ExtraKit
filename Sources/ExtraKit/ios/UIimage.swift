@@ -11,8 +11,8 @@ import UIKit
 public extension UIImage {
 
 	var imageColor: UIColor? {
-		get { return associatedValue(forKey: associatedKey()) }
-		set { set(associatedValue: newValue, forKey: associatedKey()) }
+		get { return associatedValue() }
+		set { set(associatedValue: newValue) }
 	}
 
 	class func draw(size: CGSize,  scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect)->Void) -> UIImage? {

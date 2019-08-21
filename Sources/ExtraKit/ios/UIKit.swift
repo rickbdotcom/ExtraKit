@@ -1,50 +1,5 @@
 import UIKit
 
-public extension UIView {
-
-	@discardableResult func add(to view: UIView) -> Self {
-		view.addSubview(self)
-		return self
-	}
-
-	@available(iOS 9.0, *)
-	@discardableResult func addArranged(to view: UIStackView) -> Self {
-		view.addArrangedSubview(self)
-		return self
-	}
-
-	@available(iOS 9.0, *)
-	@discardableResult func insertArranged(in view: UIStackView, at index: Int) -> Self {
-		view.insertArrangedSubview(view, at: index)
-		return self
-	}
-	
-	@discardableResult func insert(in view: UIView, below: UIView) -> Self {
-		view.insertSubview(self, belowSubview: below)
-		return self
-	}
-
-	@discardableResult func insert(in view: UIView, above: UIView) -> Self {
-		view.insertSubview(self, aboveSubview: above)
-		return self
-	}
-	
-	@discardableResult func insert(in view: UIView, atIndex index: Int) -> Self {
-		view.insertSubview(self, at: index)
-		return self
-	}
-
-	@discardableResult func bringToFront() -> Self {
-		superview?.bringSubviewToFront(self)
-		return self
-	}
-
-	@discardableResult func sendToBack() -> Self {
-		superview?.sendSubviewToBack(self)
-		return self
-	}
-}
-
 public extension UIViewController {
 
 	func parentViewController<T>(ofType: T.Type) -> T? {

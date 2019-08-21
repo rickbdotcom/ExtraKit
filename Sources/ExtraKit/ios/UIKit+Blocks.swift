@@ -12,7 +12,7 @@ private let targetBlockAction = #selector(TargetBlock.execute(_:))
 
 public extension UIControl {
 
-	private var targetBlocks: NSMutableDictionary { return getAssociatedValue(NSMutableDictionary()) }
+	private var targetBlocks: NSMutableDictionary { return associatedValue(default: NSMutableDictionary()) }
 
 	@discardableResult func on<T: UIControl>(_ event: UIControl.Event, block: ((T) -> Void)?) -> Any? {
 		if let block = block {
@@ -88,42 +88,6 @@ public extension UIBarButtonItem {
 			targetBlock = nil
 			return nil
 		}
-	}
-}
-
-public extension UITextView {
-
-	var textViewDelegate: TextViewDelegate {
-		return getAssociatedValue(TextViewDelegate(textView: self))
-	}
-}
-
-public class TextViewDelegate: NSObject, UITextViewDelegate {
-	
-	public var editingDidBegin: ((UITextView) -> Void)?
-	public var editingChanged: ((UITextView) -> Void)?
-	public var editingDidEnd: ((UITextView) -> Void)?
-	public var shouldChangeText: ((UITextView, NSRange, String) -> Bool)?
-	
-	init(textView: UITextView) {
-		super.init()
-		textView.delegate = self
-	}
-
-	public func textViewDidBeginEditing(_ textView: UITextView) {
-		editingDidBegin?(textView)
-	}
-	
-	public func textViewDidEndEditing(_ textView: UITextView) {
-		editingDidEnd?(textView)
-	}
-	
-	public func textViewDidChange(_ textView: UITextView) {
-		editingChanged?(textView)
-	}
-	
-	public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-		return shouldChangeText?(textView, range, text) ?? true
 	}
 }
 
