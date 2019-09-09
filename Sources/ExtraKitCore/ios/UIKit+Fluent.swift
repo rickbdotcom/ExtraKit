@@ -17,12 +17,14 @@ public extension UIView {
 		return self
 	}
 
+	@available(iOS 9.0, *)
 	@discardableResult
 	func addArranged(to view: UIStackView) -> Self {
 		view.addArrangedSubview(self)
 		return self
 	}
 
+	@available(iOS 9.0, *)
 	@discardableResult
 	func insertArranged(in view: UIStackView, at index: Int) -> Self {
 		view.insertArrangedSubview(view, at: index)
@@ -72,8 +74,9 @@ public extension UIView {
     }
 
     @discardableResult
-    func hugging(_ priority: UILayoutPriority) -> Self {
-        setContentHuggingPriority(priority, for: .horizontal)
+    func hugging(_ priority: UILayoutPriority, _ offset: Float = 0) -> Self {
+		let newPriority = UILayoutPriority(priority.rawValue + offset)
+        setContentHuggingPriority(newPriority, for: .horizontal)
         return self
     }
 
@@ -90,7 +93,7 @@ public extension UIView {
 
 	@discardableResult
 	func cornerRadius(_ radius: CGFloat) -> Self {
-		layer.cornerRadius = radius
+		self.cornerRadius = radius
 		return self
 	}
 
@@ -109,6 +112,15 @@ public extension UIView {
 	@discardableResult
 	func tint(_ color: UIColor) -> Self {
 		tintColor = color
+		return self
+	}
+}
+
+public extension UIControl {
+
+	@discardableResult
+	func selected(_ selected: Bool) -> Self {
+		isSelected = selected
 		return self
 	}
 }
@@ -134,8 +146,8 @@ public extension UITextField {
 public extension UIButton {
 
 	@discardableResult
-	func titleColor(_ color: UIColor, for: UIControl.State = .normal) -> Self {
-		setTitleColor(color, for: .normal)
+	func titleColor(_ color: UIColor, for state: UIControl.State = .normal) -> Self {
+		setTitleColor(color, for: state)
 		return self
 	}
 }
@@ -172,7 +184,7 @@ extension UIStackView {
 	}
 }
 
-public extension String {
+extension String {
 
     func label() -> UILabel {
         return UILabel().configure {
@@ -181,21 +193,29 @@ public extension String {
     }
 }
 
-public extension UIImage {
+extension UIImage {
 
     func imageView() -> UIImageView {
       return UIImageView(image: self).hugging(.defaultHigh).contentMode(.center)
     }
 }
 
-public func HStack(_ views: [UIView] = []) -> UIStackView {
-    return UIStackView(arrangedSubviews: views).configure {
-		$0.axis = .horizontal
-	}
+func HStack(_ views: [UIView?] = []) -> UIStackView {
+    let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
+    stackView.axis = .horizontal
+    return stackView
 }
 
-public func VStack(_ views: [UIView] = []) -> UIStackView {
-	return UIStackView(arrangedSubviews: views).configure {
-		$0.axis = .vertical
-	}
+func VStack(_ views: [UIView?] = [], withDividers: Bool = false, showTopDivider: Bool = false, showBottomDivider: Bool = false) -> UIStackView {
+    if withDividers || showTopDivider || showBottomDivider {
+        let stackView = StackViewWithDividers(arrangedSubviews: views.compactMap { $0 })
+        stackView.axis = .vertical
+        stackView.showTopDivider = showTopDivider
+        stackView.showBottomDivider = showBottomDivider
+        return stackView
+    } else {
+        let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
+        stackView.axis = .vertical
+        return stackView
+    }
 }

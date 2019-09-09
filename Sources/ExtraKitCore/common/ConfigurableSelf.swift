@@ -8,10 +8,10 @@
 
 import ObjectiveC
 
-public protocol SelfConfigurable {
+public protocol ConfigurableSelf {
 }
 
-public extension SelfConfigurable where Self: AnyObject {
+public extension ConfigurableSelf where Self: AnyObject {
 
     @discardableResult func configure(_ block: (Self) -> Void) -> Self {
         block(self)
