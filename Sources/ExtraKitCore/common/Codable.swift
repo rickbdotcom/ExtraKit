@@ -103,7 +103,7 @@ enum AnyDecodingContainer {
 			}
 			var unkeyedContainer = container
 			if index > 0 {
-				for _ in 0..<index-1 {
+				for _ in 0..<index {
 					_ = try unkeyedContainer.decode(type)
 				}
 			}
@@ -122,7 +122,7 @@ extension UnkeyedDecodingContainer {
 		}
 		var unkeyedContainer = self
 		if index > 0 {
-			for _ in 0..<index-1 {
+			for _ in 0..<index {
 				_ = try? unkeyedContainer.nestedContainer(keyedBy: AnyCodingKey.self)
 			}
 		}
@@ -131,7 +131,7 @@ extension UnkeyedDecodingContainer {
 		}
 		unkeyedContainer = self
 		if index > 0 {
-			for _ in 0..<index-1 {
+			for _ in 0..<index {
 				_ = try? unkeyedContainer.nestedUnkeyedContainer()
 			}
 		}

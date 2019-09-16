@@ -1,9 +1,9 @@
 //
 //  Subject.swift
-//  ExtraKit
+//  ERKit
 //
 //  Created by rickb on 7/3/19.
-//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
+//  Copyright © 2019 vitaminshoppe. All rights reserved.
 //
 
 import Foundation
@@ -23,7 +23,7 @@ final class CurrentValueSubject<T>: Subject, DefaultPublisherImplementation {
 	func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
 		let subscription = defaultReceive(subscriber: subscriber)
 		if let currentValue = currentValue {
-			send(value: currentValue)
+			subscriber.receive(currentValue)
 		}
 		return subscription
     }

@@ -8,35 +8,38 @@
 
 import Foundation
 
+extension String {
+
+    var emptyNil: String? {
+        return isEmpty ? nil : self
+    }
+}
+
+extension Sequence where Element == String {
+
+    func emptyJoined(separator: String) -> String {
+        return map { $0.emptyNil }.emptyJoined(separator: separator)
+    }
+
+    func emptyJoined(separator: String) -> String? {
+        return emptyJoined(separator: separator).emptyNil
+    }
+}
+
+extension Sequence where Element == String? {
+
+    func emptyJoined(separator: String) -> String {
+        return compactMap { $0 }.joined(separator: separator)
+    }
+
+    func emptyJoined(separator: String) -> String? {
+        return emptyJoined(separator: separator).emptyNil
+    }
+}
+
 public extension Optional where Wrapped == String {
 
-    var isEmptyOrNil: Bool {
+    var isEmpty: Bool {
         return (self ?? "").isEmpty
     }
-
-    var isEmptyOrNilOrSpaces: Bool {
-        return isEmptyOrNil || (self?.isOnlySpaces ?? false)
-    }
-}
-
-public extension String {
-
-	var isOnlySpaces: Bool {
-		return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-	}
-
-	var emptyNil: String? {
-		return isEmpty ? nil : self
-	}
-
-	var emptyNilSpace: String? {
-		return isEmpty || isOnlySpaces ? nil : self
-	}
-}
-
-public extension Sequence where Iterator.Element == String {
-
-    func joinedEmptyNilSpace(separator: String = "") -> String {
-		return compactMap { $0.emptyNilSpace }.joined(separator: separator)
-	}
 }
