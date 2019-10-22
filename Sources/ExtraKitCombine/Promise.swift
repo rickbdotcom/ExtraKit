@@ -55,11 +55,11 @@ public final class SemaphoreCancelToken: CancelTokenProtocol {
 		semaphore.signal()
 	}
 
-	func wait() {
+	public func wait() {
 		semaphore.wait()
 	}
 
-	func signal() {
+	public func signal() {
 		semaphore.signal()
 	}
 

@@ -9,28 +9,28 @@
 import Foundation
 
 public protocol Cancellable {
-    func cancel()
+	func cancel()
 }
 
 public final class AnyCancellable: Cancellable {
 
-    let cancelBlock: () -> Void
+	let cancelBlock: () -> Void
 
-    init(_ cancelBlock: @escaping () -> Void) {
-        self.cancelBlock = cancelBlock
-    }
+	init(_ cancelBlock: @escaping () -> Void) {
+		self.cancelBlock = cancelBlock
+	}
 
-    init<C: Cancellable>(_ cancellable: C) {
-        self.cancelBlock = {
-            cancellable.cancel()
-        }
-    }
+	init<C: Cancellable>(_ cancellable: C) {
+		self.cancelBlock = {
+			cancellable.cancel()
+		}
+	}
 
-    public func cancel() {
-        cancelBlock()
-    }
+	public func cancel() {
+		cancelBlock()
+	}
 
-    deinit {
-        cancel()
-    }
+	deinit {
+		cancel()
+	}
 }

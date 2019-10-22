@@ -64,6 +64,9 @@ public extension Publisher {
 }
 
 public struct SubscriptionValue<T> {
-	var value: T?
-	var subscription: Subscription?
+	public var value: T?
+	public var subscription: Subscription?
+
+	public init() {
+	}
 }

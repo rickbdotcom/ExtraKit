@@ -17,24 +17,24 @@ public protocol Publisher {
 
 public struct AnyPublisher<Output>: Publisher {
 
-    private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
+	private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
 
-    init<P: Publisher>(_ p: P) where P.Output == Output {
-        receiveBlock = { s in
-            p.receive(subscriber: s)
-        }
-    }
+	public init<P: Publisher>(_ p: P) where P.Output == Output {
+		receiveBlock = { s in
+			p.receive(subscriber: s)
+		}
+	}
 
-    public func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
-        return receiveBlock(AnySubscriber(subscriber))
-    }
+	public func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+		return receiveBlock(AnySubscriber(subscriber))
+	}
 }
 
 public extension Publisher {
 
-    func typeErased() -> AnyPublisher<Output> {
-        return AnyPublisher(self)
-    }
+	func typeErased() -> AnyPublisher<Output> {
+		return AnyPublisher(self)
+	}
 }
 
 public extension Publisher {

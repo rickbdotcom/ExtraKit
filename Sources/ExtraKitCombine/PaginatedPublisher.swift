@@ -21,11 +21,11 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 	}
 	private let paginatedArray: PaginatedArray<Element, Cursor>
 
-    init(cursor: Cursor, nextPage: @escaping (Cursor) -> Promise<([Element], Cursor?)>) {
+	public init(cursor: Cursor, nextPage: @escaping (Cursor) -> Promise<([Element], Cursor?)>) {
 		paginatedArray = PaginatedArray(cursor: cursor) { cursor in
 			nextPage(cursor)
 		}
-    }
+	}
 
 	public func refresh() -> Promise<[Element]> {
 		paginatedArray.reset()
@@ -36,16 +36,16 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 			self?.send(value: currentValue)
 			return currentValue
 		}.recover { [weak self] error -> Promise<[Element]> in
-		 	self?.send(error: error)
-		 	throw error
+			self?.send(error: error)
+			throw error
 		}
 	}
 
-    public func nextPage() -> Promise<Void> {
+	public func nextPage() -> Promise<Void> {
 		return paginatedArray.fetchNextPage()
 	}
 
-    override public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+	override public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
 		let subscription = super.receive(subscriber: subscriber)
 		if let currentValue = currentValue {
 			send(value: currentValue)
@@ -53,7 +53,7 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 			refresh().cauterize()
 		}
 		return subscription
-    }
+	}
 }
 
 public struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
@@ -62,7 +62,7 @@ public struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
     private let refreshBlock: () -> Promise<Output>
     private let nextPageBlock: () -> Promise<Void>
 
-    init<P: PaginatedPublisher >(_ p: P) where P.Output == Output {
+    public init<P: PaginatedPublisher >(_ p: P) where P.Output == Output {
         receiveBlock = { s in
             p.receive(subscriber: s)
         }
@@ -88,6 +88,7 @@ public struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
 }
 
 public extension PaginatedPublisher {
+
     func typeErased() -> AnyPaginatedPublisher<Output> {
 		return AnyPaginatedPublisher(self)
 	}
