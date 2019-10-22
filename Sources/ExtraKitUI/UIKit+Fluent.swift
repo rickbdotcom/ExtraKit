@@ -207,8 +207,15 @@ public func HStack(_ views: [UIView?] = []) -> UIStackView {
 }
 
 public func VStack(_ views: [UIView?] = [], withDividers: Bool = false, showTopDivider: Bool = false, showBottomDivider: Bool = false) -> UIStackView {
-	let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
-	stackView.axis = .vertical
-	return stackView
+    if withDividers || showTopDivider || showBottomDivider {
+        let stackView = StackViewWithDividers(arrangedSubviews: views.compactMap { $0 })
+        stackView.axis = .vertical
+        stackView.showTopDivider = showTopDivider
+        stackView.showBottomDivider = showBottomDivider
+        return stackView
+    } else {
+        let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
+        stackView.axis = .vertical
+        return stackView
+    }
 }
-
