@@ -1,9 +1,9 @@
 //
 //  Sink.swift
-//  ExtraKit
+//  ERKit
 //
 //  Created by rickb on 7/3/19.
-//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
+//  Copyright © 2019 vitaminshoppe. All rights reserved.
 //
 
 import Foundation

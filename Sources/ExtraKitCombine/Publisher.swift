@@ -1,9 +1,9 @@
 //
 //  Publisher.swift
-//  ExtraKit
+//  ERKit
 //
 //  Created by rickb on 6/30/19.
-//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
+//  Copyright © 2019 vitaminshoppe. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
@@ -37,43 +37,10 @@ extension Publisher {
     }
 }
 
-protocol DefaultPublisherImplementation: AnyObject, Publisher {
-    var subscribers: [UUID: AnySubscriber<Output>] { get set }
-}
-
-extension DefaultPublisherImplementation {
-
-    func defaultReceive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
-        let subscriber = AnySubscriber(subscriber)
-        subscribers[subscriber.identifier] = subscriber
-        let subscription = AnyCancellable {
-            self.subscribers[subscriber.identifier] = nil
-        }
-        subscriber.receive(subscription: subscription)
-        return subscription
-    }
-
-    func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
-        return defaultReceive(subscriber: subscriber)
-    }
-
-    func send(value: Output) {
-        subscribers.values.forEach {
-            $0.receive(value)
-        }
-    }
-
-    func send(error: Error) {
-        subscribers.values.forEach {
-            $0.receiveError?(error)
-        }
-    }
-}
-
 extension Publisher {
 
 	func once() -> Promise<Output> {
-		var subscription: Cancellable?
+		var subscription: Subscription?
 		return Promise { seal in
 			subscription = sink(receiveError: {
 				seal.reject($0)

@@ -1,9 +1,9 @@
 //
 //  Zip.swift
-//  ExtraKit
+//  ERKit
 //
 //  Created by rickb on 8/6/19.
-//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
+//  Copyright © 2019 vitaminshoppe. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
@@ -16,8 +16,8 @@ struct Zip<A, B>: RefreshablePublisher where A: RefreshablePublisher, B: Refresh
     let a: A
     let b: B
     private let publisher: AnyPublisher<Output>
-    private let aSubscription: Cancellable?
-    private let bSubscription: Cancellable?
+    private let aSubscription: Subscription?
+    private let bSubscription: Subscription?
 
     init(_ a: A, _ b: B) {
         var aValue: A.Output?
