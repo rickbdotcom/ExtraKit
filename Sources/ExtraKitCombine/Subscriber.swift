@@ -1,14 +1,14 @@
 //
-//  Subscriber.swift
-//  ERKit
 //
-//  Created by rickb on 7/3/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
 
-protocol Subscriber {
+public protocol Subscriber {
     associatedtype Input
 
     func receive(subscription: Subscription)
@@ -16,24 +16,24 @@ protocol Subscriber {
     func receive(error: Error)
 }
 
-typealias Subscription = Cancellable
+public typealias Subscription = Cancellable
 
-struct AnySubscriber<Input>: Subscriber {
+public struct AnySubscriber<Input>: Subscriber {
 
-    let identifier = UUID()
+	let identifier = UUID()
     let receiveSubscription: ((Subscription) -> Void)?
     let receiveInput: ((Input) -> Void)?
     let receiveError: ((Error) -> Void)?
 
-    func receive(subscription: Subscription) {
+    public func receive(subscription: Subscription) {
         receiveSubscription?(subscription)
     }
 
-    func receive(_ input: Input) {
+    public func receive(_ input: Input) {
         receiveInput?(input)
     }
 
-    func receive(error: Error) {
+    public func receive(error: Error) {
         receiveError?(error)
     }
 
@@ -56,14 +56,15 @@ struct AnySubscriber<Input>: Subscriber {
     }
 }
 
-extension Publisher {
+public extension Publisher {
 
     func subscribe<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
         return receive(subscriber: subscriber)
     }
 }
 
-struct SubscriptionValue<T> {
+public struct SubscriptionValue<T> {
 	var value: T?
 	var subscription: Subscription?
 }
+

@@ -1,17 +1,17 @@
 //
-//  Zip.swift
-//  ERKit
 //
-//  Created by rickb on 8/6/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
 import PromiseKit
 
-struct Zip<A, B>: RefreshablePublisher where A: RefreshablePublisher, B: RefreshablePublisher {
+public struct Zip<A, B>: RefreshablePublisher where A: RefreshablePublisher, B: RefreshablePublisher {
 
-    typealias Output = (A.Output, B.Output)
+    public typealias Output = (A.Output, B.Output)
 
     let a: A
     let b: B
@@ -48,11 +48,11 @@ struct Zip<A, B>: RefreshablePublisher where A: RefreshablePublisher, B: Refresh
         publisher = AnyPublisher(subject)
     }
 
-    func refresh() -> Promise<Output> {
+    public func refresh() -> Promise<Output> {
         return when(fulfilled: a.refresh(), b.refresh())
     }
 
-    func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+    public func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
         var aUpstreamSubscription = aSubscription
         var bUpstreamSubscription = bSubscription
         var publisherSubscription: AnyCancellable? = publisher.receive(subscriber: subscriber)

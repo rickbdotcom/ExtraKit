@@ -1,18 +1,18 @@
 //
-//  Cancellable.swift
-//  ERKit
 //
-//  Created by rickb on 7/3/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //
 
 import Foundation
 
-protocol Cancellable {
+public protocol Cancellable {
     func cancel()
 }
 
-final class AnyCancellable: Cancellable {
+public final class AnyCancellable: Cancellable {
 
     let cancelBlock: () -> Void
 
@@ -26,7 +26,7 @@ final class AnyCancellable: Cancellable {
         }
     }
 
-    func cancel() {
+    public func cancel() {
         cancelBlock()
     }
 

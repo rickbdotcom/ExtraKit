@@ -1,11 +1,12 @@
 //
-//  StackViewWithDividers.swift
-//  Vitaminshoppe
+//  
+//  ExtraKit
 //
-//  Created by rickb on 6/29/19.
-//  Copyright © 2019 Vitaminshoppe. All rights reserved.
+//  Created by rickb on 4/18/16.
+//  Copyright © 2018 rickbdotcom LLC. All rights reserved.
 //
 
+import ExtraKitCore
 import UIKit
 
 class StackViewWithDividers: UIStackView {

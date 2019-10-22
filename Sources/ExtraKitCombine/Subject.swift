@@ -1,20 +1,20 @@
 //
-//  Subject.swift
-//  ERKit
 //
-//  Created by rickb on 7/3/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //
 
 import Foundation
 
-protocol Subject: AnyObject, Publisher {
+public protocol Subject: AnyObject, Publisher {
 
     func send(value: Output)
     func send(error: Error)
 }
 
-struct AnySubject<Output>: Publisher {
+public struct AnySubject<Output>: Publisher {
 
     private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
     private let sendValueBlock: (Output) -> Void
@@ -32,7 +32,7 @@ struct AnySubject<Output>: Publisher {
         }
     }
 
-    func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+    public func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
         return receiveBlock(AnySubscriber(subscriber))
     }
 
@@ -45,17 +45,17 @@ struct AnySubject<Output>: Publisher {
 	}
 }
 
-extension Subject {
+public extension Subject {
     func typeErased() -> AnySubject<Output> {
 		return AnySubject(self)
 	}
 }
 
-class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
+public class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
 	private(set) var currentValue: Output?
 	private(set) var currentError: Error?
 
-	override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
+	public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
 		let subscription = super.receive(subscriber: subscriber)
 		if let currentValue = currentValue {
 			subscriber.receive(currentValue)
@@ -66,23 +66,23 @@ class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
 		return subscription
     }
 
-	override func send(value: Output) {
+	public override func send(value: Output) {
 		currentValue = value
 		currentError = nil
 		super.send(value: value)
 	}
 
-    override func send(error: Error) {
+    public override func send(error: Error) {
 		currentValue = nil
 		currentError = error
 		super.send(error: error)
 	}
 }
 
-class DefaultSubjectImplementation<Output>: Subject, Publisher {
+public class DefaultSubjectImplementation<Output>: Subject, Publisher {
 	private var subscribers = [UUID: AnySubscriber<Output>]()
 
-    func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
+    public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
         let subscriber = AnySubscriber(subscriber)
         subscribers[subscriber.identifier] = subscriber
         let subscription = AnyCancellable {
@@ -92,13 +92,13 @@ class DefaultSubjectImplementation<Output>: Subject, Publisher {
         return subscription
     }
 
-    func send(value: Output) {
+    public func send(value: Output) {
         subscribers.values.forEach {
             $0.receive(value)
         }
     }
 
-    func send(error: Error) {
+    public func send(error: Error) {
         subscribers.values.forEach {
             $0.receiveError?(error)
         }

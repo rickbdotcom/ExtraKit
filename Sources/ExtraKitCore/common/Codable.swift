@@ -40,7 +40,9 @@ public extension Decoder {
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Bool = false) -> Bool {
-        return defaultDecodeIfPresent(keyPath, as: Bool.self, `default`)
+		return defaultDecodeIfPresent(keyPath, as: Bool.self) ??
+			defaultDecodeIfPresent(keyPath, as: String.self).flatMap { Bool($0) ?? ($0 == "1" ? true : nil) } ??
+			`default`
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Double = 0.0) -> Double {
@@ -49,6 +51,12 @@ public extension Decoder {
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Int64 = 0) -> Int64 {
         return defaultDecodeIfPresent(keyPath, as: Int64.self, `default`)
+    }
+
+    func defaultDecodeIfPresent(_ keyPath: String, _ default: Decimal = .zero) -> Decimal {
+		return defaultDecodeIfPresent(keyPath, as: Decimal.self) ??
+			defaultDecodeIfPresent(keyPath, as: String.self).flatMap { Decimal(string: $0) } ??
+			`default`
     }
 
     func defaultDecodeIfPresent<T: Decodable>(_ keyPath: String, _ default: [T] = []) -> [T] {

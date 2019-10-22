@@ -152,7 +152,7 @@ public extension UIButton {
 	}
 }
 
-extension UIStackView {
+public extension UIStackView {
 
     func removeAllArrangedViews() {
         arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -184,7 +184,7 @@ extension UIStackView {
 	}
 }
 
-extension String {
+public extension String {
 
     func label() -> UILabel {
         return UILabel().configure {
@@ -193,29 +193,22 @@ extension String {
     }
 }
 
-extension UIImage {
+public extension UIImage {
 
     func imageView() -> UIImageView {
       return UIImageView(image: self).hugging(.defaultHigh).contentMode(.center)
     }
 }
 
-func HStack(_ views: [UIView?] = []) -> UIStackView {
+public func HStack(_ views: [UIView?] = []) -> UIStackView {
     let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
     stackView.axis = .horizontal
     return stackView
 }
 
-func VStack(_ views: [UIView?] = [], withDividers: Bool = false, showTopDivider: Bool = false, showBottomDivider: Bool = false) -> UIStackView {
-    if withDividers || showTopDivider || showBottomDivider {
-        let stackView = StackViewWithDividers(arrangedSubviews: views.compactMap { $0 })
-        stackView.axis = .vertical
-        stackView.showTopDivider = showTopDivider
-        stackView.showBottomDivider = showBottomDivider
-        return stackView
-    } else {
-        let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
-        stackView.axis = .vertical
-        return stackView
-    }
+public func VStack(_ views: [UIView?] = [], withDividers: Bool = false, showTopDivider: Bool = false, showBottomDivider: Bool = false) -> UIStackView {
+	let stackView = UIStackView(arrangedSubviews: views.compactMap { $0 })
+	stackView.axis = .vertical
+	return stackView
 }
+

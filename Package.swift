@@ -39,11 +39,19 @@ let package = Package(
 		),
         .target(
             name: "ExtraKitUI",
-            dependencies: []
+            dependencies: ["ExtraKitCore"]
 		),
         .testTarget(
             name: "ExtraKitCoreTests",
             dependencies: ["ExtraKitCore"]
+		),
+		.testTarget(
+			name: "ExtraKitCombineTests",
+			dependencies: ["ExtraKitCombine"]
+		),
+		.testTarget(
+			name: "ExtraKitUITests",
+			dependencies: ["ExtraKitUI"]
 		)
     ]
 )

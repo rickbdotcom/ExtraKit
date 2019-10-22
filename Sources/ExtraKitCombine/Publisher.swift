@@ -1,21 +1,21 @@
 //
-//  Publisher.swift
-//  ERKit
+//  
+//  ExtraKit
 //
-//  Created by rickb on 6/30/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
 import PromiseKit
 
-protocol Publisher {
+public protocol Publisher {
     associatedtype Output
 
     func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input
 }
 
-struct AnyPublisher<Output>: Publisher {
+public struct AnyPublisher<Output>: Publisher {
 
     private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
 
@@ -25,19 +25,19 @@ struct AnyPublisher<Output>: Publisher {
         }
     }
 
-    func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+    public func receive<S>(subscriber: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
         return receiveBlock(AnySubscriber(subscriber))
     }
 }
 
-extension Publisher {
+public extension Publisher {
 
     func typeErased() -> AnyPublisher<Output> {
         return AnyPublisher(self)
     }
 }
 
-extension Publisher {
+public extension Publisher {
 
 	func once() -> Promise<Output> {
 		var subscription: Subscription?

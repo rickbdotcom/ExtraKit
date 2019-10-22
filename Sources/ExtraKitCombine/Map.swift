@@ -1,15 +1,15 @@
 //
-//  Map.swift
-//  vitaminshoppe
 //
-//  Created by rickb on 9/5/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //
 
 import Foundation
 import PromiseKit
 
-struct MapOutput<Upstream, Output>: RefreshablePublisher where Upstream: Publisher {
+public struct MapOutput<Upstream, Output>: RefreshablePublisher where Upstream: Publisher {
 
     let upstream: Upstream
     let transform: (Upstream.Output) -> Output
@@ -31,7 +31,7 @@ struct MapOutput<Upstream, Output>: RefreshablePublisher where Upstream: Publish
         publisher = AnyPublisher(subject)
     }
 
-    func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+    public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
         var upstreamSubscription = subscription
         var publisherSubscription: AnyCancellable? = publisher.receive(subscriber: subscriber)
         return AnyCancellable {
@@ -44,18 +44,18 @@ struct MapOutput<Upstream, Output>: RefreshablePublisher where Upstream: Publish
         }
     }
 
-    func refresh() -> Promise<Output> {
+    public func refresh() -> Promise<Output> {
 		return .cancelled()
 	}
 }
 
-extension MapOutput where Upstream: RefreshablePublisher {
+public extension MapOutput where Upstream: RefreshablePublisher {
     func refresh() -> Promise<Output> {
 		return upstream.refresh().map { self.transform($0) }
 	}
 }
 
-extension Publisher {
+public extension Publisher {
 
     func map<Output>(_ transform: @escaping (Self.Output) -> Output) -> MapOutput<Self, Output> {
         return MapOutput(upstream: self, transform: transform)

@@ -1,20 +1,20 @@
 //
-//  PaginatedPublisher.swift
-//  vitaminshoppe
 //
-//  Created by rickb on 8/4/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //
 
 import Foundation
 import PromiseKit
 
-protocol PaginatedPublisher: RefreshablePublisher {
+public protocol PaginatedPublisher: RefreshablePublisher {
 	func nextPage() -> Promise<Void>
 }
 
-final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImplementation<[Element]>, PaginatedPublisher {
-	typealias Output = [Element]
+public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImplementation<[Element]>, PaginatedPublisher {
+	public typealias Output = [Element]
 
 	private var currentValue: [Element]? {
 		return paginatedArray.items
@@ -27,7 +27,7 @@ final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImplementati
 		}
     }
 
-	func refresh() -> Promise<[Element]> {
+	public func refresh() -> Promise<[Element]> {
 		paginatedArray.reset()
 		return nextPage().map { [weak self] in
 			guard let currentValue = self?.currentValue else {
@@ -41,11 +41,11 @@ final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImplementati
 		}
 	}
 
-    func nextPage() -> Promise<Void> {
+    public func nextPage() -> Promise<Void> {
 		return paginatedArray.fetchNextPage()
 	}
 
-    override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+    public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
 		let subscription = super.receive(subscriber: subscriber)
 		if let currentValue = currentValue {
 			send(value: currentValue)
@@ -56,7 +56,7 @@ final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImplementati
     }
 }
 
-struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
+public struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
 
     private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
     private let refreshBlock: () -> Promise<Output>
@@ -74,20 +74,20 @@ struct AnyPaginatedPublisher<Output>: PaginatedPublisher {
 		}
     }
 
-    func receive<S>(subscriber s: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+    public func receive<S>(subscriber s: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
         return receiveBlock(AnySubscriber(s))
     }
 
-	func refresh() -> Promise<Output> {
+	public func refresh() -> Promise<Output> {
 		return refreshBlock()
     }
 
-    func nextPage() -> Promise<Void> {
+    public func nextPage() -> Promise<Void> {
 		return nextPageBlock()
     }
 }
 
-extension PaginatedPublisher {
+public extension PaginatedPublisher {
     func typeErased() -> AnyPaginatedPublisher<Output> {
 		return AnyPaginatedPublisher(self)
 	}

@@ -1,19 +1,19 @@
 //
-//  Refreshable.swift
-//  ERKit
 //
-//  Created by rickb on 7/3/19.
-//  Copyright © 2019 vitaminshoppe. All rights reserved.
+//  ExtraKit
+//
+//  Created by rickb on 7/9/19.
+//  Copyright © 2019 rickbdotcom LLC. All rights reserved.
 //  swiftlint:disable identifier_name
 
 import Foundation
 import PromiseKit
 
-protocol RefreshablePublisher: Publisher {
+public protocol RefreshablePublisher: Publisher {
     func refresh() -> Promise<Output>
 }
 
-final class PromisePublisher<Output>: DefaultSubjectImplementation<Output>, RefreshablePublisher {
+public final class PromisePublisher<Output>: DefaultSubjectImplementation<Output>, RefreshablePublisher {
     private let request: () -> Promise<Output>
     private var currentValue: Output?
     private let refreshResolver = ResolverArray<Output>()
@@ -22,7 +22,7 @@ final class PromisePublisher<Output>: DefaultSubjectImplementation<Output>, Refr
         self.request = request
     }
 
-    func refresh() -> Promise<Output> {
+    public func refresh() -> Promise<Output> {
         if refreshResolver.isEmpty {
             return request()
                 .tap { [weak self] result in
@@ -41,7 +41,7 @@ final class PromisePublisher<Output>: DefaultSubjectImplementation<Output>, Refr
         }
     }
 
-    override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+    public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
         let subscription = super.receive(subscriber: subscriber)
         if let currentValue = currentValue {
             subscriber.receive(currentValue)
@@ -52,7 +52,7 @@ final class PromisePublisher<Output>: DefaultSubjectImplementation<Output>, Refr
     }
 }
 
-struct AnyRefreshablePublisher<Output>: RefreshablePublisher {
+public struct AnyRefreshablePublisher<Output>: RefreshablePublisher {
 
     private let receiveBlock: (AnySubscriber<Output>) -> AnyCancellable
     private let refreshBlock: () -> Promise<Output>
@@ -66,16 +66,16 @@ struct AnyRefreshablePublisher<Output>: RefreshablePublisher {
         }
     }
 
-    func receive<S>(subscriber s: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
+    public func receive<S>(subscriber s: S) -> AnyCancellable where S: Subscriber, Output == S.Input {
         return receiveBlock(AnySubscriber(s))
     }
 
-    func refresh() -> Promise<Output> {
+    public func refresh() -> Promise<Output> {
         return refreshBlock()
     }
 }
 
-extension RefreshablePublisher {
+public extension RefreshablePublisher {
 
     func typeErased() -> AnyRefreshablePublisher<Output> {
         return AnyRefreshablePublisher(self)
