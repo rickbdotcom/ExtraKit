@@ -55,7 +55,7 @@ public class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
 	private(set) var currentValue: Output?
 	private(set) var currentError: Error?
 
-	public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
+	override public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where Output == S.Input {
 		let subscription = super.receive(subscriber: subscriber)
 		if let currentValue = currentValue {
 			subscriber.receive(currentValue)
@@ -66,13 +66,13 @@ public class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
 		return subscription
     }
 
-	public override func send(value: Output) {
+	override public func send(value: Output) {
 		currentValue = value
 		currentError = nil
 		super.send(value: value)
 	}
 
-    public override func send(error: Error) {
+    override public func send(error: Error) {
 		currentValue = nil
 		currentError = error
 		super.send(error: error)

@@ -15,7 +15,7 @@ public class PaginatedArray<T, Cursor> {
 	var items: [T]?
 	var cursor: Cursor?
 	var initialCursor: Cursor
-	
+
 	private(set) var isLoading = false
 	private var cancelToken: CancelToken?
 	private let nextPage: (Cursor) -> Promise<([T], Cursor?)>
@@ -33,7 +33,7 @@ public class PaginatedArray<T, Cursor> {
 		isLoading = true
 
 		weak var cancelToken = newCancelToken(&self.cancelToken)
-		return nextPage(cursor).done { [weak self] (items, cursor) in
+		return nextPage(cursor).done { [weak self] items, cursor in
 			try cancelToken.throwIfCancelled()
 			self?.cursor = cursor
 			self?.items = (self?.items ?? []) + items

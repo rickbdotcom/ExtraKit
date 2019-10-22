@@ -45,7 +45,7 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 		return paginatedArray.fetchNextPage()
 	}
 
-    public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+    override public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
 		let subscription = super.receive(subscriber: subscriber)
 		if let currentValue = currentValue {
 			send(value: currentValue)

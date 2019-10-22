@@ -41,7 +41,7 @@ public final class PromisePublisher<Output>: DefaultSubjectImplementation<Output
         }
     }
 
-    public override func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
+    override public func receive<S: Subscriber>(subscriber: S) -> AnyCancellable where  Output == S.Input {
         let subscription = super.receive(subscriber: subscriber)
         if let currentValue = currentValue {
             subscriber.receive(currentValue)

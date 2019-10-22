@@ -67,4 +67,3 @@ public struct SubscriptionValue<T> {
 	var value: T?
 	var subscription: Subscription?
 }
-
