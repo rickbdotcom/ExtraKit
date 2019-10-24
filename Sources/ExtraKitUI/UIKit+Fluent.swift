@@ -193,6 +193,15 @@ public extension String {
     }
 }
 
+public extension NSAttributedString {
+
+    func label() -> UILabel {
+        return UILabel().configure {
+            $0.attributedText = self
+        }
+    }
+}
+
 public extension UIImage {
 
     func imageView() -> UIImageView {
