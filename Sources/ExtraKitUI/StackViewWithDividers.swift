@@ -27,6 +27,10 @@ class StackViewWithDividers: UIStackView {
     var dividerInsets: UIEdgeInsets = .zero
 	private var dividers = [StackViewDivider]()
 
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		insertDividers()
+	}
 	override func addArrangedSubview(_ view: UIView) {
 		super.addArrangedSubview(view)
 		insertDividers()
