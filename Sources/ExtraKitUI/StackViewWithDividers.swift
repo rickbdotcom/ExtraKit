@@ -9,13 +9,13 @@
 import ExtraKitCore
 import UIKit
 
-class StackViewWithDividers: UIStackView {
+public class StackViewWithDividers: UIStackView {
 
-    @IBInspectable var dividerColor: UIColor = .lightGray { didSet { insertDividers() } }
-    @IBInspectable var dividerHeight: CGFloat = 0.5 { didSet { insertDividers() } }
-    @IBInspectable var showTopDivider: Bool = false { didSet { insertDividers() } }
-    @IBInspectable var showBottomDivider: Bool = false { didSet { insertDividers() } }
-	@IBInspectable var dividerInsetString: String? {
+    @IBInspectable public var dividerColor: UIColor = .lightGray { didSet { insertDividers() } }
+    @IBInspectable public var dividerHeight: CGFloat = 0.5 { didSet { insertDividers() } }
+    @IBInspectable public var showTopDivider: Bool = false { didSet { insertDividers() } }
+    @IBInspectable public var showBottomDivider: Bool = false { didSet { insertDividers() } }
+	@IBInspectable public var dividerInsetString: String? {
 		set {
 			dividerInsets = NSCoder.uiEdgeInsets(for: newValue ?? "")
 			insertDividers()
@@ -24,23 +24,23 @@ class StackViewWithDividers: UIStackView {
 			return NSCoder.string(for: dividerInsets)
 		}
 	}
-    var dividerInsets: UIEdgeInsets = .zero
+    public var dividerInsets: UIEdgeInsets = .zero
 	private var dividers = [StackViewDivider]()
 
-	override func awakeFromNib() {
+	override public func awakeFromNib() {
 		super.awakeFromNib()
 		insertDividers()
 	}
-	override func addArrangedSubview(_ view: UIView) {
+	override public func addArrangedSubview(_ view: UIView) {
 		super.addArrangedSubview(view)
 		insertDividers()
 	}
 
-    override func removeArrangedSubview(_ view: UIView) {
+	override public func removeArrangedSubview(_ view: UIView) {
 		super.removeArrangedSubview(view)
 	}
 
-    override func insertArrangedSubview(_ view: UIView, at stackIndex: Int) {
+	override public func insertArrangedSubview(_ view: UIView, at stackIndex: Int) {
 		super.insertArrangedSubview(view, at: stackIndex)
 	}
 
@@ -58,6 +58,33 @@ class StackViewWithDividers: UIStackView {
 			dividers.append(StackViewDivider(height: dividerHeight, color: dividerColor, insets: dividerInsets).add(to: self).pin(edges: [.bottom, .left, .right], to: lastView, with: UIEdgeInsets(bottom: -dividerHeight * 0.5)))
         }
     }
+}
+
+public extension StackViewWithDividers {
+
+	@discardableResult
+    func dividerColor(_ color: UIColor) -> Self {
+		dividerColor = color
+		return self
+	}
+
+	@discardableResult
+    func dividerHeight(_ height: CGFloat) -> Self {
+		dividerHeight = height
+		return self
+	}
+
+	@discardableResult
+    func showTopDivider(_ show: Bool) -> Self {
+		showTopDivider = show
+		return self
+	}
+
+	@discardableResult
+    func showBottomDivider(_ show: Bool) -> Self {
+		showBottomDivider = show
+		return self
+	}
 }
 
 private class StackViewDivider: UIView {
