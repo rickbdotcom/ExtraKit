@@ -12,7 +12,7 @@ import UIKit
 public class StackViewWithDividers: UIStackView {
 
     @IBInspectable public var dividerColor: UIColor = .lightGray { didSet { insertDividers() } }
-    @IBInspectable public var dividerHeight: CGFloat = 1 { didSet { insertDividers() } }
+    @IBInspectable public var dividerHeight: CGFloat = 0.5 { didSet { insertDividers() } }
     @IBInspectable public var dividerLeftInset: CGFloat = 0 { didSet { insertDividers() } }
     @IBInspectable public var dividerRightInset: CGFloat = 0 { didSet { insertDividers() } }
     @IBInspectable public var showTopDivider: Bool = false { didSet { insertDividers() } }
@@ -76,4 +76,19 @@ public class StackViewWithDividers: UIStackView {
         dividers.append(divider)
         return divider
     }
+}
+
+public extension StackViewWithDividers {
+
+	@discardableResult
+	func dividerColor(_ color: UIColor) -> Self {
+		dividerColor = color
+		return self
+	}
+
+	@discardableResult
+	func dividerHeight(_ height: CGFloat) -> Self {
+		dividerHeight = height
+		return self
+	}
 }
