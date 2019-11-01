@@ -136,47 +136,6 @@ public extension UIEdgeInsets {
 
 public extension UIView {
 
-	@IBInspectable var capsuleCorners: Bool {
-		get { return associatedValue() ?? false }
-		set {
-			set(associatedValue: newValue)
-			setNeedsLayout()
-			if newValue == false {
-				cornerRadius = 0
-			}
-		}
-	}
-
-	class func useCapsuleCorners() {
-		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(capsuleCorners_layoutSubviews))
-		UIButton.useCapsuleCornersForButton()
-	}
-		
-	@objc func capsuleCorners_layoutSubviews() {
-		capsuleCorners_layoutSubviews()
-		if capsuleCorners {
-			cornerRadius = bounds.size.height / 2.0
-		}
-	}
-}
-
-public extension UIButton {
-
-// this shouldn't be necessary but probably something to do with either UIButton being implemented as a class cluster or it not calling super layout method
-	class func useCapsuleCornersForButton() {
-		swizzle(instanceMethod: #selector(layoutSubviews), with: #selector(buttonCapsuleCorners_layoutSubviews))
-	}
-
-	@objc func buttonCapsuleCorners_layoutSubviews() {
-		buttonCapsuleCorners_layoutSubviews()
-		if capsuleCorners {
-			cornerRadius = bounds.size.height / 2.0
-		}
-	}
-}
-
-public extension UIView {
-
 	@IBInspectable var clearBackground: Bool {
 		get { return associatedValue() ?? false }
 		set { set(associatedValue: newValue) }
