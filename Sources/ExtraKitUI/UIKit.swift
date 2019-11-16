@@ -21,34 +21,34 @@ public extension UIViewController {
 
 public extension UIView {
 
-	func superview<T>(ofType: T.Type) -> T? {
-		return typedSuperview()
-	}
+    func superview<T>(ofType: T.Type) -> T? {
+        return typedSuperview()
+    }
 
-	func parentViewController<T>(ofType: T.Type) -> T? {
-		return typedParentViewController()
-	}
-	
-	func subview<T>(ofType: T.Type) -> T? {
-		return typedSubview()
-	}
-	
-	func typedSuperview<T>() -> T? {
-		return self as? T ?? superview?.typedSuperview()
-	}
+    func parentViewController<T>(ofType: T.Type) -> T? {
+        return typedParentViewController()
+    }
 
-	func typedParentViewController<T>() -> T? {
-		return self as? T ?? parentViewController?.typedParentViewController()
-	}
-	
-	func typedSubview<T>() -> T? {
-		return subviews.first(where: { $0 is T }) as? T
-	}
+    func subview<T>(ofType: T.Type) -> T? {
+        return typedSubview()
+    }
+
+    func typedSuperview<T>() -> T? {
+        return self as? T ?? superview?.typedSuperview()
+    }
+
+    func typedParentViewController<T>() -> T? {
+        return self as? T ?? parentViewController?.typedParentViewController()
+    }
+
+    func typedSubview<T>() -> T? {
+        return subviews.first { $0 is T } as? T
+    }
 
     var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {
-            parentResponder = parentResponder!.next
+            parentResponder = parentResponder?.next
             if let viewController = parentResponder as? UIViewController {
                 return viewController
             }

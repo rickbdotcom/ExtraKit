@@ -72,7 +72,7 @@ public class StackViewWithDividers: UIStackView {
         divider.isUserInteractionEnabled = false
         divider.heightAnchor.constraint(equalToConstant: dividerHeight).isActive = true
         divider.leftAnchor.constraint(equalTo: leftAnchor, constant: dividerLeftInset).isActive = true
-        divider.rightAnchor.constraint(equalTo: rightAnchor, constant: -dividerRightInset).isActive = true
+        divider.rightAnchor.constraint(equalTo: rightAnchor, constant: dividerRightInset).isActive = true
         dividers.append(divider)
         return divider
     }
