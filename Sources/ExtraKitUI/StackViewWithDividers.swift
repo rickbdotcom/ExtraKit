@@ -21,22 +21,9 @@ public class StackViewWithDividers: UIStackView {
     private var dividerInsets: UIEdgeInsets { return UIEdgeInsets(top: 0, left: dividerLeftInset, bottom: 0, right: dividerRightInset) }
     private var dividers = [UIView]()
 
-    override public func awakeFromNib() {
-        super.awakeFromNib()
+    public override func updateConstraints() {
+        super.updateConstraints()
         insertDividers()
-    }
-
-    override public func addArrangedSubview(_ view: UIView) {
-        super.addArrangedSubview(view)
-        insertDividers()
-    }
-
-    override public func removeArrangedSubview(_ view: UIView) {
-        super.removeArrangedSubview(view)
-    }
-
-    override public func insertArrangedSubview(_ view: UIView, at stackIndex: Int) {
-        super.insertArrangedSubview(view, at: stackIndex)
     }
 
     private func insertDividers() {
@@ -76,19 +63,4 @@ public class StackViewWithDividers: UIStackView {
         dividers.append(divider)
         return divider
     }
-}
-
-public extension StackViewWithDividers {
-
-	@discardableResult
-	func dividerColor(_ color: UIColor) -> Self {
-		dividerColor = color
-		return self
-	}
-
-	@discardableResult
-	func dividerHeight(_ height: CGFloat) -> Self {
-		dividerHeight = height
-		return self
-	}
 }

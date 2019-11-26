@@ -228,3 +228,18 @@ public func VStack(_ views: [UIView?] = [], withDividers: Bool = false, showTopD
         return stackView
     }
 }
+
+public extension StackViewWithDividers {
+
+	@discardableResult
+	func dividerColor(_ color: UIColor) -> Self {
+		dividerColor = color
+		return self
+	}
+
+	@discardableResult
+	func dividerHeight(_ height: CGFloat) -> Self {
+		dividerHeight = height
+		return self
+	}
+}
