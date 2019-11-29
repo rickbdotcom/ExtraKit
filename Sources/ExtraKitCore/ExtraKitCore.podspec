@@ -18,6 +18,6 @@ TODO: Add long description of the pod here.
   s.osx.deployment_target = '10.15'
   s.swift_version    = '5.0'  
   
-  s.source_files = '*.swift'
+  s.source_files = 'Sources/ExtraKitCore/*.swift'
    
 end
