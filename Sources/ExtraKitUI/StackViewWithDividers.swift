@@ -21,7 +21,7 @@ public class StackViewWithDividers: UIStackView {
     private var dividerInsets: UIEdgeInsets { return UIEdgeInsets(top: 0, left: dividerLeftInset, bottom: 0, right: dividerRightInset) }
     private var dividers = [UIView]()
 
-    public override func updateConstraints() {
+    override public func updateConstraints() {
         super.updateConstraints()
         insertDividers()
     }
