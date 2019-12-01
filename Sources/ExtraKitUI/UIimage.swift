@@ -15,7 +15,7 @@ public extension UIImage {
 		set { set(associatedValue: newValue) }
 	}
 
-	class func draw(size: CGSize,  scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect)->Void) -> UIImage? {
+	class func draw(size: CGSize, scale: CGFloat = UIScreen.main.scale, draw: (_ context: CGContext, _ bounds: CGRect) -> Void) -> UIImage? {
 
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
 		guard let context = UIGraphicsGetCurrentContext() else {

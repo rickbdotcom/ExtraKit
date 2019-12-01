@@ -6,6 +6,6 @@ final class ExtraKitUITests: XCTestCase {
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testExample", testExample)
     ]
 }

@@ -21,8 +21,7 @@ public extension Decodable {
 public extension Encodable {
 
 	func toJSON(encoder: JSONEncoder = JSONEncoder()) -> Any? {
-		if let data = try? encoder.encode(self)
-		, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+		if let data = try? encoder.encode(self), let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
 			return json
 		}
 		return nil
@@ -150,7 +149,7 @@ extension UnkeyedDecodingContainer {
 	}
 }
 
-extension KeyedDecodingContainer where K == AnyCodingKey{
+extension KeyedDecodingContainer where K == AnyCodingKey {
 
 	func nestedContainer(forKey key: String) -> AnyDecodingContainer? {
 		if let container = try? nestedContainer(keyedBy: AnyCodingKey.self, forKey: AnyCodingKey(key)) {

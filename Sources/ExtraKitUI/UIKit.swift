@@ -99,8 +99,7 @@ public extension UIView {
 		}
 		set {
 			if #available(iOS 11.0, *) {
-				if let boolArray = newValue?.components(separatedBy: " ").map({ $0 == "true" })
-				, boolArray.count == 4 {
+				if let boolArray = newValue?.components(separatedBy: " ").map({ $0 == "true" }), boolArray.count == 4 {
 					layer.masksToBounds = true
 					layer.maskedCorners = zip(maskedCornerArray, boolArray).reduce([]) {
 						return $1.1 ? $0.union($1.0) : $0

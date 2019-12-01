@@ -21,7 +21,7 @@ public extension ConfigurableSelf where Self: AnyObject {
 
 public extension NSObjectProtocol {
 
-	@discardableResult func configure(_ block: (Self)->Void) -> Self {
+	@discardableResult func configure(_ block: (Self) -> Void) -> Self {
 		block(self)
 		return self
 	}

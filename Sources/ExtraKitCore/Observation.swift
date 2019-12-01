@@ -13,8 +13,7 @@ import Foundation
 public extension NSObject {
 
 	func startObserving(_ name: Notification.Name, object: Any? = nil, queue: OperationQueue? = nil, usingBlock block: @escaping (Notification) -> Void) {
-		set(associatedValue: NotificationObserver(forName: name, object: object, queue: queue, usingBlock: block)
-		, forKey: "\(associatedValueKey).\(name)")
+		set(associatedValue: NotificationObserver(forName: name, object: object, queue: queue, usingBlock: block), forKey: "\(associatedValueKey).\(name)")
 	}
 	
 	func stopObserving(_ name: Notification.Name) {

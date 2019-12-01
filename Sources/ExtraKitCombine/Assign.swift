@@ -45,4 +45,3 @@ public extension Publisher {
 		return subscribe(subscriber: Assign(object, keyPath))
 	}
 }
-
