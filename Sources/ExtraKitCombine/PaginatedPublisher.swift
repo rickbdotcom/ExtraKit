@@ -20,6 +20,7 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 		return paginatedArray.items
 	}
 	private let paginatedArray: PaginatedArray<Element, Cursor>
+	private let refreshResolver = ResolverArray<Output>()
 
 	public init(cursor: Cursor, nextPage: @escaping (Cursor) -> Promise<([Element], Cursor?)>) {
 		paginatedArray = PaginatedArray(cursor: cursor) { cursor in
@@ -28,16 +29,20 @@ public final class PaginatedArrayPublisher<Element, Cursor>: DefaultSubjectImple
 	}
 
 	public func refresh() -> Promise<[Element]> {
-		paginatedArray.reset()
-		return nextPage().map { [weak self] in
-			guard let currentValue = self?.currentValue else {
-				throw PMKError.cancelled
-			}
-			self?.send(value: currentValue)
-			return currentValue
-		}.recover { [weak self] error -> Promise<[Element]> in
-			self?.send(error: error)
-			throw error
+		if refreshResolver.isEmpty {
+			paginatedArray.reset()
+			return nextPage().map { [weak self] in
+				guard let currentValue = self?.currentValue else {
+					throw PMKError.cancelled
+				}
+				self?.send(value: currentValue)
+				return currentValue
+			}.recover { [weak self] error -> Promise<[Element]> in
+				self?.send(error: error)
+				throw error
+			}.resolve(with: refreshResolver)
+		} else {
+			return refreshResolver.add()
 		}
 	}
 

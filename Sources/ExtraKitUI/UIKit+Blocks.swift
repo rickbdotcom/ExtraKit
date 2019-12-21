@@ -106,3 +106,38 @@ class TargetBlock<T: NSObject>: NSObject {
 		}
 	}
 }
+public extension UITextView {
+
+	var textViewDelegate: TextViewDelegate {
+		return associatedValue(default: TextViewDelegate(textView: self))
+	}
+}
+
+public class TextViewDelegate: NSObject, UITextViewDelegate {
+
+	public var editingDidBegin: ((UITextView) -> Void)?
+	public var editingChanged: ((UITextView) -> Void)?
+	public var editingDidEnd: ((UITextView) -> Void)?
+	public var shouldChangeText: ((UITextView, NSRange, String) -> Bool)?
+
+	init(textView: UITextView) {
+		super.init()
+		textView.delegate = self
+	}
+
+	public func textViewDidBeginEditing(_ textView: UITextView) {
+		editingDidBegin?(textView)
+	}
+
+	public func textViewDidEndEditing(_ textView: UITextView) {
+		editingDidEnd?(textView)
+	}
+
+	public func textViewDidChange(_ textView: UITextView) {
+		editingChanged?(textView)
+	}
+
+	public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		return shouldChangeText?(textView, range, text) ?? true
+	}
+}

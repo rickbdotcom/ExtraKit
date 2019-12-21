@@ -80,7 +80,7 @@ public class CurrentValueSubject<Output>: DefaultSubjectImplementation<Output> {
 	}
 }
 
-public class DefaultSubjectImplementation<Output>: Subject, Publisher {
+open class DefaultSubjectImplementation<Output>: Subject, Publisher {
 	private var subscribers = [UUID: AnySubscriber<Output>]()
 
 	public init() {
