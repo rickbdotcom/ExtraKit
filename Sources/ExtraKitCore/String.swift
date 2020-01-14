@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension String {
+public extension String {
 
     var emptyNil: String? {
         return isEmpty ? nil : self
     }
 }
 
-extension Sequence where Element == String {
+public extension Sequence where Element == String {
 
     func emptyJoined(separator: String) -> String {
         return map { $0.emptyNil }.emptyJoined(separator: separator)
@@ -26,7 +26,7 @@ extension Sequence where Element == String {
     }
 }
 
-extension Sequence where Element == String? {
+public extension Sequence where Element == String? {
 
     func emptyJoined(separator: String) -> String {
         return compactMap { $0 }.joined(separator: separator)
