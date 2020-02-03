@@ -22,7 +22,7 @@ extension UILabel {
 public extension NSObject {
 
 	var associatedDictionary: NSMutableDictionary {
-		return objc_getAssociatedObject(self, &NSObject.associatedDictionaryKey) as? NSMutableDictionary ?? {
+		objc_getAssociatedObject(self, &NSObject.associatedDictionaryKey) as? NSMutableDictionary ?? {
 			let dict = NSMutableDictionary()
 			objc_setAssociatedObject(self, &NSObject.associatedDictionaryKey, dict, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 			return dict
@@ -40,15 +40,15 @@ public extension NSObject {
 	}
 		
 	func associatedValue<T>(functionName: String? = #function) -> T? {
-		return associatedValue(forKey: associatedKey(for: functionName))
+		associatedValue(forKey: associatedKey(for: functionName))
 	}
 
 	func set(associatedValue value: Any?, functionName: String? = #function) {
-		return set(associatedValue: value, forKey: associatedKey(for: functionName))
+		set(associatedValue: value, forKey: associatedKey(for: functionName))
 	}
 	
 	func weakAssociatedValue<T>(functionName: String? = #function) -> T? {
-		return weakAssociatedValue(forKey: associatedKey(for: functionName))
+		weakAssociatedValue(forKey: associatedKey(for: functionName))
 	}
 	
 	func set(weakAssociatedValue value: AnyObject?, functionName: String? = #function) {
@@ -56,7 +56,7 @@ public extension NSObject {
 	}
 
 	func associatedValue<T>(forKey key: String) -> T? {
-		return associatedDictionary[key] as? T
+		associatedDictionary[key] as? T
 	}
 	
 	func set(associatedValue value: Any?, forKey key: String) {
@@ -64,7 +64,7 @@ public extension NSObject {
 	}
 
 	func weakAssociatedValue<T>(forKey key: String) -> T? {
-		return (associatedDictionary[key] as? WeakObjectRef)?.object as? T
+		(associatedDictionary[key] as? WeakObjectRef)?.object as? T
 	}
 	
 	func set(weakAssociatedValue value: AnyObject?, forKey key: String) {
@@ -72,7 +72,7 @@ public extension NSObject {
 	}
 
 	private func associatedKey(for functionName: String?) -> String {
-		return ["com.extrakit", functionName].compactMap { $0 }.joined(separator: ".")
+		["com.extrakit", functionName].compactMap { $0 }.joined(separator: ".")
 	}
 
 	private static var associatedDictionaryKey = 0

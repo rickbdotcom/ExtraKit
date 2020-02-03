@@ -6,14 +6,13 @@
 //  Copyright © 2018 rickbdotcom LLC. All rights reserved.
 //
 
-import ExtraKitCore
 import UIKit
 
 private let targetBlockAction = #selector(TargetBlock.execute(_:))
 
 public extension UIControl {
 
-	private var targetBlocks: NSMutableDictionary { return associatedValue(default: NSMutableDictionary()) }
+	private var targetBlocks: NSMutableDictionary { associatedValue(default: NSMutableDictionary()) }
 
 	@discardableResult func on<T: UIControl>(_ event: UIControl.Event, block: ((T) -> Void)?) -> Any? {
 		if let block = block {
@@ -40,7 +39,7 @@ public extension UIControl {
 public extension UIGestureRecognizer {
 
 	private var targetBlock: Any? { 
-		get { return associatedValue() }
+		get { associatedValue() }
 		set { set(associatedValue: newValue) }
 	}
 	
@@ -70,7 +69,7 @@ public extension UIGestureRecognizer {
 public extension UIBarButtonItem {
 
 	private var targetBlock: NSObject? { 
-		get { return associatedValue() }
+		get { associatedValue() }
 		set { set(associatedValue: newValue) }
 	}
 
@@ -109,7 +108,7 @@ class TargetBlock<T: NSObject>: NSObject {
 public extension UITextView {
 
 	var textViewDelegate: TextViewDelegate {
-		return associatedValue(default: TextViewDelegate(textView: self))
+		associatedValue(default: TextViewDelegate(textView: self))
 	}
 }
 
@@ -138,6 +137,6 @@ public class TextViewDelegate: NSObject, UITextViewDelegate {
 	}
 
 	public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-		return shouldChangeText?(textView, range, text) ?? true
+		shouldChangeText?(textView, range, text) ?? true
 	}
 }

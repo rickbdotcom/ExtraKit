@@ -6,6 +6,7 @@
 //  Copyright © 2018 rickbdotcom LLC. All rights reserved.
 //
 
+import Foundation
 import ObjectiveC
 
 public protocol ConfigurableSelf {

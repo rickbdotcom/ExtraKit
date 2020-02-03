@@ -20,6 +20,10 @@ public extension UITextField {
     }
 
     func setPickerValues<T: Equatable>(_ values: [T], title: @escaping ((T) -> String?), text: ((T) -> String?)? = nil) {
+		guard values.isEmpty == false else {
+			self.inputView = nil
+			return
+		}
         var currentValue: T? = pickerView(for: T.self)?.selectedValue
         if let oldValue = currentValue, values.contains(oldValue) == false {
             currentValue = nil
@@ -55,15 +59,15 @@ public extension UITextField {
     }
 
     func selectedPickerValue<T: Equatable>(type: T.Type) -> T? {
-        return selectedPickerValue()
+        selectedPickerValue()
     }
 
     func values<T: Equatable>(type: T.Type) -> [T] {
-        return pickerView(for: T.self)?.values ?? []
+        pickerView(for: T.self)?.values ?? []
     }
 
     private func pickerView<T: Equatable>(for: T.Type) -> PickerInputView<T>? {
-        return inputView as? PickerInputView<T>
+        inputView as? PickerInputView<T>
     }
 }
 
@@ -75,7 +79,7 @@ class PickerInputView<T: Equatable>: UIPickerView, UIPickerViewDataSource, UIPic
     private let text: (T) -> String?
 
     var selectedValue: T {
-        get { return values[selectedRow(inComponent: 0)] }
+        get { values[selectedRow(inComponent: 0)] }
         set {
             if let index = values.firstIndex(of: newValue) {
                 selectRow(index, inComponent: 0, animated: true)
@@ -100,15 +104,15 @@ class PickerInputView<T: Equatable>: UIPickerView, UIPickerViewDataSource, UIPic
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return values.count
+        values.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return title(values[row])
+        title(values[row])
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

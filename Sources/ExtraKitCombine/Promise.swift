@@ -27,6 +27,26 @@ public extension Promise {
 	}
 }
 
+public extension Promise {
+
+	func notification(onBegin: Notification.Name? = nil, objectBegin: Any? = nil, beginUserInfo: [AnyHashable : Any]? = nil, onEnd: Notification.Name? = nil, objectEnd: Any? = nil, endUserInfo: [AnyHashable: Any]? = nil) -> Promise {
+		let begin = onBegin.flatMap { Notification(name: $0, object: objectBegin, userInfo: beginUserInfo) }
+		let end = onEnd.flatMap { Notification(name: $0, object: objectEnd, userInfo: endUserInfo) }
+		return notification(onBegin: begin, onEnd: end)
+	}
+
+	func notification(onBegin: Notification? = nil, onEnd: Notification? = nil) -> Promise {
+		if let begin = onBegin {
+			NotificationCenter.default.post(begin)
+		}
+		return ensure {
+			if let end = onEnd {
+				NotificationCenter.default.post(end)
+			}
+		}
+	}
+}
+
 public protocol CancelTokenProtocol {
 
 	var isCancelled: Bool { get }
