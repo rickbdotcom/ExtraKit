@@ -31,43 +31,43 @@ public extension Encodable {
 public extension Decoder {
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: String = "") -> String {
-        return defaultDecodeIfPresent(keyPath, as: String.self, `default`)
+        defaultDecodeIfPresent(keyPath, as: String.self, `default`)
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Int = 0) -> Int {
-        return defaultDecodeIfPresent(keyPath, as: Int.self, `default`)
+        defaultDecodeIfPresent(keyPath, as: Int.self, `default`)
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Bool = false) -> Bool {
-		return defaultDecodeIfPresent(keyPath, as: Bool.self) ??
+		defaultDecodeIfPresent(keyPath, as: Bool.self) ??
 			defaultDecodeIfPresent(keyPath, as: String.self).flatMap { Bool($0) ?? ($0 == "1" ? true : nil) } ??
 			`default`
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Double = 0.0) -> Double {
-        return defaultDecodeIfPresent(keyPath, as: Double.self, `default`)
+        defaultDecodeIfPresent(keyPath, as: Double.self, `default`)
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Int64 = 0) -> Int64 {
-        return defaultDecodeIfPresent(keyPath, as: Int64.self, `default`)
+        defaultDecodeIfPresent(keyPath, as: Int64.self, `default`)
     }
 
     func defaultDecodeIfPresent(_ keyPath: String, _ default: Decimal = .zero) -> Decimal {
-		return defaultDecodeIfPresent(keyPath, as: Decimal.self) ??
+		defaultDecodeIfPresent(keyPath, as: Decimal.self) ??
 			defaultDecodeIfPresent(keyPath, as: String.self).flatMap { Decimal(string: $0) } ??
 			`default`
     }
 
     func defaultDecodeIfPresent<T: Decodable>(_ keyPath: String, _ default: [T] = []) -> [T] {
-        return defaultDecodeIfPresent(keyPath, as: [T].self, `default`)
+        defaultDecodeIfPresent(keyPath, as: [T].self, `default`)
     }
 
     func defaultDecodeIfPresent<T: Decodable>(_ keyPath: String, as type: T.Type = T.self, _ default: T? = nil) -> T? {
-        return (try? decodeIfPresent(keyPath: keyPath, as: type) ?? `default`) ?? `default`
+        (try? decodeIfPresent(keyPath: keyPath, as: type) ?? `default`) ?? `default`
     }
 
-    func defaultDecodeIfPresent<T: Decodable>(_ keyPath: String, as type: T.Type = T.self, _ default: T) -> T {
-        return (try? decodeIfPresent(keyPath: keyPath, as: type) ?? `default`) ?? `default`
+    func defaultDecodeIfPresent<T: Decodable>(_ keyPath: String, as type: T.Type = T.self, _ default: @autoclosure () -> T) -> T {
+		(try? decodeIfPresent(keyPath: keyPath, as: type) ?? `default`()) ?? `default`()
     }
 
 	func decodeIfPresent<T: Decodable>(keyPath: String, as type: T.Type = T.self) throws -> T? {
