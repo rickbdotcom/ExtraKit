@@ -11,7 +11,7 @@ import UIKit
 public extension UIAlertController {
 
 	class func alert(title: String? = nil, message: String? = nil) -> UIAlertController {
-		return UIAlertController(title: title, message: message, preferredStyle: .alert)
+		UIAlertController(title: title, message: message, preferredStyle: .alert)
 	}
 
 	class func actionSheet(from source: Any, title: String? = nil, message: String? = nil) -> UIAlertController {
@@ -29,12 +29,12 @@ public extension UIAlertController {
 
 	@discardableResult
 	func ok(_ style: UIAlertAction.Style = .default, preferred: Bool = false, action inAction: ((UIAlertController) -> Void)? = nil) -> Self {
-		return action(title: NSLocalizedString("OK", comment: ""), style: style, preferred: preferred, action: inAction)
+		action(title: NSLocalizedString("OK", comment: ""), style: style, preferred: preferred, action: inAction) // swiftlint:disable:this swiftgen_strings
 	}
 
 	@discardableResult
 	func cancel(_ style: UIAlertAction.Style = .cancel, preferred: Bool = false, inAction: ((UIAlertController) -> Void)? = nil) -> Self {
-		return action(title: NSLocalizedString("Cancel", comment: ""), style: style, preferred: preferred, action: inAction)
+		action(title: NSLocalizedString("Cancel", comment: ""), style: style, preferred: preferred, action: inAction) // swiftlint:disable:this swiftgen_strings
 	}
 
 	@discardableResult

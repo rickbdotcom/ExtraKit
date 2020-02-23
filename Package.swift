@@ -15,10 +15,6 @@ let package = Package(
             targets: ["ExtraKitCore"]
 		),
 		.library(
-			name: "ExtraKitCombine",
-			targets: ["ExtraKitCombine"]
-		),
-		.library(
 			name: "ExtraKitUI",
 			targets: ["ExtraKitUI"]
 		)
@@ -34,20 +30,12 @@ let package = Package(
             dependencies: []
 		),
         .target(
-            name: "ExtraKitCombine",
-            dependencies: ["PromiseKit"]
-		),
-        .target(
             name: "ExtraKitUI",
             dependencies: ["ExtraKitCore"]
 		),
         .testTarget(
             name: "ExtraKitCoreTests",
             dependencies: ["ExtraKitCore"]
-		),
-		.testTarget(
-			name: "ExtraKitCombineTests",
-			dependencies: ["ExtraKitCombine"]
 		),
 		.testTarget(
 			name: "ExtraKitUITests",

@@ -30,11 +30,11 @@ public protocol AnchorableObject {
 public extension AnchorableObject {
 	
 	func xAxisStartAnchor(alignWithLanguageDirection: Bool) -> NSLayoutXAxisAnchor {
-		return alignWithLanguageDirection ? leadingAnchor : leftAnchor
+		alignWithLanguageDirection ? leadingAnchor : leftAnchor
 	}
 
     func xAxisEndAnchor(alignWithLanguageDirection: Bool) -> NSLayoutXAxisAnchor {
-        return alignWithLanguageDirection ? trailingAnchor : rightAnchor
+        alignWithLanguageDirection ? trailingAnchor : rightAnchor
     }
 }
 
