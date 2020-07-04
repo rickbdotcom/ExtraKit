@@ -48,7 +48,7 @@ public extension UITextField {
         }
     }
 
-    func selectedPickerValue<T: Equatable>() -> T? {
+    func selectedPickerValue<T: Equatable>(as type: T.Type = T.self) -> T? {
         if let picker = pickerView(for: T.self) {
             return picker.selectedValue
         } else if let picker = pickerView(for: Optional<T>.self) {
