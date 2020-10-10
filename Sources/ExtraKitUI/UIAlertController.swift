@@ -28,22 +28,18 @@ public extension UIAlertController {
 	}
 
 	@discardableResult
-	func ok(_ style: UIAlertAction.Style = .default, preferred: Bool = false, action inAction: ((UIAlertController) -> Void)? = nil) -> Self {
-		action(title: NSLocalizedString("OK", comment: ""), style: style, preferred: preferred, action: inAction) // swiftlint:disable:this swiftgen_strings
+	func ok(_ style: UIAlertAction.Style = .default, preferred: Bool = false, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
+		action(title: NSLocalizedString("OK", comment: ""), style: style, preferred: preferred, handler: handler) // swiftlint:disable:this swiftgen_strings
 	}
 
 	@discardableResult
-	func cancel(_ style: UIAlertAction.Style = .cancel, preferred: Bool = false, inAction: ((UIAlertController) -> Void)? = nil) -> Self {
-		action(title: NSLocalizedString("Cancel", comment: ""), style: style, preferred: preferred, action: inAction) // swiftlint:disable:this swiftgen_strings
+	func cancel(_ style: UIAlertAction.Style = .cancel, preferred: Bool = false, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
+		action(title: NSLocalizedString("Cancel", comment: ""), style: style, preferred: preferred, handler: handler) // swiftlint:disable:this swiftgen_strings
 	}
 
 	@discardableResult
-	func action(title: String?, style: UIAlertAction.Style = .default, preferred: Bool = false, action: ((UIAlertController) -> Void)? = nil) -> Self {
-		let action = UIAlertAction(title: title, style: style) { [weak self] _ in
-			if let alert = self {
-				action?(alert)
-			}
-		}
+	func action(title: String?, style: UIAlertAction.Style = .default, preferred: Bool = false, handler: ((UIAlertAction) -> Void)? = nil) -> Self {
+		let action = UIAlertAction(title: title, style: style, handler: handler)
 		addAction(action)
 		if preferred == true {
 			preferredAction = action
@@ -55,6 +51,14 @@ public extension UIAlertController {
 	func textField(configurationHandler: ((UITextField) -> Void)? = nil) -> Self {
 		addTextField(configurationHandler: configurationHandler)
 		return self
+	}
+
+	@discardableResult
+	func secureTextField(configurationHandler: ((UITextField) -> Void)? = nil) -> Self {
+		textField {
+			$0.isSecureTextEntry = true
+			configurationHandler?($0)
+		}
 	}
 
 	@discardableResult
